@@ -2,7 +2,7 @@
 {
     public interface IWavePipeDeviceInfo
     {
-        WaveInDevice WaveInDevice { get; }
-        WaveOutDevice WaveOutDevice { get; }
+        IWaveInDevice WaveInDevice { get; }
+        IWaveOutDevice WaveOutDevice { get; }
     }
 }

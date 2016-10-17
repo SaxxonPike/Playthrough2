@@ -5,18 +5,18 @@ namespace Playthrough2
 {
     public class WaveDeviceEnumerator
     {
-        public IEnumerable<WaveInDevice> GetWaveInDevices()
+        public IEnumerable<IWaveInDevice> GetWaveInDevices()
         {
             var count = WaveIn.DeviceCount;
             for (var i = 0; i < count; i++)
-                yield return new WaveInDevice(i);
+                yield return new WindowsWaveInDevice(i);
         }
 
-        public IEnumerable<WaveOutDevice> GetWaveOutDevices()
+        public IEnumerable<IWaveOutDevice> GetWaveOutDevices()
         {
             var count = WaveOut.DeviceCount;
             for (var i = 0; i < count; i++)
-                yield return new WaveOutDevice(i);
+                yield return new WindowsWaveOutDevice(i);
         }
     }
 }

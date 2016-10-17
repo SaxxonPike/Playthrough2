@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.inputGroupBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.inputBufferCountValueLabel = new System.Windows.Forms.Label();
@@ -51,6 +52,7 @@
             this.actionsGroupBox = new System.Windows.Forms.GroupBox();
             this.stopButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.inputGroupBox.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputBufferCountSlider)).BeginInit();
@@ -341,6 +343,11 @@
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.OnStartClicked);
             // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Text = "Passthrough2";
+            this.notifyIcon.Visible = true;
+            // 
             // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -352,6 +359,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "ConfigurationForm";
+            this.ShowInTaskbar = false;
             this.Text = "Passthrough2";
             this.inputGroupBox.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -397,6 +405,7 @@
         private System.Windows.Forms.Label outputBufferCountValueLabel;
         private System.Windows.Forms.Label outputBufferCountLabel;
         private System.Windows.Forms.TrackBar outputBufferCountSlider;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
     }
 }
 

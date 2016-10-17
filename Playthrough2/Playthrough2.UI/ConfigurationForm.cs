@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Playthrough2.UI.Properties;
 
 namespace Playthrough2.UI
 {
@@ -16,16 +18,22 @@ namespace Playthrough2.UI
 
             Shown += OnFirstShown;
             Closed += OnClosed;
+            notifyIcon.Click += OnNotifyIconClicked;
+        }
+
+        private void OnNotifyIconClicked(object sender, EventArgs e)
+        {
+            ShowAndBringToFront();
         }
 
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == Win32.WM_SHOWME)
-                ShowMe();
+                ShowAndBringToFront();
             base.WndProc(ref m);
         }
 
-        private void ShowMe()
+        private void ShowAndBringToFront()
         {
             if (WindowState == FormWindowState.Minimized)
                 WindowState = FormWindowState.Normal;
@@ -47,8 +55,8 @@ namespace Playthrough2.UI
         {
             return new WavePipeConfiguration
             {
-                WaveInDevice = inputDeviceComboBox.SelectedItem as WaveInDevice,
-                WaveOutDevice = outputDeviceComboBox.SelectedItem as WaveOutDevice,
+                WaveInDevice = inputDeviceComboBox.SelectedItem as IWaveInDevice,
+                WaveOutDevice = outputDeviceComboBox.SelectedItem as IWaveOutDevice,
                 InputBufferCount = inputBufferCountSlider.Value,
                 InputBufferLength = inputBufferSizeSlider.Value,
                 OutputBufferCount = outputBufferCountSlider.Value,
@@ -59,13 +67,30 @@ namespace Playthrough2.UI
         private void OnClosed(object sender, EventArgs eventArgs)
         {
             _wavePipeManager.Dispose();
+            notifyIcon.Visible = false;
         }
 
         private void OnFirstShown(object sender, EventArgs e)
         {
             Shown -= OnFirstShown;
+
+            PopulateDevices();
+
+            notifyIcon.Text = Text;
+            notifyIcon.Icon = Resources.Logo16.ToIcon();
+            notifyIcon.Visible = true;
+        }
+
+        private void PopulateDevices()
+        {
             inputDeviceComboBox.Items.AddRange(_waveDeviceEnumerator.GetWaveInDevices().Cast<object>().ToArray());
+            inputDeviceComboBox.SelectedIndex = inputDeviceComboBox.Items.Count > 0 ? 0 : -1;
+
             outputDeviceComboBox.Items.AddRange(_waveDeviceEnumerator.GetWaveOutDevices().Cast<object>().ToArray());
+            outputDeviceComboBox.SelectedIndex = outputDeviceComboBox.Items.Count > 0 ? 0 : -1;
+
+            inputGroupBox.Enabled = outputGroupBox.Enabled = actionsGroupBox.Enabled =
+                inputDeviceComboBox.Items.Count > 0 && outputDeviceComboBox.Items.Count > 0;
         }
 
         private void OnStartClicked(object sender, EventArgs e)

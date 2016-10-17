@@ -6,9 +6,9 @@ namespace Playthrough2
 {
     public class WavePipeManager : IDisposable
     {
-        private readonly IList<WavePipeInfo> _pipes = new List<WavePipeInfo>();
+        private readonly IList<IWavePipeInfo> _pipes = new List<IWavePipeInfo>();
 
-        private WavePipeInfo GetExistingPipe(IWavePipeDeviceInfo wavePipeConfiguration)
+        private IWavePipeInfo GetExistingPipe(IWavePipeDeviceInfo wavePipeConfiguration)
         {
             return _pipes.FirstOrDefault(p => 
                 p.WaveInDevice.Index == wavePipeConfiguration.WaveInDevice.Index &&
@@ -37,7 +37,7 @@ namespace Playthrough2
             existingPipe.Dispose();
         }
 
-        public IEnumerable<WavePipeInfo> Pipes => _pipes;
+        public IEnumerable<IWavePipeInfo> Pipes => _pipes;
 
         public void Dispose()
         {
