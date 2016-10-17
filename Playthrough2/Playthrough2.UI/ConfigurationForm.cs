@@ -18,6 +18,23 @@ namespace Playthrough2.UI
             Closed += OnClosed;
         }
 
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == Win32.WM_SHOWME)
+                ShowMe();
+            base.WndProc(ref m);
+        }
+
+        private void ShowMe()
+        {
+            if (WindowState == FormWindowState.Minimized)
+                WindowState = FormWindowState.Normal;
+
+            var top = TopMost;
+            TopMost = true;
+            TopMost = top;
+        }
+
         private void SetDefaultValues()
         {
             SetInputBufferSize(20);
