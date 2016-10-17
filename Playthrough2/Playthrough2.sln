@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playthrough2", "Playthrough2\Playthrough2.csproj", "{0F8AEE4C-1B6E-4F98-BCA7-BD6EB697F5EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playthrough2.UI", "Playthrough2.UI\Playthrough2.UI.csproj", "{15057894-1411-41AE-8323-7224FD4FC9CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playthrough2.CLI", "Playthrough2.CLI\Playthrough2.CLI.csproj", "{6BA8737D-4E33-494F-9962-CA960E87102D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F8AEE4C-1B6E-4F98-BCA7-BD6EB697F5EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F8AEE4C-1B6E-4F98-BCA7-BD6EB697F5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F8AEE4C-1B6E-4F98-BCA7-BD6EB697F5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F8AEE4C-1B6E-4F98-BCA7-BD6EB697F5EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15057894-1411-41AE-8323-7224FD4FC9CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15057894-1411-41AE-8323-7224FD4FC9CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15057894-1411-41AE-8323-7224FD4FC9CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15057894-1411-41AE-8323-7224FD4FC9CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BA8737D-4E33-494F-9962-CA960E87102D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BA8737D-4E33-494F-9962-CA960E87102D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BA8737D-4E33-494F-9962-CA960E87102D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BA8737D-4E33-494F-9962-CA960E87102D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
