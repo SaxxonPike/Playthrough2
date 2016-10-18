@@ -2,11 +2,8 @@
 
 namespace Playthrough2
 {
-    public interface IWaveOutDevice
+    public interface IWaveOutDevice : IWaveDevice
     {
-        string Name { get; }
-        int Index { get; }
-        WaveApi Api { get; }
         IWavePlayer Create(IWavePipeConfiguration config);
     }
 }

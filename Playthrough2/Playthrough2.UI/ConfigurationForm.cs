@@ -10,6 +10,7 @@ namespace Playthrough2.UI
     {
         private readonly WavePipeManager _wavePipeManager = new WavePipeManager();
         private readonly WaveDeviceEnumerator _waveDeviceEnumerator = new WaveDeviceEnumerator();
+        private int _updating = 0;
 
         public ConfigurationForm()
         {
@@ -24,6 +25,16 @@ namespace Playthrough2.UI
         private void OnNotifyIconClicked(object sender, EventArgs e)
         {
             ShowAndBringToFront();
+        }
+
+        private void StartUpdate()
+        {
+            _updating++;
+        }
+
+        private void EndUpdate()
+        {
+            _updating--;
         }
 
         protected override void WndProc(ref Message m)
@@ -99,6 +110,15 @@ namespace Playthrough2.UI
                 return;
 
             _wavePipeManager.Start(GetConfiguration());
+            UpdateRoutes();
+        }
+
+        private void UpdateRoutes()
+        {
+            foreach (var newRoute in _wavePipeManager.Pipes.Except(routeList.Items.Cast<IWavePipeInfo>()))
+                routeList.Items.Add(newRoute);
+            foreach (var deadRoute in routeList.Items.Cast<IWavePipeInfo>().Except(_wavePipeManager.Pipes))
+                routeList.Items.Remove(deadRoute);
         }
 
         private void OnStopClicked(object sender, EventArgs e)
@@ -107,43 +127,44 @@ namespace Playthrough2.UI
                 return;
 
             _wavePipeManager.Stop(GetConfiguration());
+            UpdateRoutes();
         }
 
-        private void SetTrackbarValue(TrackBar trackBar, Control valueLabel, int value, string format)
+        private void SetTrackbarValue(TrackBar trackBar, Control valueLabel, int? value, string format)
         {
             SuspendLayout();
             valueLabel.Text = string.Format(format, value);
-            if (trackBar.Value != value)
-                trackBar.Value = value;
+            if (value.HasValue && trackBar.Value != value)
+                trackBar.Value = value.Value;
             ResumeLayout();
         }
 
-        private void SetMillisecondValue(TrackBar trackBar, Control valueLabel, int value)
+        private void SetMillisecondValue(TrackBar trackBar, Control valueLabel, int? value)
         {
             SetTrackbarValue(trackBar, valueLabel, value, "{0}ms");
         }
 
-        private void SetIntegerValue(TrackBar trackBar, Control valueLabel, int value)
+        private void SetIntegerValue(TrackBar trackBar, Control valueLabel, int? value)
         {
             SetTrackbarValue(trackBar, valueLabel, value, "{0}");
         }
 
-        private void SetInputBufferSize(int value)
+        private void SetInputBufferSize(int? value)
         {
             SetMillisecondValue(inputBufferSizeSlider, inputBufferSizeValueLabel, value);
         }
 
-        private void SetInputBufferCount(int value)
+        private void SetInputBufferCount(int? value)
         {
             SetIntegerValue(inputBufferCountSlider, inputBufferCountValueLabel, value);
         }
 
-        private void SetOutputBufferCount(int value)
+        private void SetOutputBufferCount(int? value)
         {
             SetIntegerValue(outputBufferCountSlider, outputBufferCountValueLabel, value);
         }
 
-        private void SetOutputLatency(int value)
+        private void SetOutputLatency(int? value)
         {
             SetMillisecondValue(outputLatencySlider, outputLatencyValueLabel, value);
         }
@@ -166,6 +187,42 @@ namespace Playthrough2.UI
         private void OnOutputLatencyScroll(object sender, EventArgs e)
         {
             SetOutputLatency(outputLatencySlider.Value);
+        }
+
+        private void OnRouteListSelectedIndexChanged(object sender, EventArgs e)
+        {
+            var pipeInfo = routeList.SelectedItem as IWavePipeInfo;
+            if (pipeInfo == null)
+                return;
+
+            SuspendLayout();
+            UpdateInterfaceForPipe(pipeInfo);
+            ResumeLayout();
+        }
+
+        private void UpdateInterfaceForPipe(IWavePipeInfo pipeInfo)
+        {
+            SetInputBufferSize(pipeInfo.Configuration.InputBufferLength);
+            SetInputBufferCount(pipeInfo.Configuration.InputBufferCount);
+            SetOutputLatency(pipeInfo.Configuration.OutputLatency);
+            SetOutputBufferCount(pipeInfo.Configuration.OutputBufferCount);
+            inputDeviceComboBox.SelectedItem = pipeInfo.WaveInDevice;
+            outputDeviceComboBox.SelectedItem = pipeInfo.WaveOutDevice;
+        }
+
+        private void OnDeviceChanged()
+        {
+            
+        }
+
+        private void OnInputDeviceChanged(object sender, EventArgs e)
+        {
+            OnDeviceChanged();
+        }
+
+        private void OnOutputDeviceChanged(object sender, EventArgs e)
+        {
+            OnDeviceChanged();
         }
     }
 }

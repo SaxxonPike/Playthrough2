@@ -191,6 +191,7 @@
             this.inputDeviceComboBox.Size = new System.Drawing.Size(188, 21);
             this.inputDeviceComboBox.Sorted = true;
             this.inputDeviceComboBox.TabIndex = 3;
+            this.inputDeviceComboBox.SelectedIndexChanged += new System.EventHandler(this.OnInputDeviceChanged);
             // 
             // outputGroupBox
             // 
@@ -315,6 +316,7 @@
             this.outputDeviceComboBox.Size = new System.Drawing.Size(188, 21);
             this.outputDeviceComboBox.Sorted = true;
             this.outputDeviceComboBox.TabIndex = 0;
+            this.outputDeviceComboBox.SelectedIndexChanged += new System.EventHandler(this.OnOutputDeviceChanged);
             // 
             // actionsGroupBox
             // 
@@ -346,6 +348,7 @@
             this.routeList.Name = "routeList";
             this.routeList.Size = new System.Drawing.Size(291, 81);
             this.routeList.TabIndex = 3;
+            this.routeList.SelectedIndexChanged += new System.EventHandler(this.OnRouteListSelectedIndexChanged);
             // 
             // stopButton
             // 

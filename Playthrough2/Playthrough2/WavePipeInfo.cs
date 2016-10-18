@@ -7,6 +7,7 @@ namespace Playthrough2
     {
         public WavePipeInfo(IWavePipeConfiguration wavePipeConfiguration)
         {
+            Configuration = wavePipeConfiguration;
             WaveInDevice = wavePipeConfiguration.WaveInDevice;
             WaveOutDevice = wavePipeConfiguration.WaveOutDevice;
             WaveIn = WaveInDevice.Create(wavePipeConfiguration);
@@ -19,10 +20,16 @@ namespace Playthrough2
         private IWaveIn WaveIn { get; }
         public IWaveInDevice WaveInDevice { get; }
         public IWaveOutDevice WaveOutDevice { get; }
+        public IWavePipeConfiguration Configuration { get; private set; }
 
         public void Start()
         {
             WavePipe.Start();
+        }
+
+        public void Reconfigure(IWavePipeConfiguration configuration)
+        {
+            Configuration = configuration;
         }
 
         public void Stop()
@@ -36,6 +43,11 @@ namespace Playthrough2
             WaveIn.StopRecording();
             WaveOut.Dispose();
             WaveIn.Dispose();
+        }
+
+        public override string ToString()
+        {
+            return $"{WaveInDevice.Name} -> {WaveOutDevice.Name}";
         }
     }
 }

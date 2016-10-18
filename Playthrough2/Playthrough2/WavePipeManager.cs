@@ -17,26 +17,32 @@ namespace Playthrough2
                 p.WaveOutDevice.Api == wavePipeConfiguration.WaveOutDevice.Api);
         }
 
-        public void Start(IWavePipeConfiguration wavePipeConfiguration)
+        public IWavePipeInfo Start(IWavePipeConfiguration wavePipeConfiguration)
         {
             var existingPipe = GetExistingPipe(wavePipeConfiguration);
             if (existingPipe != null)
-                return;
+            {
+                existingPipe.Stop();
+                existingPipe.Start();
+                return existingPipe;
+            }
 
             var newPipe = new WavePipeInfo(wavePipeConfiguration);
             _pipes.Add(newPipe);
             newPipe.Start();
+            return newPipe;
         }
 
-        public void Stop(IWavePipeDeviceInfo wavePipeDeviceInfo)
+        public IWavePipeInfo Stop(IWavePipeDeviceInfo wavePipeDeviceInfo)
         {
             var existingPipe = GetExistingPipe(wavePipeDeviceInfo);
             if (existingPipe == null)
-                return;
+                return null;
 
             existingPipe.Stop();
             _pipes.Remove(existingPipe);
             existingPipe.Dispose();
+            return existingPipe;
         }
 
         public IEnumerable<IWavePipeInfo> Pipes => _pipes;

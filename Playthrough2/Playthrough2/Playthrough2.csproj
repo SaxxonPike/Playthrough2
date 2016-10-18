@@ -61,7 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectSoundWaveOutDevice.cs" />
+    <Compile Include="Devices\DirectSoundWaveOutDevice.cs" />
+    <Compile Include="IWaveDevice.cs" />
     <Compile Include="IWaveInDevice.cs" />
     <Compile Include="IWaveOutDevice.cs" />
     <Compile Include="IWavePipe.cs" />
@@ -71,8 +72,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WaveApi.cs" />
     <Compile Include="WaveDeviceEnumerator.cs" />
-    <Compile Include="WindowsWaveInDevice.cs" />
-    <Compile Include="WindowsWaveOutDevice.cs" />
+    <Compile Include="Devices\WindowsWaveInDevice.cs" />
+    <Compile Include="Devices\WindowsWaveOutDevice.cs" />
     <Compile Include="WavePipe.cs" />
     <Compile Include="WavePipeConfiguration.cs" />
     <Compile Include="WavePipeDeviceInfo.cs" />
