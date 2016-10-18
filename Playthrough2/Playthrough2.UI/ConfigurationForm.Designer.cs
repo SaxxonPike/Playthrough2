@@ -80,7 +80,7 @@
             this.inputGroupBox.TabStop = false;
             this.inputGroupBox.Text = "Input";
             // 
-            // tableLayoutPanel2
+            // inputDeviceBufferCountPanel
             // 
             this.inputDeviceBufferCountPanel.ColumnCount = 2;
             this.inputDeviceBufferCountPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -130,7 +130,7 @@
             this.inputBufferCountSlider.Value = 2;
             this.inputBufferCountSlider.Scroll += new System.EventHandler(this.OnInputBufferCountScroll);
             // 
-            // tableLayoutPanel1
+            // inputDeviceBufferSizePanel
             // 
             this.inputDeviceBufferSizePanel.ColumnCount = 2;
             this.inputDeviceBufferSizePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -205,7 +205,7 @@
             this.outputGroupBox.TabStop = false;
             this.outputGroupBox.Text = "Output";
             // 
-            // tableLayoutPanel5
+            // outputDeviceBufferSizePanel
             // 
             this.outputDeviceBufferSizePanel.ColumnCount = 2;
             this.outputDeviceBufferSizePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -238,9 +238,9 @@
             this.outputTargetLatencyLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.outputTargetLatencyLabel.Location = new System.Drawing.Point(3, 0);
             this.outputTargetLatencyLabel.Name = "outputTargetLatencyLabel";
-            this.outputTargetLatencyLabel.Size = new System.Drawing.Size(45, 13);
+            this.outputTargetLatencyLabel.Size = new System.Drawing.Size(58, 13);
             this.outputTargetLatencyLabel.TabIndex = 9;
-            this.outputTargetLatencyLabel.Text = "Latency";
+            this.outputTargetLatencyLabel.Text = "Buffer Size";
             // 
             // outputLatencySlider
             // 
@@ -256,7 +256,7 @@
             this.outputLatencySlider.Value = 50;
             this.outputLatencySlider.Scroll += new System.EventHandler(this.OnOutputLatencyScroll);
             // 
-            // tableLayoutPanel4
+            // outputDeviceBufferCountPanel
             // 
             this.outputDeviceBufferCountPanel.ColumnCount = 2;
             this.outputDeviceBufferCountPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));

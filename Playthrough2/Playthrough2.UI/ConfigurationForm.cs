@@ -187,10 +187,14 @@ namespace Playthrough2.UI
 
         private void UpdateInterfaceForPipe(IWavePipeInfo pipeInfo)
         {
-            SetInputBufferSize(pipeInfo.Configuration.InputBufferLength);
-            SetInputBufferCount(pipeInfo.Configuration.InputBufferCount);
-            SetOutputLatency(pipeInfo.Configuration.OutputLatency);
-            SetOutputBufferCount(pipeInfo.Configuration.OutputBufferCount);
+            if (pipeInfo.WaveInDevice?.SupportsBufferSize ?? false)
+                SetInputBufferSize(pipeInfo.Configuration.InputBufferLength);
+            if (pipeInfo.WaveInDevice?.SupportsBufferCount ?? false)
+                SetInputBufferCount(pipeInfo.Configuration.InputBufferCount);
+            if (pipeInfo.WaveOutDevice?.SupportsBufferSize ?? false)
+                SetOutputLatency(pipeInfo.Configuration.OutputLatency);
+            if (pipeInfo.WaveOutDevice?.SupportsBufferCount ?? false)
+                SetOutputBufferCount(pipeInfo.Configuration.OutputBufferCount);
             inputDeviceComboBox.SelectedItem = pipeInfo.WaveInDevice;
             outputDeviceComboBox.SelectedItem = pipeInfo.WaveOutDevice;
         }
