@@ -347,11 +347,6 @@
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.OnStartClicked);
             // 
-            // notifyIcon
-            // 
-            this.notifyIcon.Text = "Passthrough2";
-            this.notifyIcon.Visible = true;
-            // 
             // routeList
             // 
             this.routeList.FormattingEnabled = true;
@@ -369,6 +364,11 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "Clear";
             this.button1.UseVisualStyleBackColor = true;
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Text = "Passthrough2";
+            this.notifyIcon.Visible = true;
             // 
             // ConfigurationForm
             // 
@@ -427,9 +427,9 @@
         private System.Windows.Forms.Label outputBufferCountValueLabel;
         private System.Windows.Forms.Label outputBufferCountLabel;
         private System.Windows.Forms.TrackBar outputBufferCountSlider;
-        private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ListBox routeList;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
     }
 }
 
