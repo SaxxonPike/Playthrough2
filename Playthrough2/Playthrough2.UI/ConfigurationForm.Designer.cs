@@ -30,21 +30,21 @@
         {
             this.components = new System.ComponentModel.Container();
             this.inputGroupBox = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.inputDeviceBufferCountPanel = new System.Windows.Forms.TableLayoutPanel();
             this.inputBufferCountValueLabel = new System.Windows.Forms.Label();
             this.inputBufferCountLabel = new System.Windows.Forms.Label();
             this.inputBufferCountSlider = new System.Windows.Forms.TrackBar();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.inputDeviceBufferSizePanel = new System.Windows.Forms.TableLayoutPanel();
             this.inputBufferSizeValueLabel = new System.Windows.Forms.Label();
             this.inputBufferSizeLabel = new System.Windows.Forms.Label();
             this.inputBufferSizeSlider = new System.Windows.Forms.TrackBar();
             this.inputDeviceComboBox = new System.Windows.Forms.ComboBox();
             this.outputGroupBox = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.outputDeviceBufferSizePanel = new System.Windows.Forms.TableLayoutPanel();
             this.outputLatencyValueLabel = new System.Windows.Forms.Label();
             this.outputTargetLatencyLabel = new System.Windows.Forms.Label();
             this.outputLatencySlider = new System.Windows.Forms.TrackBar();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.outputDeviceBufferCountPanel = new System.Windows.Forms.TableLayoutPanel();
             this.outputBufferCountSlider = new System.Windows.Forms.TrackBar();
             this.outputBufferCountValueLabel = new System.Windows.Forms.Label();
             this.outputBufferCountLabel = new System.Windows.Forms.Label();
@@ -56,22 +56,22 @@
             this.startButton = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.inputGroupBox.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            this.inputDeviceBufferCountPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputBufferCountSlider)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.inputDeviceBufferSizePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputBufferSizeSlider)).BeginInit();
             this.outputGroupBox.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
+            this.outputDeviceBufferSizePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputLatencySlider)).BeginInit();
-            this.tableLayoutPanel4.SuspendLayout();
+            this.outputDeviceBufferCountPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputBufferCountSlider)).BeginInit();
             this.actionsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // inputGroupBox
             // 
-            this.inputGroupBox.Controls.Add(this.tableLayoutPanel2);
-            this.inputGroupBox.Controls.Add(this.tableLayoutPanel1);
+            this.inputGroupBox.Controls.Add(this.inputDeviceBufferCountPanel);
+            this.inputGroupBox.Controls.Add(this.inputDeviceBufferSizePanel);
             this.inputGroupBox.Controls.Add(this.inputDeviceComboBox);
             this.inputGroupBox.Location = new System.Drawing.Point(12, 12);
             this.inputGroupBox.Name = "inputGroupBox";
@@ -82,20 +82,20 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.inputBufferCountValueLabel, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.inputBufferCountLabel, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.inputBufferCountSlider, 0, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 100);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(188, 48);
-            this.tableLayoutPanel2.TabIndex = 5;
+            this.inputDeviceBufferCountPanel.ColumnCount = 2;
+            this.inputDeviceBufferCountPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.inputDeviceBufferCountPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.inputDeviceBufferCountPanel.Controls.Add(this.inputBufferCountValueLabel, 1, 0);
+            this.inputDeviceBufferCountPanel.Controls.Add(this.inputBufferCountLabel, 0, 0);
+            this.inputDeviceBufferCountPanel.Controls.Add(this.inputBufferCountSlider, 0, 1);
+            this.inputDeviceBufferCountPanel.Location = new System.Drawing.Point(6, 100);
+            this.inputDeviceBufferCountPanel.Name = "inputDeviceBufferCountPanel";
+            this.inputDeviceBufferCountPanel.RowCount = 2;
+            this.inputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.inputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.inputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.inputDeviceBufferCountPanel.Size = new System.Drawing.Size(188, 48);
+            this.inputDeviceBufferCountPanel.TabIndex = 5;
             // 
             // inputBufferCountValueLabel
             // 
@@ -120,7 +120,7 @@
             // inputBufferCountSlider
             // 
             this.inputBufferCountSlider.AutoSize = false;
-            this.tableLayoutPanel2.SetColumnSpan(this.inputBufferCountSlider, 2);
+            this.inputDeviceBufferCountPanel.SetColumnSpan(this.inputBufferCountSlider, 2);
             this.inputBufferCountSlider.LargeChange = 3;
             this.inputBufferCountSlider.Location = new System.Drawing.Point(3, 16);
             this.inputBufferCountSlider.Minimum = 1;
@@ -132,20 +132,20 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.inputBufferSizeValueLabel, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.inputBufferSizeLabel, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.inputBufferSizeSlider, 0, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 46);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(188, 48);
-            this.tableLayoutPanel1.TabIndex = 4;
+            this.inputDeviceBufferSizePanel.ColumnCount = 2;
+            this.inputDeviceBufferSizePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.inputDeviceBufferSizePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.inputDeviceBufferSizePanel.Controls.Add(this.inputBufferSizeValueLabel, 1, 0);
+            this.inputDeviceBufferSizePanel.Controls.Add(this.inputBufferSizeLabel, 0, 0);
+            this.inputDeviceBufferSizePanel.Controls.Add(this.inputBufferSizeSlider, 0, 1);
+            this.inputDeviceBufferSizePanel.Location = new System.Drawing.Point(6, 46);
+            this.inputDeviceBufferSizePanel.Name = "inputDeviceBufferSizePanel";
+            this.inputDeviceBufferSizePanel.RowCount = 2;
+            this.inputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.inputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.inputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.inputDeviceBufferSizePanel.Size = new System.Drawing.Size(188, 48);
+            this.inputDeviceBufferSizePanel.TabIndex = 4;
             // 
             // inputBufferSizeValueLabel
             // 
@@ -170,7 +170,7 @@
             // inputBufferSizeSlider
             // 
             this.inputBufferSizeSlider.AutoSize = false;
-            this.tableLayoutPanel1.SetColumnSpan(this.inputBufferSizeSlider, 2);
+            this.inputDeviceBufferSizePanel.SetColumnSpan(this.inputBufferSizeSlider, 2);
             this.inputBufferSizeSlider.Location = new System.Drawing.Point(3, 16);
             this.inputBufferSizeSlider.Maximum = 300;
             this.inputBufferSizeSlider.Minimum = 1;
@@ -195,8 +195,8 @@
             // 
             // outputGroupBox
             // 
-            this.outputGroupBox.Controls.Add(this.tableLayoutPanel5);
-            this.outputGroupBox.Controls.Add(this.tableLayoutPanel4);
+            this.outputGroupBox.Controls.Add(this.outputDeviceBufferSizePanel);
+            this.outputGroupBox.Controls.Add(this.outputDeviceBufferCountPanel);
             this.outputGroupBox.Controls.Add(this.outputDeviceComboBox);
             this.outputGroupBox.Location = new System.Drawing.Point(218, 12);
             this.outputGroupBox.Name = "outputGroupBox";
@@ -207,20 +207,20 @@
             // 
             // tableLayoutPanel5
             // 
-            this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Controls.Add(this.outputLatencyValueLabel, 1, 0);
-            this.tableLayoutPanel5.Controls.Add(this.outputTargetLatencyLabel, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.outputLatencySlider, 0, 1);
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(6, 46);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 2;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(188, 48);
-            this.tableLayoutPanel5.TabIndex = 7;
+            this.outputDeviceBufferSizePanel.ColumnCount = 2;
+            this.outputDeviceBufferSizePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.outputDeviceBufferSizePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.outputDeviceBufferSizePanel.Controls.Add(this.outputLatencyValueLabel, 1, 0);
+            this.outputDeviceBufferSizePanel.Controls.Add(this.outputTargetLatencyLabel, 0, 0);
+            this.outputDeviceBufferSizePanel.Controls.Add(this.outputLatencySlider, 0, 1);
+            this.outputDeviceBufferSizePanel.Location = new System.Drawing.Point(6, 46);
+            this.outputDeviceBufferSizePanel.Name = "outputDeviceBufferSizePanel";
+            this.outputDeviceBufferSizePanel.RowCount = 2;
+            this.outputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.outputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.outputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.outputDeviceBufferSizePanel.Size = new System.Drawing.Size(188, 48);
+            this.outputDeviceBufferSizePanel.TabIndex = 7;
             // 
             // outputLatencyValueLabel
             // 
@@ -245,7 +245,7 @@
             // outputLatencySlider
             // 
             this.outputLatencySlider.AutoSize = false;
-            this.tableLayoutPanel5.SetColumnSpan(this.outputLatencySlider, 2);
+            this.outputDeviceBufferSizePanel.SetColumnSpan(this.outputLatencySlider, 2);
             this.outputLatencySlider.Location = new System.Drawing.Point(3, 16);
             this.outputLatencySlider.Maximum = 300;
             this.outputLatencySlider.Minimum = 1;
@@ -258,25 +258,25 @@
             // 
             // tableLayoutPanel4
             // 
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.outputBufferCountSlider, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.outputBufferCountValueLabel, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.outputBufferCountLabel, 0, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(6, 100);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(188, 48);
-            this.tableLayoutPanel4.TabIndex = 6;
+            this.outputDeviceBufferCountPanel.ColumnCount = 2;
+            this.outputDeviceBufferCountPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.outputDeviceBufferCountPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.outputDeviceBufferCountPanel.Controls.Add(this.outputBufferCountSlider, 0, 1);
+            this.outputDeviceBufferCountPanel.Controls.Add(this.outputBufferCountValueLabel, 1, 0);
+            this.outputDeviceBufferCountPanel.Controls.Add(this.outputBufferCountLabel, 0, 0);
+            this.outputDeviceBufferCountPanel.Location = new System.Drawing.Point(6, 100);
+            this.outputDeviceBufferCountPanel.Name = "outputDeviceBufferCountPanel";
+            this.outputDeviceBufferCountPanel.RowCount = 2;
+            this.outputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.outputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.outputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.outputDeviceBufferCountPanel.Size = new System.Drawing.Size(188, 48);
+            this.outputDeviceBufferCountPanel.TabIndex = 6;
             // 
             // outputBufferCountSlider
             // 
             this.outputBufferCountSlider.AutoSize = false;
-            this.tableLayoutPanel4.SetColumnSpan(this.outputBufferCountSlider, 2);
+            this.outputDeviceBufferCountPanel.SetColumnSpan(this.outputBufferCountSlider, 2);
             this.outputBufferCountSlider.LargeChange = 3;
             this.outputBufferCountSlider.Location = new System.Drawing.Point(3, 16);
             this.outputBufferCountSlider.Minimum = 1;
@@ -389,18 +389,18 @@
             this.ShowInTaskbar = false;
             this.Text = "Passthrough2";
             this.inputGroupBox.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
+            this.inputDeviceBufferCountPanel.ResumeLayout(false);
+            this.inputDeviceBufferCountPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputBufferCountSlider)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.inputDeviceBufferSizePanel.ResumeLayout(false);
+            this.inputDeviceBufferSizePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputBufferSizeSlider)).EndInit();
             this.outputGroupBox.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel5.PerformLayout();
+            this.outputDeviceBufferSizePanel.ResumeLayout(false);
+            this.outputDeviceBufferSizePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputLatencySlider)).EndInit();
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
+            this.outputDeviceBufferCountPanel.ResumeLayout(false);
+            this.outputDeviceBufferCountPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputBufferCountSlider)).EndInit();
             this.actionsGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -416,19 +416,19 @@
         private System.Windows.Forms.GroupBox actionsGroupBox;
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Button stopButton;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel inputDeviceBufferSizePanel;
         private System.Windows.Forms.Label inputBufferSizeLabel;
         private System.Windows.Forms.TrackBar inputBufferSizeSlider;
         private System.Windows.Forms.Label inputBufferSizeValueLabel;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel inputDeviceBufferCountPanel;
         private System.Windows.Forms.Label inputBufferCountValueLabel;
         private System.Windows.Forms.Label inputBufferCountLabel;
         private System.Windows.Forms.TrackBar inputBufferCountSlider;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.TableLayoutPanel outputDeviceBufferSizePanel;
         private System.Windows.Forms.Label outputLatencyValueLabel;
         private System.Windows.Forms.Label outputTargetLatencyLabel;
         private System.Windows.Forms.TrackBar outputLatencySlider;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.TableLayoutPanel outputDeviceBufferCountPanel;
         private System.Windows.Forms.Label outputBufferCountValueLabel;
         private System.Windows.Forms.Label outputBufferCountLabel;
         private System.Windows.Forms.TrackBar outputBufferCountSlider;

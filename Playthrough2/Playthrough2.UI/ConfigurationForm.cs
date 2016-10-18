@@ -98,11 +98,6 @@ namespace Playthrough2.UI
             UpdateRoutes();
         }
 
-        private bool SelectedRouteIsPresent()
-        {
-            return _wavePipeManager.ContainsPipeWithDevices(GetConfiguration());
-        }
-
         private void UpdateRoutes()
         {
             foreach (var newRoute in _wavePipeManager.Pipes.Except(routeList.Items.Cast<IWavePipeInfo>()))
@@ -202,9 +197,15 @@ namespace Playthrough2.UI
 
         private void OnDeviceChanged()
         {
-            var routeExists = SelectedRouteIsPresent();
+            var selectedRoute = GetConfiguration();
+            var routeExists = _wavePipeManager.ContainsPipeWithDevices(selectedRoute);
             startButton.Enabled = !routeExists;
             stopButton.Enabled = routeExists;
+
+            inputDeviceBufferSizePanel.Enabled = selectedRoute.WaveInDevice?.SupportsBufferSize ?? false;
+            inputDeviceBufferCountPanel.Enabled = selectedRoute.WaveInDevice?.SupportsBufferCount ?? false;
+            outputDeviceBufferSizePanel.Enabled = selectedRoute.WaveOutDevice?.SupportsBufferSize ?? false;
+            outputDeviceBufferCountPanel.Enabled = selectedRoute.WaveOutDevice?.SupportsBufferCount ?? false;
         }
 
         private void OnInputDeviceChanged(object sender, EventArgs e)
