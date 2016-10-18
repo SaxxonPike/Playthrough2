@@ -52,6 +52,8 @@
             this.actionsGroupBox = new System.Windows.Forms.GroupBox();
             this.stopButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
+            this.routeList = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.inputGroupBox.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -314,32 +316,34 @@
             // 
             // actionsGroupBox
             // 
+            this.actionsGroupBox.Controls.Add(this.button1);
+            this.actionsGroupBox.Controls.Add(this.routeList);
             this.actionsGroupBox.Controls.Add(this.stopButton);
             this.actionsGroupBox.Controls.Add(this.startButton);
             this.actionsGroupBox.Location = new System.Drawing.Point(12, 175);
             this.actionsGroupBox.Name = "actionsGroupBox";
-            this.actionsGroupBox.Size = new System.Drawing.Size(406, 51);
+            this.actionsGroupBox.Size = new System.Drawing.Size(406, 107);
             this.actionsGroupBox.TabIndex = 2;
             this.actionsGroupBox.TabStop = false;
-            this.actionsGroupBox.Text = "Actions";
+            this.actionsGroupBox.Text = "Routes";
             // 
             // stopButton
             // 
-            this.stopButton.Location = new System.Drawing.Point(206, 19);
+            this.stopButton.Location = new System.Drawing.Point(303, 48);
             this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(194, 23);
+            this.stopButton.Size = new System.Drawing.Size(97, 23);
             this.stopButton.TabIndex = 2;
-            this.stopButton.Text = "Stop";
+            this.stopButton.Text = "Remove";
             this.stopButton.UseVisualStyleBackColor = true;
             this.stopButton.Click += new System.EventHandler(this.OnStopClicked);
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(6, 19);
+            this.startButton.Location = new System.Drawing.Point(303, 19);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(194, 23);
+            this.startButton.Size = new System.Drawing.Size(97, 23);
             this.startButton.TabIndex = 0;
-            this.startButton.Text = "Start";
+            this.startButton.Text = "Add";
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.OnStartClicked);
             // 
@@ -348,11 +352,29 @@
             this.notifyIcon.Text = "Passthrough2";
             this.notifyIcon.Visible = true;
             // 
+            // routeList
+            // 
+            this.routeList.FormattingEnabled = true;
+            this.routeList.IntegralHeight = false;
+            this.routeList.Location = new System.Drawing.Point(6, 19);
+            this.routeList.Name = "routeList";
+            this.routeList.Size = new System.Drawing.Size(291, 81);
+            this.routeList.TabIndex = 3;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(303, 77);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(97, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Clear";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 239);
+            this.ClientSize = new System.Drawing.Size(430, 294);
             this.Controls.Add(this.actionsGroupBox);
             this.Controls.Add(this.outputGroupBox);
             this.Controls.Add(this.inputGroupBox);
@@ -406,6 +428,8 @@
         private System.Windows.Forms.Label outputBufferCountLabel;
         private System.Windows.Forms.TrackBar outputBufferCountSlider;
         private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ListBox routeList;
     }
 }
 
