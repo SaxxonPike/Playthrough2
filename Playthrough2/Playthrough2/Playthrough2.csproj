@@ -74,6 +74,7 @@
     <Compile Include="WaveDeviceEnumerator.cs" />
     <Compile Include="Devices\WindowsWaveInDevice.cs" />
     <Compile Include="Devices\WindowsWaveOutDevice.cs" />
+    <Compile Include="WaveDeviceGuidRepository.cs" />
     <Compile Include="WavePipe.cs" />
     <Compile Include="WavePipeConfiguration.cs" />
     <Compile Include="WavePipeDeviceInfo.cs" />

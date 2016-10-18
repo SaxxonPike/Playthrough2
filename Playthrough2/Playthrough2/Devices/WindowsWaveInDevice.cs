@@ -1,18 +1,22 @@
-﻿using NAudio.Wave;
+﻿using System;
+using NAudio.Wave;
 
 namespace Playthrough2
 {
     internal class WindowsWaveInDevice : IWaveInDevice
     {
+        private readonly int _index;
         public string Name => Capabilities.ProductName;
+        public Guid Id => WaveDeviceGuidRepository.InputGuids[_index];
         public WaveApi Api => WaveApi.Windows;
+        public bool SupportsBufferCount => true;
+        public bool SupportsBufferSize => true;
 
-        public int Index { get; }
         private WaveInCapabilities Capabilities { get; }
 
         public WindowsWaveInDevice(int index)
         {
-            Index = index;
+            _index = index;
             Capabilities = WaveIn.GetCapabilities(index);
         }
 
@@ -20,7 +24,7 @@ namespace Playthrough2
         {
             return new WaveIn
             {
-                DeviceNumber = Index,
+                DeviceNumber = _index,
                 BufferMilliseconds = config.InputBufferLength ?? 50,
                 NumberOfBuffers = config.InputBufferCount ?? 3
             };
@@ -28,7 +32,7 @@ namespace Playthrough2
 
         public override string ToString()
         {
-            return $"WI:{Name}";
+            return $"{Name} [Wave]";
         }
     }
 }

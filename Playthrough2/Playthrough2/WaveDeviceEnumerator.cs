@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using NAudio.CoreAudioApi;
+﻿using System.Collections.Generic;
 using NAudio.Wave;
 
 namespace Playthrough2
@@ -23,7 +21,7 @@ namespace Playthrough2
             var directSoundIndex = 0;
             foreach (var directSoundDevice in DirectSoundOut.Devices)
             {
-                yield return new DirectSoundWaveOutDevice(directSoundIndex, directSoundDevice);
+                yield return new DirectSoundWaveOutDevice(directSoundDevice);
                 directSoundIndex++;
             }
         }

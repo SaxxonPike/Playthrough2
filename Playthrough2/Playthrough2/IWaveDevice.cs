@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Playthrough2
 {
     public interface IWaveDevice
     {
         string Name { get; }
-        int Index { get; }
+        Guid Id { get; }
         WaveApi Api { get; }
+        bool SupportsBufferCount { get; }
+        bool SupportsBufferSize { get; }
     }
 }

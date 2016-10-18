@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Playthrough2.UI.Properties;
@@ -10,7 +9,6 @@ namespace Playthrough2.UI
     {
         private readonly WavePipeManager _wavePipeManager = new WavePipeManager();
         private readonly WaveDeviceEnumerator _waveDeviceEnumerator = new WaveDeviceEnumerator();
-        private int _updating = 0;
 
         public ConfigurationForm()
         {
@@ -25,16 +23,6 @@ namespace Playthrough2.UI
         private void OnNotifyIconClicked(object sender, EventArgs e)
         {
             ShowAndBringToFront();
-        }
-
-        private void StartUpdate()
-        {
-            _updating++;
-        }
-
-        private void EndUpdate()
-        {
-            _updating--;
         }
 
         protected override void WndProc(ref Message m)
@@ -99,9 +87,6 @@ namespace Playthrough2.UI
 
             outputDeviceComboBox.Items.AddRange(_waveDeviceEnumerator.GetWaveOutDevices().Cast<object>().ToArray());
             outputDeviceComboBox.SelectedIndex = outputDeviceComboBox.Items.Count > 0 ? 0 : -1;
-
-            inputGroupBox.Enabled = outputGroupBox.Enabled = actionsGroupBox.Enabled =
-                inputDeviceComboBox.Items.Count > 0 && outputDeviceComboBox.Items.Count > 0;
         }
 
         private void OnStartClicked(object sender, EventArgs e)
@@ -111,6 +96,11 @@ namespace Playthrough2.UI
 
             _wavePipeManager.Start(GetConfiguration());
             UpdateRoutes();
+        }
+
+        private bool SelectedRouteIsPresent()
+        {
+            return _wavePipeManager.ContainsPipeWithDevices(GetConfiguration());
         }
 
         private void UpdateRoutes()
@@ -212,7 +202,9 @@ namespace Playthrough2.UI
 
         private void OnDeviceChanged()
         {
-            
+            var routeExists = SelectedRouteIsPresent();
+            startButton.Enabled = !routeExists;
+            stopButton.Enabled = routeExists;
         }
 
         private void OnInputDeviceChanged(object sender, EventArgs e)

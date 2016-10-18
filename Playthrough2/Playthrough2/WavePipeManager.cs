@@ -11,41 +11,44 @@ namespace Playthrough2
         private IWavePipeInfo GetExistingPipe(IWavePipeDeviceInfo wavePipeConfiguration)
         {
             return _pipes.FirstOrDefault(p => 
-                p.WaveInDevice.Index == wavePipeConfiguration.WaveInDevice.Index &&
+                p.WaveInDevice.Id == wavePipeConfiguration.WaveInDevice.Id &&
                 p.WaveInDevice.Api == wavePipeConfiguration.WaveInDevice.Api &&
-                p.WaveOutDevice.Index == wavePipeConfiguration.WaveOutDevice.Index &&
+                p.WaveOutDevice.Id == wavePipeConfiguration.WaveOutDevice.Id &&
                 p.WaveOutDevice.Api == wavePipeConfiguration.WaveOutDevice.Api);
         }
 
-        public IWavePipeInfo Start(IWavePipeConfiguration wavePipeConfiguration)
+        public void Start(IWavePipeConfiguration wavePipeConfiguration)
         {
             var existingPipe = GetExistingPipe(wavePipeConfiguration);
             if (existingPipe != null)
             {
                 existingPipe.Stop();
                 existingPipe.Start();
-                return existingPipe;
+                return;
             }
 
             var newPipe = new WavePipeInfo(wavePipeConfiguration);
             _pipes.Add(newPipe);
             newPipe.Start();
-            return newPipe;
         }
 
-        public IWavePipeInfo Stop(IWavePipeDeviceInfo wavePipeDeviceInfo)
+        public void Stop(IWavePipeDeviceInfo wavePipeDeviceInfo)
         {
             var existingPipe = GetExistingPipe(wavePipeDeviceInfo);
             if (existingPipe == null)
-                return null;
+                return;
 
             existingPipe.Stop();
             _pipes.Remove(existingPipe);
             existingPipe.Dispose();
-            return existingPipe;
         }
 
         public IEnumerable<IWavePipeInfo> Pipes => _pipes;
+
+        public bool ContainsPipeWithDevices(IWavePipeDeviceInfo wavePipeDeviceInfo)
+        {
+            return GetExistingPipe(wavePipeDeviceInfo) != null;
+        }
 
         public void Dispose()
         {

@@ -1,19 +1,22 @@
-﻿using NAudio.Wave;
+﻿using System;
+using NAudio.Wave;
 
 namespace Playthrough2
 {
     internal class WindowsWaveOutDevice : IWaveOutDevice
     {
-        public string Name => Capabilities.ProductName;
+        private readonly int _index;
+        public string Name => _capabilities.ProductName;
         public WaveApi Api => WaveApi.Windows;
-
-        public int Index { get; }
-        private WaveOutCapabilities Capabilities { get; }
+        public Guid Id => WaveDeviceGuidRepository.OutputGuids[_index];
+        private WaveOutCapabilities _capabilities;
+        public bool SupportsBufferCount => true;
+        public bool SupportsBufferSize => true;
 
         public WindowsWaveOutDevice(int index)
         {
-            Index = index;
-            Capabilities = WaveOut.GetCapabilities(index);
+            _index = index;
+            _capabilities = WaveOut.GetCapabilities(index);
         }
 
         public IWavePlayer Create(IWavePipeConfiguration config)
@@ -21,14 +24,14 @@ namespace Playthrough2
             return new WaveOut
             {
                 DesiredLatency = config.OutputLatency ?? 100,
-                DeviceNumber = Index,
+                DeviceNumber = _index,
                 NumberOfBuffers = config.OutputBufferCount ?? 3
             };
         }
 
         public override string ToString()
         {
-            return $"WI:{Name}";
+            return $"{Name} [Wave]";
         }
     }
 }

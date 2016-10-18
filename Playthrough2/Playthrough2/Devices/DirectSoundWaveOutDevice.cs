@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using NAudio.Wave;
 
 namespace Playthrough2
@@ -8,12 +8,13 @@ namespace Playthrough2
         private readonly DirectSoundDeviceInfo _device;
 
         public string Name => _device.Description;
-        public int Index { get; }
+        public Guid Id => _device.Guid;
         public WaveApi Api => WaveApi.DirectSound;
+        public bool SupportsBufferCount => false;
+        public bool SupportsBufferSize => true;
 
-        public DirectSoundWaveOutDevice(int index, DirectSoundDeviceInfo deviceInfo)
+        public DirectSoundWaveOutDevice(DirectSoundDeviceInfo deviceInfo)
         {
-            Index = index;
             _device = deviceInfo;
         }
 
@@ -24,7 +25,7 @@ namespace Playthrough2
 
         public override string ToString()
         {
-            return $"DS:{Name}";
+            return $"{Name} [DirectSound]";
         }
     }
 }
