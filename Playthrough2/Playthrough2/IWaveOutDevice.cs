@@ -7,5 +7,6 @@ namespace Playthrough2
         string Name { get; }
         int Index { get; }
         WaveApi Api { get; }
+        IWavePlayer Create(IWavePipeConfiguration config);
     }
 }

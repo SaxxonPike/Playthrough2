@@ -2,7 +2,7 @@
 
 namespace Playthrough2
 {
-    public class WindowsWaveOutDevice : IWaveOutDevice
+    internal class WindowsWaveOutDevice : IWaveOutDevice
     {
         public string Name => Capabilities.ProductName;
         public WaveApi Api => WaveApi.Windows;
@@ -16,9 +16,19 @@ namespace Playthrough2
             Capabilities = WaveOut.GetCapabilities(index);
         }
 
+        public IWavePlayer Create(IWavePipeConfiguration config)
+        {
+            return new WaveOut
+            {
+                DesiredLatency = config.OutputLatency ?? 100,
+                DeviceNumber = Index,
+                NumberOfBuffers = config.OutputBufferCount ?? 3
+            };
+        }
+
         public override string ToString()
         {
-            return $"[WIN{Index:D2}] {Capabilities.ProductName}";
+            return $"WI:{Name}";
         }
     }
 }

@@ -12,7 +12,9 @@ namespace Playthrough2
         {
             return _pipes.FirstOrDefault(p => 
                 p.WaveInDevice.Index == wavePipeConfiguration.WaveInDevice.Index &&
-                p.WaveOutDevice.Index == wavePipeConfiguration.WaveOutDevice.Index);
+                p.WaveInDevice.Api == wavePipeConfiguration.WaveInDevice.Api &&
+                p.WaveOutDevice.Index == wavePipeConfiguration.WaveOutDevice.Index &&
+                p.WaveOutDevice.Api == wavePipeConfiguration.WaveOutDevice.Api);
         }
 
         public void Start(IWavePipeConfiguration wavePipeConfiguration)

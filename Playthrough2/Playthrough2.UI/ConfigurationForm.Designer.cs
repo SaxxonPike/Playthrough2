@@ -50,10 +50,10 @@
             this.outputBufferCountLabel = new System.Windows.Forms.Label();
             this.outputDeviceComboBox = new System.Windows.Forms.ComboBox();
             this.actionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.routeList = new System.Windows.Forms.ListBox();
             this.stopButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
-            this.routeList = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.inputGroupBox.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -184,6 +184,7 @@
             // inputDeviceComboBox
             // 
             this.inputDeviceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.inputDeviceComboBox.DropDownWidth = 300;
             this.inputDeviceComboBox.FormattingEnabled = true;
             this.inputDeviceComboBox.Location = new System.Drawing.Point(6, 19);
             this.inputDeviceComboBox.Name = "inputDeviceComboBox";
@@ -307,6 +308,7 @@
             // outputDeviceComboBox
             // 
             this.outputDeviceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.outputDeviceComboBox.DropDownWidth = 300;
             this.outputDeviceComboBox.FormattingEnabled = true;
             this.outputDeviceComboBox.Location = new System.Drawing.Point(6, 19);
             this.outputDeviceComboBox.Name = "outputDeviceComboBox";
@@ -327,6 +329,24 @@
             this.actionsGroupBox.TabStop = false;
             this.actionsGroupBox.Text = "Routes";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(303, 77);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(97, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Clear";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // routeList
+            // 
+            this.routeList.FormattingEnabled = true;
+            this.routeList.IntegralHeight = false;
+            this.routeList.Location = new System.Drawing.Point(6, 19);
+            this.routeList.Name = "routeList";
+            this.routeList.Size = new System.Drawing.Size(291, 81);
+            this.routeList.TabIndex = 3;
+            // 
             // stopButton
             // 
             this.stopButton.Location = new System.Drawing.Point(303, 48);
@@ -346,24 +366,6 @@
             this.startButton.Text = "Add";
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.OnStartClicked);
-            // 
-            // routeList
-            // 
-            this.routeList.FormattingEnabled = true;
-            this.routeList.IntegralHeight = false;
-            this.routeList.Location = new System.Drawing.Point(6, 19);
-            this.routeList.Name = "routeList";
-            this.routeList.Size = new System.Drawing.Size(291, 81);
-            this.routeList.TabIndex = 3;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(303, 77);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(97, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Clear";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // notifyIcon
             // 

@@ -9,26 +9,14 @@ namespace Playthrough2
         {
             WaveInDevice = wavePipeConfiguration.WaveInDevice;
             WaveOutDevice = wavePipeConfiguration.WaveOutDevice;
-            WaveIn = new WaveIn();
-            WaveOut = new WaveOut();
-            WaveIn.DeviceNumber = WaveInDevice.Index;
-            WaveOut.DeviceNumber = WaveOutDevice.Index;
-
-            if (wavePipeConfiguration.InputBufferCount.HasValue)
-                WaveIn.NumberOfBuffers = wavePipeConfiguration.InputBufferCount.Value;
-            if (wavePipeConfiguration.InputBufferLength.HasValue)
-                WaveIn.BufferMilliseconds = wavePipeConfiguration.InputBufferLength.Value;
-            if (wavePipeConfiguration.OutputBufferCount.HasValue)
-                WaveOut.NumberOfBuffers = wavePipeConfiguration.OutputBufferCount.Value;
-            if (wavePipeConfiguration.OutputLatency.HasValue)
-                WaveOut.DesiredLatency = wavePipeConfiguration.OutputLatency.Value;
-
+            WaveIn = WaveInDevice.Create(wavePipeConfiguration);
+            WaveOut = WaveOutDevice.Create(wavePipeConfiguration);
             WavePipe = new WavePipe(WaveIn, WaveOut);
         }
 
         private IWavePipe WavePipe { get; }
-        private WaveOut WaveOut { get; }
-        private WaveIn WaveIn { get; }
+        private IWavePlayer WaveOut { get; }
+        private IWaveIn WaveIn { get; }
         public IWaveInDevice WaveInDevice { get; }
         public IWaveOutDevice WaveOutDevice { get; }
 

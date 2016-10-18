@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using NAudio.CoreAudioApi;
 using NAudio.Wave;
 
 namespace Playthrough2
@@ -7,16 +9,23 @@ namespace Playthrough2
     {
         public IEnumerable<IWaveInDevice> GetWaveInDevices()
         {
-            var count = WaveIn.DeviceCount;
-            for (var i = 0; i < count; i++)
+            var windowsDeviceCount = WaveIn.DeviceCount;
+            for (var i = 0; i < windowsDeviceCount; i++)
                 yield return new WindowsWaveInDevice(i);
         }
 
         public IEnumerable<IWaveOutDevice> GetWaveOutDevices()
         {
-            var count = WaveOut.DeviceCount;
-            for (var i = 0; i < count; i++)
+            var windowsDeviceCount = WaveOut.DeviceCount;
+            for (var i = 0; i < windowsDeviceCount; i++)
                 yield return new WindowsWaveOutDevice(i);
+
+            var directSoundIndex = 0;
+            foreach (var directSoundDevice in DirectSoundOut.Devices)
+            {
+                yield return new DirectSoundWaveOutDevice(directSoundIndex, directSoundDevice);
+                directSoundIndex++;
+            }
         }
     }
 }
