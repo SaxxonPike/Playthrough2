@@ -9,5 +9,6 @@ namespace Playthrough2
         WaveApi Api { get; }
         bool SupportsBufferCount { get; }
         bool SupportsBufferSize { get; }
+        bool SupportsFormat { get; }
     }
 }

@@ -15,6 +15,9 @@ namespace Playthrough2
 
         public void Start()
         {
+            if (Running)
+                return;
+
             Running = true;
             WaveIn.StartRecording();
             WaveOut.Init(_stream);
@@ -23,6 +26,9 @@ namespace Playthrough2
 
         public void Stop()
         {
+            if (!Running)
+                return;
+
             WaveIn.StopRecording();
             if (WaveOut.PlaybackState == PlaybackState.Playing)
                 WaveOut.Stop();

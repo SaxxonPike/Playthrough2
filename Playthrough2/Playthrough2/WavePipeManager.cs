@@ -22,14 +22,13 @@ namespace Playthrough2
             var existingPipe = GetExistingPipe(wavePipeConfiguration);
             if (existingPipe != null)
             {
-                existingPipe.Stop();
-                existingPipe.Start();
+                existingPipe.Reconfigure(wavePipeConfiguration);
                 return;
             }
 
             var newPipe = new WavePipeInfo(wavePipeConfiguration);
-            _pipes.Add(newPipe);
             newPipe.Start();
+            _pipes.Add(newPipe);
         }
 
         public void Stop(IWavePipeDeviceInfo wavePipeDeviceInfo)

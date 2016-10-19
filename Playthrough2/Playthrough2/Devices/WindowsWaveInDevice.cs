@@ -1,7 +1,7 @@
 ﻿using System;
 using NAudio.Wave;
 
-namespace Playthrough2
+namespace Playthrough2.Devices
 {
     internal class WindowsWaveInDevice : IWaveInDevice
     {
@@ -11,6 +11,7 @@ namespace Playthrough2
         public WaveApi Api => WaveApi.Windows;
         public bool SupportsBufferCount => true;
         public bool SupportsBufferSize => true;
+        public bool SupportsFormat => true;
 
         private WaveInCapabilities Capabilities { get; }
 
@@ -22,12 +23,16 @@ namespace Playthrough2
 
         public IWaveIn Create(IWavePipeConfiguration config)
         {
-            return new WaveIn
+            var result = new WaveIn
             {
                 DeviceNumber = _index,
                 BufferMilliseconds = config.InputBufferLength ?? 50,
                 NumberOfBuffers = config.InputBufferCount ?? 3
             };
+
+            if (config.InputFormat != null)
+                result.WaveFormat = config.InputFormat;
+            return result;
         }
 
         public override string ToString()

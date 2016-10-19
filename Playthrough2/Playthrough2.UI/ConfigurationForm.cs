@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using NAudio.Wave;
 using Playthrough2.UI.Properties;
 
 namespace Playthrough2.UI
@@ -52,6 +53,9 @@ namespace Playthrough2.UI
 
         private IWavePipeConfiguration GetConfiguration()
         {
+            int frequency;
+            int channels;
+
             return new WavePipeConfiguration
             {
                 WaveInDevice = inputDeviceComboBox.SelectedItem as IWaveInDevice,
@@ -59,7 +63,12 @@ namespace Playthrough2.UI
                 InputBufferCount = inputBufferCountSlider.Value,
                 InputBufferLength = inputBufferSizeSlider.Value,
                 OutputBufferCount = outputBufferCountSlider.Value,
-                OutputLatency = outputLatencySlider.Value
+                OutputLatency = outputLatencySlider.Value,
+                InputFormat = inputFormatEnable.Checked &&
+                              int.TryParse(inputFormatFrequency.Text, out frequency) &&
+                              int.TryParse(inputFormatChannels.Text, out channels)
+                    ? new WaveFormat(frequency, channels)
+                    : null
             };
         }
 
@@ -94,7 +103,15 @@ namespace Playthrough2.UI
             if (inputDeviceComboBox.SelectedItem == null || outputDeviceComboBox.SelectedItem == null)
                 return;
 
-            _wavePipeManager.Start(GetConfiguration());
+            try
+            {
+                _wavePipeManager.Start(GetConfiguration());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"WavePipeManager could not start the route.\n{ex.Message}");
+            }
+
             UpdateRoutes();
         }
 
@@ -104,6 +121,7 @@ namespace Playthrough2.UI
                 routeList.Items.Add(newRoute);
             foreach (var deadRoute in routeList.Items.Cast<IWavePipeInfo>().Except(_wavePipeManager.Pipes))
                 routeList.Items.Remove(deadRoute);
+            OnDeviceChanged();
         }
 
         private void OnStopClicked(object sender, EventArgs e)
@@ -111,7 +129,14 @@ namespace Playthrough2.UI
             if (inputDeviceComboBox.SelectedItem == null || outputDeviceComboBox.SelectedItem == null)
                 return;
 
-            _wavePipeManager.Stop(GetConfiguration());
+            try
+            {
+                _wavePipeManager.Stop(GetConfiguration());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"WavePipeManager could not stop the route.\n{ex.Message}");
+            }
             UpdateRoutes();
         }
 
@@ -195,19 +220,42 @@ namespace Playthrough2.UI
                 SetOutputLatency(pipeInfo.Configuration.OutputLatency);
             if (pipeInfo.WaveOutDevice?.SupportsBufferCount ?? false)
                 SetOutputBufferCount(pipeInfo.Configuration.OutputBufferCount);
-            inputDeviceComboBox.SelectedItem = pipeInfo.WaveInDevice;
-            outputDeviceComboBox.SelectedItem = pipeInfo.WaveOutDevice;
+
+            if (inputDeviceComboBox.SelectedItem != pipeInfo.WaveInDevice ||
+                outputDeviceComboBox.SelectedItem != pipeInfo.WaveOutDevice)
+            {
+                inputDeviceComboBox.SelectedItem = pipeInfo.WaveInDevice;
+                outputDeviceComboBox.SelectedItem = pipeInfo.WaveOutDevice;
+            }
+            else
+            {
+                OnDeviceChanged();
+            }
         }
 
         private void OnDeviceChanged()
         {
             var selectedRoute = GetConfiguration();
             var routeExists = _wavePipeManager.ContainsPipeWithDevices(selectedRoute);
-            startButton.Enabled = !routeExists;
+            startButton.Text = routeExists ? "Restart" : "Start";
             stopButton.Enabled = routeExists;
 
             inputDeviceBufferSizePanel.Enabled = selectedRoute.WaveInDevice?.SupportsBufferSize ?? false;
             inputDeviceBufferCountPanel.Enabled = selectedRoute.WaveInDevice?.SupportsBufferCount ?? false;
+            inputFormatPanel.Enabled = selectedRoute.WaveInDevice?.SupportsFormat ?? false;
+
+            if (selectedRoute.InputFormat != null)
+            {
+                inputFormatEnable.Checked = true;
+                var format = selectedRoute.InputFormat;
+                inputFormatFrequency.Text = $"{format.SampleRate}";
+                inputFormatChannels.Text = $"{format.Channels}";
+            }
+            else
+            {
+                inputFormatEnable.Checked = false;
+            }
+
             outputDeviceBufferSizePanel.Enabled = selectedRoute.WaveOutDevice?.SupportsBufferSize ?? false;
             outputDeviceBufferCountPanel.Enabled = selectedRoute.WaveOutDevice?.SupportsBufferCount ?? false;
         }
@@ -220,6 +268,23 @@ namespace Playthrough2.UI
         private void OnOutputDeviceChanged(object sender, EventArgs e)
         {
             OnDeviceChanged();
+        }
+
+        private void OnInputFormatEnableChanged(object sender, EventArgs e)
+        {
+            inputFormatChannels.Enabled = inputFormatFrequency.Enabled = inputFormatEnable.Checked;
+        }
+
+        private void OnRouteListClicked(object sender, EventArgs e)
+        {
+            OnRouteListSelectedIndexChanged(sender, e);
+        }
+
+        private void OnClearButtonClick(object sender, EventArgs e)
+        {
+            foreach (var pipe in _wavePipeManager.Pipes.ToList())
+                _wavePipeManager.Stop(pipe.Configuration);
+            UpdateRoutes();
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Playthrough2
 {
-    public static class WaveDeviceGuidRepository
+    internal static class WaveDeviceGuidRepository
     {
         private const int GuidCount = 32;
 
@@ -16,7 +16,7 @@ namespace Playthrough2
             get
             {
                 if (_inputGuids == null)
-                    _inputGuids = Enumerable.Range(0, GuidCount).Select(i => new Guid()).ToList();
+                    _inputGuids = Enumerable.Range(0, GuidCount).Select(i => Guid.NewGuid()).ToList();
                 return new List<Guid>(_inputGuids);
             }
         }
@@ -26,7 +26,7 @@ namespace Playthrough2
             get
             {
                 if (_outputGuids == null)
-                    _outputGuids = Enumerable.Range(0, GuidCount).Select(i => new Guid()).ToList();
+                    _outputGuids = Enumerable.Range(0, GuidCount).Select(i => Guid.NewGuid()).ToList();
                 return new List<Guid>(_outputGuids);
             }
         }

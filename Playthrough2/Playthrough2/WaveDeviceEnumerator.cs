@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NAudio.Wave;
+using Playthrough2.Devices;
 
 namespace Playthrough2
 {
@@ -18,12 +19,8 @@ namespace Playthrough2
             for (var i = 0; i < windowsDeviceCount; i++)
                 yield return new WindowsWaveOutDevice(i);
 
-            var directSoundIndex = 0;
             foreach (var directSoundDevice in DirectSoundOut.Devices)
-            {
                 yield return new DirectSoundWaveOutDevice(directSoundDevice);
-                directSoundIndex++;
-            }
         }
     }
 }

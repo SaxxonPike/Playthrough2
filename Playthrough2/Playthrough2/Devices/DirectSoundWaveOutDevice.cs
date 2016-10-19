@@ -1,7 +1,7 @@
 ﻿using System;
 using NAudio.Wave;
 
-namespace Playthrough2
+namespace Playthrough2.Devices
 {
     internal class DirectSoundWaveOutDevice : IWaveOutDevice
     {
@@ -12,6 +12,7 @@ namespace Playthrough2
         public WaveApi Api => WaveApi.DirectSound;
         public bool SupportsBufferCount => false;
         public bool SupportsBufferSize => true;
+        public bool SupportsFormat => false;
 
         public DirectSoundWaveOutDevice(DirectSoundDeviceInfo deviceInfo)
         {

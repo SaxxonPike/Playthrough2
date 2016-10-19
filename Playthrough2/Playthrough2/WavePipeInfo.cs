@@ -9,17 +9,25 @@ namespace Playthrough2
             Configuration = wavePipeConfiguration;
             WaveInDevice = wavePipeConfiguration.WaveInDevice;
             WaveOutDevice = wavePipeConfiguration.WaveOutDevice;
-            WaveIn = WaveInDevice.Create(wavePipeConfiguration);
-            WaveOut = WaveOutDevice.Create(wavePipeConfiguration);
-            WavePipe = new WavePipe(WaveIn, WaveOut);
+            Configure(wavePipeConfiguration);
         }
 
-        private IWavePipe WavePipe { get; }
-        private IWavePlayer WaveOut { get; }
-        private IWaveIn WaveIn { get; }
+        private IWavePipe WavePipe { get; set; }
+        private IWavePlayer WaveOut { get; set; }
+        private IWaveIn WaveIn { get; set; }
         public IWaveInDevice WaveInDevice { get; }
         public IWaveOutDevice WaveOutDevice { get; }
         public IWavePipeConfiguration Configuration { get; private set; }
+
+        private void Configure(IWavePipeConfiguration configuration)
+        {
+            WaveIn?.Dispose();
+            WaveOut?.Dispose();
+
+            WaveIn = WaveInDevice.Create(configuration);
+            WaveOut = WaveOutDevice.Create(configuration);
+            WavePipe = new WavePipe(WaveIn, WaveOut);
+        }
 
         public void Start()
         {
@@ -29,6 +37,9 @@ namespace Playthrough2
         public void Reconfigure(IWavePipeConfiguration configuration)
         {
             Configuration = configuration;
+            Stop();
+            Configure(configuration);
+            Start();
         }
 
         public void Stop()

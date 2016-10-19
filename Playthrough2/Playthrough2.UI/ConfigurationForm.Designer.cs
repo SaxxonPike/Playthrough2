@@ -30,6 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.inputGroupBox = new System.Windows.Forms.GroupBox();
+            this.inputFormatPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.inputFormatChLabel = new System.Windows.Forms.Label();
+            this.inputFormatEnable = new System.Windows.Forms.CheckBox();
+            this.inputFormatFrequency = new System.Windows.Forms.TextBox();
+            this.inputFormatHzLabel = new System.Windows.Forms.Label();
+            this.inputFormatChannels = new System.Windows.Forms.TextBox();
             this.inputDeviceBufferCountPanel = new System.Windows.Forms.TableLayoutPanel();
             this.inputBufferCountValueLabel = new System.Windows.Forms.Label();
             this.inputBufferCountLabel = new System.Windows.Forms.Label();
@@ -50,12 +56,14 @@
             this.outputBufferCountLabel = new System.Windows.Forms.Label();
             this.outputDeviceComboBox = new System.Windows.Forms.ComboBox();
             this.actionsGroupBox = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.clearButton = new System.Windows.Forms.Button();
             this.routeList = new System.Windows.Forms.ListBox();
             this.stopButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.inputGroupBox.SuspendLayout();
+            this.inputFormatPanel.SuspendLayout();
             this.inputDeviceBufferCountPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputBufferCountSlider)).BeginInit();
             this.inputDeviceBufferSizePanel.SuspendLayout();
@@ -70,15 +78,94 @@
             // 
             // inputGroupBox
             // 
+            this.inputGroupBox.Controls.Add(this.inputFormatPanel);
             this.inputGroupBox.Controls.Add(this.inputDeviceBufferCountPanel);
             this.inputGroupBox.Controls.Add(this.inputDeviceBufferSizePanel);
             this.inputGroupBox.Controls.Add(this.inputDeviceComboBox);
             this.inputGroupBox.Location = new System.Drawing.Point(12, 12);
             this.inputGroupBox.Name = "inputGroupBox";
-            this.inputGroupBox.Size = new System.Drawing.Size(200, 157);
+            this.inputGroupBox.Size = new System.Drawing.Size(200, 189);
             this.inputGroupBox.TabIndex = 0;
             this.inputGroupBox.TabStop = false;
-            this.inputGroupBox.Text = "Input";
+            this.inputGroupBox.Text = "&Input";
+            // 
+            // inputFormatPanel
+            // 
+            this.inputFormatPanel.ColumnCount = 5;
+            this.inputFormatPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.inputFormatPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
+            this.inputFormatPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.inputFormatPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.inputFormatPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.inputFormatPanel.Controls.Add(this.inputFormatChLabel, 4, 0);
+            this.inputFormatPanel.Controls.Add(this.inputFormatEnable, 0, 0);
+            this.inputFormatPanel.Controls.Add(this.inputFormatFrequency, 1, 0);
+            this.inputFormatPanel.Controls.Add(this.inputFormatHzLabel, 2, 0);
+            this.inputFormatPanel.Controls.Add(this.inputFormatChannels, 3, 0);
+            this.inputFormatPanel.Location = new System.Drawing.Point(6, 46);
+            this.inputFormatPanel.Name = "inputFormatPanel";
+            this.inputFormatPanel.RowCount = 1;
+            this.inputFormatPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.inputFormatPanel.Size = new System.Drawing.Size(188, 26);
+            this.inputFormatPanel.TabIndex = 1;
+            // 
+            // inputFormatChLabel
+            // 
+            this.inputFormatChLabel.AutoSize = true;
+            this.inputFormatChLabel.Location = new System.Drawing.Point(141, 8);
+            this.inputFormatChLabel.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
+            this.inputFormatChLabel.Name = "inputFormatChLabel";
+            this.inputFormatChLabel.Size = new System.Drawing.Size(46, 13);
+            this.inputFormatChLabel.TabIndex = 5;
+            this.inputFormatChLabel.Text = "Channel";
+            // 
+            // inputFormatEnable
+            // 
+            this.inputFormatEnable.AutoSize = true;
+            this.inputFormatEnable.Checked = true;
+            this.inputFormatEnable.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.inputFormatEnable.Location = new System.Drawing.Point(3, 3);
+            this.inputFormatEnable.Name = "inputFormatEnable";
+            this.inputFormatEnable.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.inputFormatEnable.Size = new System.Drawing.Size(15, 19);
+            this.inputFormatEnable.TabIndex = 0;
+            this.toolTip.SetToolTip(this.inputFormatEnable, "If checked, override the default sampling rate.");
+            this.inputFormatEnable.UseVisualStyleBackColor = true;
+            this.inputFormatEnable.CheckedChanged += new System.EventHandler(this.OnInputFormatEnableChanged);
+            // 
+            // inputFormatFrequency
+            // 
+            this.inputFormatFrequency.Dock = System.Windows.Forms.DockStyle.Top;
+            this.inputFormatFrequency.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inputFormatFrequency.Location = new System.Drawing.Point(24, 3);
+            this.inputFormatFrequency.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.inputFormatFrequency.Name = "inputFormatFrequency";
+            this.inputFormatFrequency.Size = new System.Drawing.Size(62, 21);
+            this.inputFormatFrequency.TabIndex = 1;
+            this.inputFormatFrequency.Text = "48000";
+            this.inputFormatFrequency.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // inputFormatHzLabel
+            // 
+            this.inputFormatHzLabel.AutoSize = true;
+            this.inputFormatHzLabel.Location = new System.Drawing.Point(86, 8);
+            this.inputFormatHzLabel.Margin = new System.Windows.Forms.Padding(0, 8, 3, 0);
+            this.inputFormatHzLabel.Name = "inputFormatHzLabel";
+            this.inputFormatHzLabel.Size = new System.Drawing.Size(20, 13);
+            this.inputFormatHzLabel.TabIndex = 3;
+            this.inputFormatHzLabel.Text = "Hz";
+            // 
+            // inputFormatChannels
+            // 
+            this.inputFormatChannels.Dock = System.Windows.Forms.DockStyle.Top;
+            this.inputFormatChannels.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inputFormatChannels.Location = new System.Drawing.Point(112, 3);
+            this.inputFormatChannels.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.inputFormatChannels.Name = "inputFormatChannels";
+            this.inputFormatChannels.Size = new System.Drawing.Size(29, 21);
+            this.inputFormatChannels.TabIndex = 2;
+            this.inputFormatChannels.Text = "2";
+            this.inputFormatChannels.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // inputDeviceBufferCountPanel
             // 
@@ -88,14 +175,14 @@
             this.inputDeviceBufferCountPanel.Controls.Add(this.inputBufferCountValueLabel, 1, 0);
             this.inputDeviceBufferCountPanel.Controls.Add(this.inputBufferCountLabel, 0, 0);
             this.inputDeviceBufferCountPanel.Controls.Add(this.inputBufferCountSlider, 0, 1);
-            this.inputDeviceBufferCountPanel.Location = new System.Drawing.Point(6, 100);
+            this.inputDeviceBufferCountPanel.Location = new System.Drawing.Point(6, 132);
             this.inputDeviceBufferCountPanel.Name = "inputDeviceBufferCountPanel";
             this.inputDeviceBufferCountPanel.RowCount = 2;
             this.inputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.inputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.inputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.inputDeviceBufferCountPanel.Size = new System.Drawing.Size(188, 48);
-            this.inputDeviceBufferCountPanel.TabIndex = 5;
+            this.inputDeviceBufferCountPanel.TabIndex = 3;
             // 
             // inputBufferCountValueLabel
             // 
@@ -138,14 +225,14 @@
             this.inputDeviceBufferSizePanel.Controls.Add(this.inputBufferSizeValueLabel, 1, 0);
             this.inputDeviceBufferSizePanel.Controls.Add(this.inputBufferSizeLabel, 0, 0);
             this.inputDeviceBufferSizePanel.Controls.Add(this.inputBufferSizeSlider, 0, 1);
-            this.inputDeviceBufferSizePanel.Location = new System.Drawing.Point(6, 46);
+            this.inputDeviceBufferSizePanel.Location = new System.Drawing.Point(6, 78);
             this.inputDeviceBufferSizePanel.Name = "inputDeviceBufferSizePanel";
             this.inputDeviceBufferSizePanel.RowCount = 2;
             this.inputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.inputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.inputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.inputDeviceBufferSizePanel.Size = new System.Drawing.Size(188, 48);
-            this.inputDeviceBufferSizePanel.TabIndex = 4;
+            this.inputDeviceBufferSizePanel.TabIndex = 2;
             // 
             // inputBufferSizeValueLabel
             // 
@@ -190,7 +277,7 @@
             this.inputDeviceComboBox.Name = "inputDeviceComboBox";
             this.inputDeviceComboBox.Size = new System.Drawing.Size(188, 21);
             this.inputDeviceComboBox.Sorted = true;
-            this.inputDeviceComboBox.TabIndex = 3;
+            this.inputDeviceComboBox.TabIndex = 0;
             this.inputDeviceComboBox.SelectedIndexChanged += new System.EventHandler(this.OnInputDeviceChanged);
             // 
             // outputGroupBox
@@ -200,10 +287,10 @@
             this.outputGroupBox.Controls.Add(this.outputDeviceComboBox);
             this.outputGroupBox.Location = new System.Drawing.Point(218, 12);
             this.outputGroupBox.Name = "outputGroupBox";
-            this.outputGroupBox.Size = new System.Drawing.Size(200, 157);
+            this.outputGroupBox.Size = new System.Drawing.Size(200, 189);
             this.outputGroupBox.TabIndex = 1;
             this.outputGroupBox.TabStop = false;
-            this.outputGroupBox.Text = "Output";
+            this.outputGroupBox.Text = "&Output";
             // 
             // outputDeviceBufferSizePanel
             // 
@@ -213,14 +300,14 @@
             this.outputDeviceBufferSizePanel.Controls.Add(this.outputLatencyValueLabel, 1, 0);
             this.outputDeviceBufferSizePanel.Controls.Add(this.outputTargetLatencyLabel, 0, 0);
             this.outputDeviceBufferSizePanel.Controls.Add(this.outputLatencySlider, 0, 1);
-            this.outputDeviceBufferSizePanel.Location = new System.Drawing.Point(6, 46);
+            this.outputDeviceBufferSizePanel.Location = new System.Drawing.Point(6, 78);
             this.outputDeviceBufferSizePanel.Name = "outputDeviceBufferSizePanel";
             this.outputDeviceBufferSizePanel.RowCount = 2;
             this.outputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.outputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.outputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.outputDeviceBufferSizePanel.Size = new System.Drawing.Size(188, 48);
-            this.outputDeviceBufferSizePanel.TabIndex = 7;
+            this.outputDeviceBufferSizePanel.TabIndex = 1;
             // 
             // outputLatencyValueLabel
             // 
@@ -264,14 +351,14 @@
             this.outputDeviceBufferCountPanel.Controls.Add(this.outputBufferCountSlider, 0, 1);
             this.outputDeviceBufferCountPanel.Controls.Add(this.outputBufferCountValueLabel, 1, 0);
             this.outputDeviceBufferCountPanel.Controls.Add(this.outputBufferCountLabel, 0, 0);
-            this.outputDeviceBufferCountPanel.Location = new System.Drawing.Point(6, 100);
+            this.outputDeviceBufferCountPanel.Location = new System.Drawing.Point(6, 132);
             this.outputDeviceBufferCountPanel.Name = "outputDeviceBufferCountPanel";
             this.outputDeviceBufferCountPanel.RowCount = 2;
             this.outputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.outputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.outputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.outputDeviceBufferCountPanel.Size = new System.Drawing.Size(188, 48);
-            this.outputDeviceBufferCountPanel.TabIndex = 6;
+            this.outputDeviceBufferCountPanel.TabIndex = 2;
             // 
             // outputBufferCountSlider
             // 
@@ -320,25 +407,26 @@
             // 
             // actionsGroupBox
             // 
-            this.actionsGroupBox.Controls.Add(this.button1);
+            this.actionsGroupBox.Controls.Add(this.clearButton);
             this.actionsGroupBox.Controls.Add(this.routeList);
             this.actionsGroupBox.Controls.Add(this.stopButton);
             this.actionsGroupBox.Controls.Add(this.startButton);
-            this.actionsGroupBox.Location = new System.Drawing.Point(12, 175);
+            this.actionsGroupBox.Location = new System.Drawing.Point(12, 207);
             this.actionsGroupBox.Name = "actionsGroupBox";
             this.actionsGroupBox.Size = new System.Drawing.Size(406, 107);
             this.actionsGroupBox.TabIndex = 2;
             this.actionsGroupBox.TabStop = false;
-            this.actionsGroupBox.Text = "Routes";
+            this.actionsGroupBox.Text = "Active &Routes";
             // 
-            // button1
+            // clearButton
             // 
-            this.button1.Location = new System.Drawing.Point(303, 77);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(97, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Clear";
-            this.button1.UseVisualStyleBackColor = true;
+            this.clearButton.Location = new System.Drawing.Point(303, 77);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(97, 23);
+            this.clearButton.TabIndex = 3;
+            this.clearButton.Text = "&Clear All";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.OnClearButtonClick);
             // 
             // routeList
             // 
@@ -347,7 +435,8 @@
             this.routeList.Location = new System.Drawing.Point(6, 19);
             this.routeList.Name = "routeList";
             this.routeList.Size = new System.Drawing.Size(291, 81);
-            this.routeList.TabIndex = 3;
+            this.routeList.TabIndex = 0;
+            this.routeList.Click += new System.EventHandler(this.OnRouteListClicked);
             this.routeList.SelectedIndexChanged += new System.EventHandler(this.OnRouteListSelectedIndexChanged);
             // 
             // stopButton
@@ -356,7 +445,7 @@
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(97, 23);
             this.stopButton.TabIndex = 2;
-            this.stopButton.Text = "Remove";
+            this.stopButton.Text = "S&top";
             this.stopButton.UseVisualStyleBackColor = true;
             this.stopButton.Click += new System.EventHandler(this.OnStopClicked);
             // 
@@ -365,8 +454,8 @@
             this.startButton.Location = new System.Drawing.Point(303, 19);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(97, 23);
-            this.startButton.TabIndex = 0;
-            this.startButton.Text = "Add";
+            this.startButton.TabIndex = 1;
+            this.startButton.Text = "&Start";
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.OnStartClicked);
             // 
@@ -379,7 +468,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 294);
+            this.ClientSize = new System.Drawing.Size(430, 329);
             this.Controls.Add(this.actionsGroupBox);
             this.Controls.Add(this.outputGroupBox);
             this.Controls.Add(this.inputGroupBox);
@@ -389,6 +478,8 @@
             this.ShowInTaskbar = false;
             this.Text = "Passthrough2";
             this.inputGroupBox.ResumeLayout(false);
+            this.inputFormatPanel.ResumeLayout(false);
+            this.inputFormatPanel.PerformLayout();
             this.inputDeviceBufferCountPanel.ResumeLayout(false);
             this.inputDeviceBufferCountPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputBufferCountSlider)).EndInit();
@@ -432,9 +523,16 @@
         private System.Windows.Forms.Label outputBufferCountValueLabel;
         private System.Windows.Forms.Label outputBufferCountLabel;
         private System.Windows.Forms.TrackBar outputBufferCountSlider;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.ListBox routeList;
         private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.TableLayoutPanel inputFormatPanel;
+        private System.Windows.Forms.CheckBox inputFormatEnable;
+        private System.Windows.Forms.TextBox inputFormatFrequency;
+        private System.Windows.Forms.Label inputFormatHzLabel;
+        private System.Windows.Forms.Label inputFormatChLabel;
+        private System.Windows.Forms.TextBox inputFormatChannels;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 

@@ -1,4 +1,6 @@
-﻿namespace Playthrough2
+﻿using NAudio.Wave;
+
+namespace Playthrough2
 {
     public class WavePipeConfiguration : IWavePipeConfiguration
     {
@@ -8,5 +10,7 @@
         public int? InputBufferLength { get; set; }
         public int? OutputBufferCount { get; set; }
         public int? OutputLatency { get; set; }
+        public WaveFormat InputFormat { get; set; }
+        public WaveFormat OutputFormat { get; set; }
     }
 }

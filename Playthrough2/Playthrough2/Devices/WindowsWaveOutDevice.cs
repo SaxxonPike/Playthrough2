@@ -1,7 +1,7 @@
 ﻿using System;
 using NAudio.Wave;
 
-namespace Playthrough2
+namespace Playthrough2.Devices
 {
     internal class WindowsWaveOutDevice : IWaveOutDevice
     {
@@ -12,6 +12,7 @@ namespace Playthrough2
         private WaveOutCapabilities _capabilities;
         public bool SupportsBufferCount => true;
         public bool SupportsBufferSize => true;
+        public bool SupportsFormat => false;
 
         public WindowsWaveOutDevice(int index)
         {
@@ -25,7 +26,8 @@ namespace Playthrough2
             {
                 DesiredLatency = config.OutputLatency ?? 100,
                 DeviceNumber = _index,
-                NumberOfBuffers = config.OutputBufferCount ?? 3
+                NumberOfBuffers = config.OutputBufferCount ?? 3,
+                Volume = 1
             };
         }
 
