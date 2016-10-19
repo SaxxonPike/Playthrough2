@@ -1,22 +1,26 @@
 ﻿using System.Collections.Generic;
 using NAudio.Wave;
+using Playthrough2.Devices;
 
 namespace Playthrough2
 {
     public class WaveDeviceEnumerator
     {
-        public IEnumerable<WaveInDevice> GetWaveInDevices()
+        public IEnumerable<IWaveInDevice> GetWaveInDevices()
         {
-            var count = WaveIn.DeviceCount;
-            for (var i = 0; i < count; i++)
-                yield return new WaveInDevice(i);
+            var windowsDeviceCount = WaveIn.DeviceCount;
+            for (var i = 0; i < windowsDeviceCount; i++)
+                yield return new WindowsWaveInDevice(i);
         }
 
-        public IEnumerable<WaveOutDevice> GetWaveOutDevices()
+        public IEnumerable<IWaveOutDevice> GetWaveOutDevices()
         {
-            var count = WaveOut.DeviceCount;
-            for (var i = 0; i < count; i++)
-                yield return new WaveOutDevice(i);
+            var windowsDeviceCount = WaveOut.DeviceCount;
+            for (var i = 0; i < windowsDeviceCount; i++)
+                yield return new WindowsWaveOutDevice(i);
+
+            foreach (var directSoundDevice in DirectSoundOut.Devices)
+                yield return new DirectSoundWaveOutDevice(directSoundDevice);
         }
     }
 }

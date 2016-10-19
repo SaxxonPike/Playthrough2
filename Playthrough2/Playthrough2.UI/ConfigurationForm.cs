@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using NAudio.Wave;
+using Playthrough2.UI.Properties;
 
 namespace Playthrough2.UI
 {
@@ -16,6 +18,29 @@ namespace Playthrough2.UI
 
             Shown += OnFirstShown;
             Closed += OnClosed;
+            notifyIcon.Click += OnNotifyIconClicked;
+        }
+
+        private void OnNotifyIconClicked(object sender, EventArgs e)
+        {
+            ShowAndBringToFront();
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == Win32.WM_SHOWME)
+                ShowAndBringToFront();
+            base.WndProc(ref m);
+        }
+
+        private void ShowAndBringToFront()
+        {
+            if (WindowState == FormWindowState.Minimized)
+                WindowState = FormWindowState.Normal;
+
+            var top = TopMost;
+            TopMost = true;
+            TopMost = top;
         }
 
         private void SetDefaultValues()
@@ -28,27 +53,49 @@ namespace Playthrough2.UI
 
         private IWavePipeConfiguration GetConfiguration()
         {
+            int frequency;
+            int channels;
+
             return new WavePipeConfiguration
             {
-                WaveInDevice = inputDeviceComboBox.SelectedItem as WaveInDevice,
-                WaveOutDevice = outputDeviceComboBox.SelectedItem as WaveOutDevice,
+                WaveInDevice = inputDeviceComboBox.SelectedItem as IWaveInDevice,
+                WaveOutDevice = outputDeviceComboBox.SelectedItem as IWaveOutDevice,
                 InputBufferCount = inputBufferCountSlider.Value,
                 InputBufferLength = inputBufferSizeSlider.Value,
                 OutputBufferCount = outputBufferCountSlider.Value,
-                OutputLatency = outputLatencySlider.Value
+                OutputLatency = outputLatencySlider.Value,
+                InputFormat = inputFormatEnable.Checked &&
+                              int.TryParse(inputFormatFrequency.Text, out frequency) &&
+                              int.TryParse(inputFormatChannels.Text, out channels)
+                    ? new WaveFormat(frequency, channels)
+                    : null
             };
         }
 
         private void OnClosed(object sender, EventArgs eventArgs)
         {
             _wavePipeManager.Dispose();
+            notifyIcon.Visible = false;
         }
 
         private void OnFirstShown(object sender, EventArgs e)
         {
             Shown -= OnFirstShown;
+
+            PopulateDevices();
+
+            notifyIcon.Text = Text;
+            notifyIcon.Icon = Resources.Logo16.ToIcon();
+            notifyIcon.Visible = true;
+        }
+
+        private void PopulateDevices()
+        {
             inputDeviceComboBox.Items.AddRange(_waveDeviceEnumerator.GetWaveInDevices().Cast<object>().ToArray());
+            inputDeviceComboBox.SelectedIndex = inputDeviceComboBox.Items.Count > 0 ? 0 : -1;
+
             outputDeviceComboBox.Items.AddRange(_waveDeviceEnumerator.GetWaveOutDevices().Cast<object>().ToArray());
+            outputDeviceComboBox.SelectedIndex = outputDeviceComboBox.Items.Count > 0 ? 0 : -1;
         }
 
         private void OnStartClicked(object sender, EventArgs e)
@@ -56,7 +103,25 @@ namespace Playthrough2.UI
             if (inputDeviceComboBox.SelectedItem == null || outputDeviceComboBox.SelectedItem == null)
                 return;
 
-            _wavePipeManager.Start(GetConfiguration());
+            try
+            {
+                _wavePipeManager.Start(GetConfiguration());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"WavePipeManager could not start the route.\n{ex.Message}");
+            }
+
+            UpdateRoutes();
+        }
+
+        private void UpdateRoutes()
+        {
+            foreach (var newRoute in _wavePipeManager.Pipes.Except(routeList.Items.Cast<IWavePipeInfo>()))
+                routeList.Items.Add(newRoute);
+            foreach (var deadRoute in routeList.Items.Cast<IWavePipeInfo>().Except(_wavePipeManager.Pipes))
+                routeList.Items.Remove(deadRoute);
+            OnDeviceChanged();
         }
 
         private void OnStopClicked(object sender, EventArgs e)
@@ -64,44 +129,52 @@ namespace Playthrough2.UI
             if (inputDeviceComboBox.SelectedItem == null || outputDeviceComboBox.SelectedItem == null)
                 return;
 
-            _wavePipeManager.Stop(GetConfiguration());
+            try
+            {
+                _wavePipeManager.Stop(GetConfiguration());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"WavePipeManager could not stop the route.\n{ex.Message}");
+            }
+            UpdateRoutes();
         }
 
-        private void SetTrackbarValue(TrackBar trackBar, Control valueLabel, int value, string format)
+        private void SetTrackbarValue(TrackBar trackBar, Control valueLabel, int? value, string format)
         {
             SuspendLayout();
             valueLabel.Text = string.Format(format, value);
-            if (trackBar.Value != value)
-                trackBar.Value = value;
+            if (value.HasValue && trackBar.Value != value)
+                trackBar.Value = value.Value;
             ResumeLayout();
         }
 
-        private void SetMillisecondValue(TrackBar trackBar, Control valueLabel, int value)
+        private void SetMillisecondValue(TrackBar trackBar, Control valueLabel, int? value)
         {
             SetTrackbarValue(trackBar, valueLabel, value, "{0}ms");
         }
 
-        private void SetIntegerValue(TrackBar trackBar, Control valueLabel, int value)
+        private void SetIntegerValue(TrackBar trackBar, Control valueLabel, int? value)
         {
             SetTrackbarValue(trackBar, valueLabel, value, "{0}");
         }
 
-        private void SetInputBufferSize(int value)
+        private void SetInputBufferSize(int? value)
         {
             SetMillisecondValue(inputBufferSizeSlider, inputBufferSizeValueLabel, value);
         }
 
-        private void SetInputBufferCount(int value)
+        private void SetInputBufferCount(int? value)
         {
             SetIntegerValue(inputBufferCountSlider, inputBufferCountValueLabel, value);
         }
 
-        private void SetOutputBufferCount(int value)
+        private void SetOutputBufferCount(int? value)
         {
             SetIntegerValue(outputBufferCountSlider, outputBufferCountValueLabel, value);
         }
 
-        private void SetOutputLatency(int value)
+        private void SetOutputLatency(int? value)
         {
             SetMillisecondValue(outputLatencySlider, outputLatencyValueLabel, value);
         }
@@ -124,6 +197,94 @@ namespace Playthrough2.UI
         private void OnOutputLatencyScroll(object sender, EventArgs e)
         {
             SetOutputLatency(outputLatencySlider.Value);
+        }
+
+        private void OnRouteListSelectedIndexChanged(object sender, EventArgs e)
+        {
+            var pipeInfo = routeList.SelectedItem as IWavePipeInfo;
+            if (pipeInfo == null)
+                return;
+
+            SuspendLayout();
+            UpdateInterfaceForPipe(pipeInfo);
+            ResumeLayout();
+        }
+
+        private void UpdateInterfaceForPipe(IWavePipeInfo pipeInfo)
+        {
+            if (pipeInfo.WaveInDevice?.SupportsBufferSize ?? false)
+                SetInputBufferSize(pipeInfo.Configuration.InputBufferLength);
+            if (pipeInfo.WaveInDevice?.SupportsBufferCount ?? false)
+                SetInputBufferCount(pipeInfo.Configuration.InputBufferCount);
+            if (pipeInfo.WaveOutDevice?.SupportsBufferSize ?? false)
+                SetOutputLatency(pipeInfo.Configuration.OutputLatency);
+            if (pipeInfo.WaveOutDevice?.SupportsBufferCount ?? false)
+                SetOutputBufferCount(pipeInfo.Configuration.OutputBufferCount);
+
+            if (inputDeviceComboBox.SelectedItem != pipeInfo.WaveInDevice ||
+                outputDeviceComboBox.SelectedItem != pipeInfo.WaveOutDevice)
+            {
+                inputDeviceComboBox.SelectedItem = pipeInfo.WaveInDevice;
+                outputDeviceComboBox.SelectedItem = pipeInfo.WaveOutDevice;
+            }
+            else
+            {
+                OnDeviceChanged();
+            }
+        }
+
+        private void OnDeviceChanged()
+        {
+            var selectedRoute = GetConfiguration();
+            var routeExists = _wavePipeManager.ContainsPipeWithDevices(selectedRoute);
+            startButton.Text = routeExists ? "Restart" : "Start";
+            stopButton.Enabled = routeExists;
+
+            inputDeviceBufferSizePanel.Enabled = selectedRoute.WaveInDevice?.SupportsBufferSize ?? false;
+            inputDeviceBufferCountPanel.Enabled = selectedRoute.WaveInDevice?.SupportsBufferCount ?? false;
+            inputFormatPanel.Enabled = selectedRoute.WaveInDevice?.SupportsFormat ?? false;
+
+            if (selectedRoute.InputFormat != null)
+            {
+                inputFormatEnable.Checked = true;
+                var format = selectedRoute.InputFormat;
+                inputFormatFrequency.Text = $"{format.SampleRate}";
+                inputFormatChannels.Text = $"{format.Channels}";
+            }
+            else
+            {
+                inputFormatEnable.Checked = false;
+            }
+
+            outputDeviceBufferSizePanel.Enabled = selectedRoute.WaveOutDevice?.SupportsBufferSize ?? false;
+            outputDeviceBufferCountPanel.Enabled = selectedRoute.WaveOutDevice?.SupportsBufferCount ?? false;
+        }
+
+        private void OnInputDeviceChanged(object sender, EventArgs e)
+        {
+            OnDeviceChanged();
+        }
+
+        private void OnOutputDeviceChanged(object sender, EventArgs e)
+        {
+            OnDeviceChanged();
+        }
+
+        private void OnInputFormatEnableChanged(object sender, EventArgs e)
+        {
+            inputFormatChannels.Enabled = inputFormatFrequency.Enabled = inputFormatEnable.Checked;
+        }
+
+        private void OnRouteListClicked(object sender, EventArgs e)
+        {
+            OnRouteListSelectedIndexChanged(sender, e);
+        }
+
+        private void OnClearButtonClick(object sender, EventArgs e)
+        {
+            foreach (var pipe in _wavePipeManager.Pipes.ToList())
+                _wavePipeManager.Stop(pipe.Configuration);
+            UpdateRoutes();
         }
     }
 }

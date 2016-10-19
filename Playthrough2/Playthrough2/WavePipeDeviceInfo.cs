@@ -2,7 +2,7 @@
 {
     public class WavePipeDeviceInfo : IWavePipeDeviceInfo
     {
-        public WaveInDevice WaveInDevice { get; set; }
-        public WaveOutDevice WaveOutDevice { get; set; }
+        public IWaveInDevice WaveInDevice { get; set; }
+        public IWaveOutDevice WaveOutDevice { get; set; }
     }
 }

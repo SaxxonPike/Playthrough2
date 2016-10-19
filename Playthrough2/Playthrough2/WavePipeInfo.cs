@@ -1,96 +1,45 @@
-﻿using System;
-using NAudio.Wave;
+﻿using NAudio.Wave;
 
 namespace Playthrough2
 {
-    public class WavePipeInfo : IDisposable
+    public class WavePipeInfo : IWavePipeInfo
     {
         public WavePipeInfo(IWavePipeConfiguration wavePipeConfiguration)
         {
+            Configuration = wavePipeConfiguration;
             WaveInDevice = wavePipeConfiguration.WaveInDevice;
             WaveOutDevice = wavePipeConfiguration.WaveOutDevice;
-            WaveIn = new WaveIn();
-            WaveOut = new WaveOut();
-            WaveIn.DeviceNumber = WaveInDevice.Index;
-            WaveOut.DeviceNumber = WaveOutDevice.Index;
+            Configure(wavePipeConfiguration);
+        }
 
-            if (wavePipeConfiguration.InputBufferCount.HasValue)
-                WaveIn.NumberOfBuffers = wavePipeConfiguration.InputBufferCount.Value;
-            if (wavePipeConfiguration.InputBufferLength.HasValue)
-                WaveIn.BufferMilliseconds = wavePipeConfiguration.InputBufferLength.Value;
-            if (wavePipeConfiguration.OutputBufferCount.HasValue)
-                WaveOut.NumberOfBuffers = wavePipeConfiguration.OutputBufferCount.Value;
-            if (wavePipeConfiguration.OutputLatency.HasValue)
-                WaveOut.DesiredLatency = wavePipeConfiguration.OutputLatency.Value;
+        private IWavePipe WavePipe { get; set; }
+        private IWavePlayer WaveOut { get; set; }
+        private IWaveIn WaveIn { get; set; }
+        public IWaveInDevice WaveInDevice { get; }
+        public IWaveOutDevice WaveOutDevice { get; }
+        public IWavePipeConfiguration Configuration { get; private set; }
 
+        private void Configure(IWavePipeConfiguration configuration)
+        {
+            WaveIn?.Dispose();
+            WaveOut?.Dispose();
+
+            WaveIn = WaveInDevice.Create(configuration);
+            WaveOut = WaveOutDevice.Create(configuration);
             WavePipe = new WavePipe(WaveIn, WaveOut);
-        }
-
-        private IWavePipe WavePipe { get; }
-        private WaveOut WaveOut { get; }
-        private WaveIn WaveIn { get; }
-        public WaveInDevice WaveInDevice { get; }
-        public WaveOutDevice WaveOutDevice { get; }
-
-        public int InputBufferSize
-        {
-            get { return WaveIn.BufferMilliseconds; }
-            set
-            {
-                var wasRunning = WavePipe.Running;
-                if (wasRunning)
-                    WavePipe.Stop();
-                WaveIn.BufferMilliseconds = value;
-                if (wasRunning)
-                    WavePipe.Start();
-            }
-        }
-
-        public int InputBufferCount
-        {
-            get { return WaveIn.NumberOfBuffers; }
-            set
-            {
-                var wasRunning = WavePipe.Running;
-                if (wasRunning)
-                    WavePipe.Stop();
-                WaveIn.NumberOfBuffers = value;
-                if (wasRunning)
-                    WavePipe.Start();
-            }
-        }
-
-        public int OutputLatency
-        {
-            get { return WaveOut.DesiredLatency; }
-            set
-            {
-                var wasRunning = WavePipe.Running;
-                if (wasRunning)
-                    WavePipe.Stop();
-                WaveOut.DesiredLatency = value;
-                if (wasRunning)
-                    WavePipe.Start();
-            }
-        }
-
-        public int OutputBufferCount
-        {
-            get { return WaveOut.NumberOfBuffers; }
-            set
-            {
-                var wasRunning = WavePipe.Running;
-                if (wasRunning)
-                    WavePipe.Stop();
-                WaveOut.NumberOfBuffers = value;
-                if (wasRunning)
-                    WavePipe.Start();
-            }
         }
 
         public void Start()
         {
             WavePipe.Start();
+        }
+
+        public void Reconfigure(IWavePipeConfiguration configuration)
+        {
+            Configuration = configuration;
+            Stop();
+            Configure(configuration);
+            Start();
         }
 
         public void Stop()
@@ -104,6 +53,11 @@ namespace Playthrough2
             WaveIn.StopRecording();
             WaveOut.Dispose();
             WaveIn.Dispose();
+        }
+
+        public override string ToString()
+        {
+            return $"{WaveInDevice.Name} -> {WaveOutDevice.Name}";
         }
     }
 }

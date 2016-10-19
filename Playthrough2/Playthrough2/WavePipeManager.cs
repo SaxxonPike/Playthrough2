@@ -6,24 +6,29 @@ namespace Playthrough2
 {
     public class WavePipeManager : IDisposable
     {
-        private readonly IList<WavePipeInfo> _pipes = new List<WavePipeInfo>();
+        private readonly IList<IWavePipeInfo> _pipes = new List<IWavePipeInfo>();
 
-        private WavePipeInfo GetExistingPipe(IWavePipeDeviceInfo wavePipeConfiguration)
+        private IWavePipeInfo GetExistingPipe(IWavePipeDeviceInfo wavePipeConfiguration)
         {
             return _pipes.FirstOrDefault(p => 
-                p.WaveInDevice.Index == wavePipeConfiguration.WaveInDevice.Index &&
-                p.WaveOutDevice.Index == wavePipeConfiguration.WaveOutDevice.Index);
+                p.WaveInDevice.Id == wavePipeConfiguration.WaveInDevice.Id &&
+                p.WaveInDevice.Api == wavePipeConfiguration.WaveInDevice.Api &&
+                p.WaveOutDevice.Id == wavePipeConfiguration.WaveOutDevice.Id &&
+                p.WaveOutDevice.Api == wavePipeConfiguration.WaveOutDevice.Api);
         }
 
         public void Start(IWavePipeConfiguration wavePipeConfiguration)
         {
             var existingPipe = GetExistingPipe(wavePipeConfiguration);
             if (existingPipe != null)
+            {
+                existingPipe.Reconfigure(wavePipeConfiguration);
                 return;
+            }
 
             var newPipe = new WavePipeInfo(wavePipeConfiguration);
-            _pipes.Add(newPipe);
             newPipe.Start();
+            _pipes.Add(newPipe);
         }
 
         public void Stop(IWavePipeDeviceInfo wavePipeDeviceInfo)
@@ -37,7 +42,12 @@ namespace Playthrough2
             existingPipe.Dispose();
         }
 
-        public IEnumerable<WavePipeInfo> Pipes => _pipes;
+        public IEnumerable<IWavePipeInfo> Pipes => _pipes;
+
+        public bool ContainsPipeWithDevices(IWavePipeDeviceInfo wavePipeDeviceInfo)
+        {
+            return GetExistingPipe(wavePipeDeviceInfo) != null;
+        }
 
         public void Dispose()
         {
