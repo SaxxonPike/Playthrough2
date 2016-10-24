@@ -11,5 +11,6 @@ namespace Playthrough2
         WaveFormat InputFormat { get; }
         WaveFormat OutputFormat { get; }
         bool UseBackgroundThread { get; }
+        bool DiscardSamplesIfLagging { get; }
     }
 }

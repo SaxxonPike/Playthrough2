@@ -71,7 +71,8 @@ namespace Playthrough2.UI
                               int.TryParse(inputFormatChannels.Text, out channels)
                     ? new WaveFormat(frequency, channels)
                     : null,
-                UseBackgroundThread = backgroundThreadCheckBox.Checked
+                UseBackgroundThread = backgroundThreadCheckBox.Checked,
+                DiscardSamplesIfLagging = discardDataCheckBox.Checked
             };
         }
 

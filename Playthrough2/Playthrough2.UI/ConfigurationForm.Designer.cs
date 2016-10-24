@@ -64,6 +64,7 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.optionsGroupBox = new System.Windows.Forms.GroupBox();
             this.backgroundThreadCheckBox = new System.Windows.Forms.CheckBox();
+            this.discardDataCheckBox = new System.Windows.Forms.CheckBox();
             this.inputGroupBox.SuspendLayout();
             this.inputFormatPanel.SuspendLayout();
             this.inputDeviceBufferCountPanel.SuspendLayout();
@@ -471,6 +472,7 @@
             // 
             // optionsGroupBox
             // 
+            this.optionsGroupBox.Controls.Add(this.discardDataCheckBox);
             this.optionsGroupBox.Controls.Add(this.backgroundThreadCheckBox);
             this.optionsGroupBox.Location = new System.Drawing.Point(12, 207);
             this.optionsGroupBox.Name = "optionsGroupBox";
@@ -488,10 +490,22 @@
             this.backgroundThreadCheckBox.Name = "backgroundThreadCheckBox";
             this.backgroundThreadCheckBox.Size = new System.Drawing.Size(143, 17);
             this.backgroundThreadCheckBox.TabIndex = 0;
-            this.backgroundThreadCheckBox.Text = "Use Background Thread";
+            this.backgroundThreadCheckBox.Text = "Use &Background Thread";
             this.toolTip.SetToolTip(this.backgroundThreadCheckBox, "If checked, record on a background thread. This generally performs better, but is" +
         " less compatible.");
             this.backgroundThreadCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // discardDataCheckBox
+            // 
+            this.discardDataCheckBox.AutoSize = true;
+            this.discardDataCheckBox.Location = new System.Drawing.Point(206, 19);
+            this.discardDataCheckBox.Name = "discardDataCheckBox";
+            this.discardDataCheckBox.Size = new System.Drawing.Size(148, 17);
+            this.discardDataCheckBox.TabIndex = 1;
+            this.discardDataCheckBox.Text = "&Discard Data to Catch Up";
+            this.toolTip.SetToolTip(this.discardDataCheckBox, "If checked, when output falls behind input, start discarding samples to catch up." +
+        "");
+            this.discardDataCheckBox.UseVisualStyleBackColor = true;
             // 
             // ConfigurationForm
             // 
@@ -567,6 +581,7 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.GroupBox optionsGroupBox;
         private System.Windows.Forms.CheckBox backgroundThreadCheckBox;
+        private System.Windows.Forms.CheckBox discardDataCheckBox;
     }
 }
 
