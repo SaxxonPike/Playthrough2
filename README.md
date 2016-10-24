@@ -2,6 +2,8 @@
 
 An audio passthrough tool.
 
+[Get the latest installer on the Releases tab](https://github.com/SaxxonPike/Playthrough2/releases).
+
 ### Features
 
 - Route audio from any input to any output.
