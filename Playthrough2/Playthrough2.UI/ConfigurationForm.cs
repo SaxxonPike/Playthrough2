@@ -127,15 +127,14 @@ namespace Playthrough2.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"WavePipeManager did not shut down cleanly.\n{ex.Message}");
+                MessageBox.Show(string.Format(Resources.WavePipeManagerShutdownFailure, ex.Message));
             }
             notifyIcon.Visible = false;
         }
 
         private void OnFirstShown(object sender, EventArgs e)
         {
-            var version = Assembly.GetExecutingAssembly().GetName().Version;
-            Text = $"{Application.ProductName} v{version.Major}.{version.Minor}";
+            SetFormTitle();
 
             var icon = Resources.Logo16.ToIcon();
 
@@ -151,6 +150,12 @@ namespace Playthrough2.UI
 
             SetupFormEvents();
             SetConfiguration(_configurationRepository.LoadCombined());
+        }
+
+        private void SetFormTitle()
+        {
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            Text = string.Format(Resources.ConfigurationFormTitle, Application.ProductName, version.Major, version.Minor);
         }
 
         private void SetupFormEvents()
@@ -196,7 +201,7 @@ namespace Playthrough2.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"WavePipeManager could not start the route.\n{ex.Message}");
+                MessageBox.Show(string.Format(Resources.WavePipeManagerStartFailure, ex.Message));
             }
 
             UpdateRoutes();
@@ -222,7 +227,7 @@ namespace Playthrough2.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"WavePipeManager could not stop the route.\n{ex.Message}");
+                MessageBox.Show(string.Format(Resources.WavePipeManagerStopFailure, ex.Message));
             }
             UpdateRoutes();
         }
@@ -324,7 +329,7 @@ namespace Playthrough2.UI
         {
             var selectedRoute = GetConfiguration();
             var routeExists = _wavePipeManager.ContainsPipeWithDevices(selectedRoute);
-            startButton.Text = routeExists ? "Restart" : "Start";
+            startButton.Text = routeExists ? Resources.StartButtonRestartText : Resources.StartButtonStartText;
             stopButton.Enabled = routeExists;
 
             inputDeviceBufferSizePanel.Enabled = selectedRoute.WaveInDevice?.SupportsBufferSize ?? false;
@@ -335,8 +340,8 @@ namespace Playthrough2.UI
             {
                 inputFormatEnable.Checked = true;
                 var format = selectedRoute.InputFormat;
-                inputFormatFrequency.Text = $"{format.SampleRate}";
-                inputFormatChannels.Text = $"{format.Channels}";
+                inputFormatFrequency.Text = format.SampleRate.ToString();
+                inputFormatChannels.Text = format.Channels.ToString();
             }
             else
             {

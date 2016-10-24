@@ -121,4 +121,31 @@
   <data name="Logo16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\icons\logo16.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="WavePipeManagerShutdownFailure" xml:space="preserve">
+    <value>WavePipeManager did not shut down cleanly.
+{0}</value>
+    <comment>An error happened when closing the application when streams were all being stopped.</comment>
+  </data>
+  <data name="ConfigurationFormTitle" xml:space="preserve">
+    <value>{0} v{1}.{2}</value>
+    <comment>Shown at the top of the configuration form.</comment>
+  </data>
+  <data name="WavePipeManagerStartFailure" xml:space="preserve">
+    <value>WavePipeManager could not start the route.
+{0}</value>
+    <comment>An error happened when starting the stream.</comment>
+  </data>
+  <data name="WavePipeManagerStopFailure" xml:space="preserve">
+    <value>WavePipeManager could not stop the route.
+{0}</value>
+    <comment>An error happened when stopping the stream.</comment>
+  </data>
+  <data name="StartButtonRestartText" xml:space="preserve">
+    <value>Restart</value>
+    <comment>User clicks this to stop a stream and start it again.</comment>
+  </data>
+  <data name="StartButtonStartText" xml:space="preserve">
+    <value>Start</value>
+    <comment>User clicks this to initiate a stream.</comment>
+  </data>
 </root>

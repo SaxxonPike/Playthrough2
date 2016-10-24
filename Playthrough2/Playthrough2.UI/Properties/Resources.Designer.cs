@@ -61,12 +61,69 @@ namespace Playthrough2.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} v{1}.{2}.
+        /// </summary>
+        internal static string ConfigurationFormTitle {
+            get {
+                return ResourceManager.GetString("ConfigurationFormTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Logo16 {
             get {
                 object obj = ResourceManager.GetObject("Logo16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restart.
+        /// </summary>
+        internal static string StartButtonRestartText {
+            get {
+                return ResourceManager.GetString("StartButtonRestartText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        internal static string StartButtonStartText {
+            get {
+                return ResourceManager.GetString("StartButtonStartText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WavePipeManager did not shut down cleanly.
+        ///{0}.
+        /// </summary>
+        internal static string WavePipeManagerShutdownFailure {
+            get {
+                return ResourceManager.GetString("WavePipeManagerShutdownFailure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WavePipeManager could not start the route.
+        ///{0}.
+        /// </summary>
+        internal static string WavePipeManagerStartFailure {
+            get {
+                return ResourceManager.GetString("WavePipeManagerStartFailure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WavePipeManager could not stop the route.
+        ///{0}.
+        /// </summary>
+        internal static string WavePipeManagerStopFailure {
+            get {
+                return ResourceManager.GetString("WavePipeManagerStopFailure", resourceCulture);
             }
         }
     }
