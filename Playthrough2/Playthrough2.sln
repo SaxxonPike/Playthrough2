@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Playthrough2Setup", "Playthrough2Setup\Playthrough2Setup.vdproj", "{9B1D4EA2-2810-4785-9127-EA620470ACCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,12 @@ Global
 		{6BA8737D-4E33-494F-9962-CA960E87102D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6BA8737D-4E33-494F-9962-CA960E87102D}.Release|x86.ActiveCfg = Release|x86
 		{6BA8737D-4E33-494F-9962-CA960E87102D}.Release|x86.Build.0 = Release|x86
+		{9B1D4EA2-2810-4785-9127-EA620470ACCD}.Debug|Any CPU.ActiveCfg = Debug
+		{9B1D4EA2-2810-4785-9127-EA620470ACCD}.Debug|x86.ActiveCfg = Debug
+		{9B1D4EA2-2810-4785-9127-EA620470ACCD}.Release|Any CPU.ActiveCfg = Release
+		{9B1D4EA2-2810-4785-9127-EA620470ACCD}.Release|Any CPU.Build.0 = Release
+		{9B1D4EA2-2810-4785-9127-EA620470ACCD}.Release|x86.ActiveCfg = Release
+		{9B1D4EA2-2810-4785-9127-EA620470ACCD}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
