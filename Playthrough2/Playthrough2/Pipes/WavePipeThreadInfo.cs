@@ -16,7 +16,7 @@ namespace Playthrough2.Pipes
             _configuration = configuration;
         }
 
-        private WaveInProvider Stream { get; set; }
+        private IWaveProvider Stream { get; set; }
         public Queue<WavePipeThreadCommand> CommandQueue { get; } = new Queue<WavePipeThreadCommand>();
         private IWaveIn WaveIn { get; set; }
         private IWavePlayer WaveOut { get; set; }
@@ -25,7 +25,7 @@ namespace Playthrough2.Pipes
         {
             WaveIn = _waveInDevice.Create(_configuration);
             WaveOut = _waveOutDevice.Create(_configuration);
-            Stream = new WaveInProvider(WaveIn);
+            Stream = new WaveInBufferedStreamProvider(WaveIn, _configuration);
         }
 
         public void Start()

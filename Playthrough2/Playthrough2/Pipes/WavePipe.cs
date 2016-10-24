@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using NAudio.Wave;
 
 namespace Playthrough2.Pipes
 {
@@ -16,6 +15,8 @@ namespace Playthrough2.Pipes
 
             if (!_configuration.UseBackgroundThread)
                 _threadInfo.Initialize();
+            else
+                thread.Priority = ThreadPriority.AboveNormal;
 
             thread.Start(_threadInfo);
         }

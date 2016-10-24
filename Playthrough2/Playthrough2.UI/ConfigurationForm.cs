@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using NAudio.Wave;
-using Newtonsoft.Json;
 using Playthrough2.Devices;
 using Playthrough2.Pipes;
 using Playthrough2.UI.Properties;
@@ -21,10 +19,23 @@ namespace Playthrough2.UI
         {
             InitializeComponent();
             SetDefaultValues();
+            SetHighPriority();
 
             Shown += OnFirstShown;
             Closed += OnClosed;
             notifyIcon.Click += OnNotifyIconClicked;
+        }
+
+        private void SetHighPriority()
+        {
+            try
+            {
+                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+            }
+            catch (Exception)
+            {
+                // Swallow any exceptions here; this is optional functionality.
+            }
         }
 
         private void OnNotifyIconClicked(object sender, EventArgs e)
@@ -153,27 +164,6 @@ namespace Playthrough2.UI
             clearButton.Click += OnClearButtonClick;
             routeList.Click += OnRouteListClicked;
             routeList.SelectedIndexChanged += OnRouteListSelectedIndexChanged;
-
-            deviceInfoTreeView.NodeMouseClick += OnDeviceTreeDeviceClicked;
-        }
-
-        private string SerializeToJson(object input)
-        {
-            return JsonConvert.SerializeObject(input, Formatting.Indented);
-        }
-
-        private TObject DeserializeFromJson<TObject>(string input)
-        {
-            return JsonConvert.DeserializeObject<TObject>(input);
-        }
-
-        private void OnDeviceTreeDeviceClicked(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if (!(e.Node.Tag is IWaveDevice))
-                return;
-
-            var device = (e.Node.Tag as IWaveDevice);
-            deviceInfoTextBox.Text = SerializeToJson(device);
         }
 
         private void PopulateDevices()
