@@ -29,6 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.routesTabPage = new System.Windows.Forms.TabPage();
+            this.actionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.clearButton = new System.Windows.Forms.Button();
+            this.routeList = new System.Windows.Forms.ListBox();
+            this.stopButton = new System.Windows.Forms.Button();
+            this.startButton = new System.Windows.Forms.Button();
             this.inputGroupBox = new System.Windows.Forms.GroupBox();
             this.inputFormatPanel = new System.Windows.Forms.TableLayoutPanel();
             this.inputFormatChLabel = new System.Windows.Forms.Label();
@@ -47,24 +54,27 @@
             this.inputDeviceComboBox = new System.Windows.Forms.ComboBox();
             this.outputGroupBox = new System.Windows.Forms.GroupBox();
             this.outputDeviceBufferSizePanel = new System.Windows.Forms.TableLayoutPanel();
+            this.outputLatencySlider = new System.Windows.Forms.TrackBar();
             this.outputLatencyValueLabel = new System.Windows.Forms.Label();
             this.outputTargetLatencyLabel = new System.Windows.Forms.Label();
-            this.outputLatencySlider = new System.Windows.Forms.TrackBar();
             this.outputDeviceBufferCountPanel = new System.Windows.Forms.TableLayoutPanel();
             this.outputBufferCountSlider = new System.Windows.Forms.TrackBar();
             this.outputBufferCountValueLabel = new System.Windows.Forms.Label();
             this.outputBufferCountLabel = new System.Windows.Forms.Label();
             this.outputDeviceComboBox = new System.Windows.Forms.ComboBox();
-            this.actionsGroupBox = new System.Windows.Forms.GroupBox();
-            this.clearButton = new System.Windows.Forms.Button();
-            this.routeList = new System.Windows.Forms.ListBox();
-            this.stopButton = new System.Windows.Forms.Button();
-            this.startButton = new System.Windows.Forms.Button();
-            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.configurationTabPage = new System.Windows.Forms.TabPage();
             this.optionsGroupBox = new System.Windows.Forms.GroupBox();
-            this.backgroundThreadCheckBox = new System.Windows.Forms.CheckBox();
             this.discardDataCheckBox = new System.Windows.Forms.CheckBox();
+            this.backgroundThreadCheckBox = new System.Windows.Forms.CheckBox();
+            this.devicesTabPage = new System.Windows.Forms.TabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.deviceInfoTreeView = new System.Windows.Forms.TreeView();
+            this.deviceInfoTextBox = new System.Windows.Forms.TextBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.tabControl1.SuspendLayout();
+            this.routesTabPage.SuspendLayout();
+            this.actionsGroupBox.SuspendLayout();
             this.inputGroupBox.SuspendLayout();
             this.inputFormatPanel.SuspendLayout();
             this.inputDeviceBufferCountPanel.SuspendLayout();
@@ -76,9 +86,88 @@
             ((System.ComponentModel.ISupportInitialize)(this.outputLatencySlider)).BeginInit();
             this.outputDeviceBufferCountPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputBufferCountSlider)).BeginInit();
-            this.actionsGroupBox.SuspendLayout();
+            this.configurationTabPage.SuspendLayout();
             this.optionsGroupBox.SuspendLayout();
+            this.devicesTabPage.SuspendLayout();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.Buttons;
+            this.tabControl1.Controls.Add(this.routesTabPage);
+            this.tabControl1.Controls.Add(this.configurationTabPage);
+            this.tabControl1.Controls.Add(this.devicesTabPage);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(3, 3);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(414, 331);
+            this.tabControl1.TabIndex = 0;
+            // 
+            // routesTabPage
+            // 
+            this.routesTabPage.Controls.Add(this.actionsGroupBox);
+            this.routesTabPage.Controls.Add(this.inputGroupBox);
+            this.routesTabPage.Controls.Add(this.outputGroupBox);
+            this.routesTabPage.Location = new System.Drawing.Point(4, 25);
+            this.routesTabPage.Name = "routesTabPage";
+            this.routesTabPage.Size = new System.Drawing.Size(406, 302);
+            this.routesTabPage.TabIndex = 0;
+            this.routesTabPage.Text = "Routing";
+            this.routesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // actionsGroupBox
+            // 
+            this.actionsGroupBox.Controls.Add(this.clearButton);
+            this.actionsGroupBox.Controls.Add(this.routeList);
+            this.actionsGroupBox.Controls.Add(this.stopButton);
+            this.actionsGroupBox.Controls.Add(this.startButton);
+            this.actionsGroupBox.Location = new System.Drawing.Point(0, 195);
+            this.actionsGroupBox.Name = "actionsGroupBox";
+            this.actionsGroupBox.Size = new System.Drawing.Size(406, 107);
+            this.actionsGroupBox.TabIndex = 7;
+            this.actionsGroupBox.TabStop = false;
+            this.actionsGroupBox.Text = "Active &Routes";
+            // 
+            // clearButton
+            // 
+            this.clearButton.Location = new System.Drawing.Point(303, 77);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(97, 23);
+            this.clearButton.TabIndex = 3;
+            this.clearButton.Text = "&Clear All";
+            this.clearButton.UseVisualStyleBackColor = true;
+            // 
+            // routeList
+            // 
+            this.routeList.FormattingEnabled = true;
+            this.routeList.IntegralHeight = false;
+            this.routeList.Location = new System.Drawing.Point(6, 19);
+            this.routeList.Name = "routeList";
+            this.routeList.Size = new System.Drawing.Size(291, 81);
+            this.routeList.TabIndex = 0;
+            // 
+            // stopButton
+            // 
+            this.stopButton.Enabled = false;
+            this.stopButton.Location = new System.Drawing.Point(303, 48);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(97, 23);
+            this.stopButton.TabIndex = 2;
+            this.stopButton.Text = "S&top";
+            this.stopButton.UseVisualStyleBackColor = true;
+            // 
+            // startButton
+            // 
+            this.startButton.Location = new System.Drawing.Point(303, 19);
+            this.startButton.Name = "startButton";
+            this.startButton.Size = new System.Drawing.Size(97, 23);
+            this.startButton.TabIndex = 1;
+            this.startButton.Text = "&Start";
+            this.startButton.UseVisualStyleBackColor = true;
             // 
             // inputGroupBox
             // 
@@ -86,10 +175,10 @@
             this.inputGroupBox.Controls.Add(this.inputDeviceBufferCountPanel);
             this.inputGroupBox.Controls.Add(this.inputDeviceBufferSizePanel);
             this.inputGroupBox.Controls.Add(this.inputDeviceComboBox);
-            this.inputGroupBox.Location = new System.Drawing.Point(12, 12);
+            this.inputGroupBox.Location = new System.Drawing.Point(0, 0);
             this.inputGroupBox.Name = "inputGroupBox";
             this.inputGroupBox.Size = new System.Drawing.Size(200, 189);
-            this.inputGroupBox.TabIndex = 0;
+            this.inputGroupBox.TabIndex = 4;
             this.inputGroupBox.TabStop = false;
             this.inputGroupBox.Text = "&Input";
             // 
@@ -135,7 +224,6 @@
             this.inputFormatEnable.TabIndex = 0;
             this.toolTip.SetToolTip(this.inputFormatEnable, "If checked, override the default sampling rate.");
             this.inputFormatEnable.UseVisualStyleBackColor = true;
-            this.inputFormatEnable.CheckedChanged += new System.EventHandler(this.OnInputFormatEnableChanged);
             // 
             // inputFormatFrequency
             // 
@@ -221,7 +309,6 @@
             this.inputBufferCountSlider.Size = new System.Drawing.Size(182, 27);
             this.inputBufferCountSlider.TabIndex = 8;
             this.inputBufferCountSlider.Value = 2;
-            this.inputBufferCountSlider.Scroll += new System.EventHandler(this.OnInputBufferCountScroll);
             // 
             // inputDeviceBufferSizePanel
             // 
@@ -272,7 +359,6 @@
             this.inputBufferSizeSlider.TabIndex = 8;
             this.inputBufferSizeSlider.TickFrequency = 10;
             this.inputBufferSizeSlider.Value = 50;
-            this.inputBufferSizeSlider.Scroll += new System.EventHandler(this.OnInputBufferSizeScroll);
             // 
             // inputDeviceComboBox
             // 
@@ -284,17 +370,16 @@
             this.inputDeviceComboBox.Size = new System.Drawing.Size(188, 21);
             this.inputDeviceComboBox.Sorted = true;
             this.inputDeviceComboBox.TabIndex = 0;
-            this.inputDeviceComboBox.SelectedIndexChanged += new System.EventHandler(this.OnInputDeviceChanged);
             // 
             // outputGroupBox
             // 
             this.outputGroupBox.Controls.Add(this.outputDeviceBufferSizePanel);
             this.outputGroupBox.Controls.Add(this.outputDeviceBufferCountPanel);
             this.outputGroupBox.Controls.Add(this.outputDeviceComboBox);
-            this.outputGroupBox.Location = new System.Drawing.Point(218, 12);
+            this.outputGroupBox.Location = new System.Drawing.Point(206, 0);
             this.outputGroupBox.Name = "outputGroupBox";
             this.outputGroupBox.Size = new System.Drawing.Size(200, 189);
-            this.outputGroupBox.TabIndex = 1;
+            this.outputGroupBox.TabIndex = 5;
             this.outputGroupBox.TabStop = false;
             this.outputGroupBox.Text = "&Output";
             // 
@@ -315,6 +400,19 @@
             this.outputDeviceBufferSizePanel.Size = new System.Drawing.Size(188, 48);
             this.outputDeviceBufferSizePanel.TabIndex = 1;
             // 
+            // outputLatencySlider
+            // 
+            this.outputLatencySlider.AutoSize = false;
+            this.outputDeviceBufferSizePanel.SetColumnSpan(this.outputLatencySlider, 2);
+            this.outputLatencySlider.Location = new System.Drawing.Point(3, 16);
+            this.outputLatencySlider.Maximum = 300;
+            this.outputLatencySlider.Minimum = 1;
+            this.outputLatencySlider.Name = "outputLatencySlider";
+            this.outputLatencySlider.Size = new System.Drawing.Size(182, 27);
+            this.outputLatencySlider.TabIndex = 8;
+            this.outputLatencySlider.TickFrequency = 10;
+            this.outputLatencySlider.Value = 50;
+            // 
             // outputLatencyValueLabel
             // 
             this.outputLatencyValueLabel.AutoSize = true;
@@ -334,20 +432,6 @@
             this.outputTargetLatencyLabel.Size = new System.Drawing.Size(58, 13);
             this.outputTargetLatencyLabel.TabIndex = 9;
             this.outputTargetLatencyLabel.Text = "Buffer Size";
-            // 
-            // outputLatencySlider
-            // 
-            this.outputLatencySlider.AutoSize = false;
-            this.outputDeviceBufferSizePanel.SetColumnSpan(this.outputLatencySlider, 2);
-            this.outputLatencySlider.Location = new System.Drawing.Point(3, 16);
-            this.outputLatencySlider.Maximum = 300;
-            this.outputLatencySlider.Minimum = 1;
-            this.outputLatencySlider.Name = "outputLatencySlider";
-            this.outputLatencySlider.Size = new System.Drawing.Size(182, 27);
-            this.outputLatencySlider.TabIndex = 8;
-            this.outputLatencySlider.TickFrequency = 10;
-            this.outputLatencySlider.Value = 50;
-            this.outputLatencySlider.Scroll += new System.EventHandler(this.OnOutputLatencyScroll);
             // 
             // outputDeviceBufferCountPanel
             // 
@@ -377,7 +461,6 @@
             this.outputBufferCountSlider.Size = new System.Drawing.Size(182, 27);
             this.outputBufferCountSlider.TabIndex = 12;
             this.outputBufferCountSlider.Value = 2;
-            this.outputBufferCountSlider.Scroll += new System.EventHandler(this.OnOutputBufferCountScroll);
             // 
             // outputBufferCountValueLabel
             // 
@@ -409,77 +492,40 @@
             this.outputDeviceComboBox.Size = new System.Drawing.Size(188, 21);
             this.outputDeviceComboBox.Sorted = true;
             this.outputDeviceComboBox.TabIndex = 0;
-            this.outputDeviceComboBox.SelectedIndexChanged += new System.EventHandler(this.OnOutputDeviceChanged);
             // 
-            // actionsGroupBox
+            // configurationTabPage
             // 
-            this.actionsGroupBox.Controls.Add(this.clearButton);
-            this.actionsGroupBox.Controls.Add(this.routeList);
-            this.actionsGroupBox.Controls.Add(this.stopButton);
-            this.actionsGroupBox.Controls.Add(this.startButton);
-            this.actionsGroupBox.Location = new System.Drawing.Point(12, 260);
-            this.actionsGroupBox.Name = "actionsGroupBox";
-            this.actionsGroupBox.Size = new System.Drawing.Size(406, 107);
-            this.actionsGroupBox.TabIndex = 3;
-            this.actionsGroupBox.TabStop = false;
-            this.actionsGroupBox.Text = "Active &Routes";
-            // 
-            // clearButton
-            // 
-            this.clearButton.Location = new System.Drawing.Point(303, 77);
-            this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(97, 23);
-            this.clearButton.TabIndex = 3;
-            this.clearButton.Text = "&Clear All";
-            this.clearButton.UseVisualStyleBackColor = true;
-            this.clearButton.Click += new System.EventHandler(this.OnClearButtonClick);
-            // 
-            // routeList
-            // 
-            this.routeList.FormattingEnabled = true;
-            this.routeList.IntegralHeight = false;
-            this.routeList.Location = new System.Drawing.Point(6, 19);
-            this.routeList.Name = "routeList";
-            this.routeList.Size = new System.Drawing.Size(291, 81);
-            this.routeList.TabIndex = 0;
-            this.routeList.Click += new System.EventHandler(this.OnRouteListClicked);
-            this.routeList.SelectedIndexChanged += new System.EventHandler(this.OnRouteListSelectedIndexChanged);
-            // 
-            // stopButton
-            // 
-            this.stopButton.Location = new System.Drawing.Point(303, 48);
-            this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(97, 23);
-            this.stopButton.TabIndex = 2;
-            this.stopButton.Text = "S&top";
-            this.stopButton.UseVisualStyleBackColor = true;
-            this.stopButton.Click += new System.EventHandler(this.OnStopClicked);
-            // 
-            // startButton
-            // 
-            this.startButton.Location = new System.Drawing.Point(303, 19);
-            this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(97, 23);
-            this.startButton.TabIndex = 1;
-            this.startButton.Text = "&Start";
-            this.startButton.UseVisualStyleBackColor = true;
-            this.startButton.Click += new System.EventHandler(this.OnStartClicked);
-            // 
-            // notifyIcon
-            // 
-            this.notifyIcon.Text = "Passthrough2";
-            this.notifyIcon.Visible = true;
+            this.configurationTabPage.Controls.Add(this.optionsGroupBox);
+            this.configurationTabPage.Location = new System.Drawing.Point(4, 25);
+            this.configurationTabPage.Name = "configurationTabPage";
+            this.configurationTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.configurationTabPage.Size = new System.Drawing.Size(406, 302);
+            this.configurationTabPage.TabIndex = 1;
+            this.configurationTabPage.Text = "Configuration";
+            this.configurationTabPage.UseVisualStyleBackColor = true;
             // 
             // optionsGroupBox
             // 
             this.optionsGroupBox.Controls.Add(this.discardDataCheckBox);
             this.optionsGroupBox.Controls.Add(this.backgroundThreadCheckBox);
-            this.optionsGroupBox.Location = new System.Drawing.Point(12, 207);
+            this.optionsGroupBox.Location = new System.Drawing.Point(0, 0);
             this.optionsGroupBox.Name = "optionsGroupBox";
             this.optionsGroupBox.Size = new System.Drawing.Size(406, 47);
-            this.optionsGroupBox.TabIndex = 2;
+            this.optionsGroupBox.TabIndex = 7;
             this.optionsGroupBox.TabStop = false;
-            this.optionsGroupBox.Text = "Additional O&ptions";
+            this.optionsGroupBox.Text = "&Performance Options";
+            // 
+            // discardDataCheckBox
+            // 
+            this.discardDataCheckBox.AutoSize = true;
+            this.discardDataCheckBox.Location = new System.Drawing.Point(206, 19);
+            this.discardDataCheckBox.Name = "discardDataCheckBox";
+            this.discardDataCheckBox.Size = new System.Drawing.Size(148, 17);
+            this.discardDataCheckBox.TabIndex = 1;
+            this.discardDataCheckBox.Text = "&Discard Data to Catch Up";
+            this.toolTip.SetToolTip(this.discardDataCheckBox, "If checked, when output falls behind input, start discarding samples to catch up." +
+        "");
+            this.discardDataCheckBox.UseVisualStyleBackColor = true;
             // 
             // backgroundThreadCheckBox
             // 
@@ -495,32 +541,72 @@
         " less compatible.");
             this.backgroundThreadCheckBox.UseVisualStyleBackColor = true;
             // 
-            // discardDataCheckBox
+            // devicesTabPage
             // 
-            this.discardDataCheckBox.AutoSize = true;
-            this.discardDataCheckBox.Location = new System.Drawing.Point(206, 19);
-            this.discardDataCheckBox.Name = "discardDataCheckBox";
-            this.discardDataCheckBox.Size = new System.Drawing.Size(148, 17);
-            this.discardDataCheckBox.TabIndex = 1;
-            this.discardDataCheckBox.Text = "&Discard Data to Catch Up";
-            this.toolTip.SetToolTip(this.discardDataCheckBox, "If checked, when output falls behind input, start discarding samples to catch up." +
-        "");
-            this.discardDataCheckBox.UseVisualStyleBackColor = true;
+            this.devicesTabPage.Controls.Add(this.splitContainer1);
+            this.devicesTabPage.Location = new System.Drawing.Point(4, 25);
+            this.devicesTabPage.Name = "devicesTabPage";
+            this.devicesTabPage.Size = new System.Drawing.Size(406, 302);
+            this.devicesTabPage.TabIndex = 2;
+            this.devicesTabPage.Text = "Devices";
+            this.devicesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.deviceInfoTreeView);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.deviceInfoTextBox);
+            this.splitContainer1.Size = new System.Drawing.Size(406, 302);
+            this.splitContainer1.SplitterDistance = 135;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // deviceInfoTreeView
+            // 
+            this.deviceInfoTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.deviceInfoTreeView.Location = new System.Drawing.Point(0, 0);
+            this.deviceInfoTreeView.Name = "deviceInfoTreeView";
+            this.deviceInfoTreeView.Size = new System.Drawing.Size(135, 302);
+            this.deviceInfoTreeView.TabIndex = 0;
+            // 
+            // deviceInfoTextBox
+            // 
+            this.deviceInfoTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.deviceInfoTextBox.Location = new System.Drawing.Point(0, 0);
+            this.deviceInfoTextBox.Multiline = true;
+            this.deviceInfoTextBox.Name = "deviceInfoTextBox";
+            this.deviceInfoTextBox.ReadOnly = true;
+            this.deviceInfoTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.deviceInfoTextBox.Size = new System.Drawing.Size(267, 302);
+            this.deviceInfoTextBox.TabIndex = 0;
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Text = "Passthrough2";
+            this.notifyIcon.Visible = true;
             // 
             // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 381);
-            this.Controls.Add(this.optionsGroupBox);
-            this.Controls.Add(this.actionsGroupBox);
-            this.Controls.Add(this.outputGroupBox);
-            this.Controls.Add(this.inputGroupBox);
+            this.ClientSize = new System.Drawing.Size(420, 337);
+            this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "ConfigurationForm";
+            this.Padding = new System.Windows.Forms.Padding(3);
             this.ShowInTaskbar = false;
             this.Text = "Passthrough2";
+            this.tabControl1.ResumeLayout(false);
+            this.routesTabPage.ResumeLayout(false);
+            this.actionsGroupBox.ResumeLayout(false);
             this.inputGroupBox.ResumeLayout(false);
             this.inputFormatPanel.ResumeLayout(false);
             this.inputFormatPanel.PerformLayout();
@@ -537,51 +623,63 @@
             this.outputDeviceBufferCountPanel.ResumeLayout(false);
             this.outputDeviceBufferCountPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputBufferCountSlider)).EndInit();
-            this.actionsGroupBox.ResumeLayout(false);
+            this.configurationTabPage.ResumeLayout(false);
             this.optionsGroupBox.ResumeLayout(false);
             this.optionsGroupBox.PerformLayout();
+            this.devicesTabPage.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox inputGroupBox;
-        private System.Windows.Forms.ComboBox inputDeviceComboBox;
-        private System.Windows.Forms.GroupBox outputGroupBox;
-        private System.Windows.Forms.ComboBox outputDeviceComboBox;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage routesTabPage;
+        private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.GroupBox actionsGroupBox;
-        private System.Windows.Forms.Button startButton;
+        private System.Windows.Forms.Button clearButton;
+        private System.Windows.Forms.ListBox routeList;
         private System.Windows.Forms.Button stopButton;
-        private System.Windows.Forms.TableLayoutPanel inputDeviceBufferSizePanel;
-        private System.Windows.Forms.Label inputBufferSizeLabel;
-        private System.Windows.Forms.TrackBar inputBufferSizeSlider;
-        private System.Windows.Forms.Label inputBufferSizeValueLabel;
+        private System.Windows.Forms.Button startButton;
+        private System.Windows.Forms.GroupBox inputGroupBox;
+        private System.Windows.Forms.TableLayoutPanel inputFormatPanel;
+        private System.Windows.Forms.Label inputFormatChLabel;
+        private System.Windows.Forms.CheckBox inputFormatEnable;
+        private System.Windows.Forms.TextBox inputFormatFrequency;
+        private System.Windows.Forms.Label inputFormatHzLabel;
+        private System.Windows.Forms.TextBox inputFormatChannels;
         private System.Windows.Forms.TableLayoutPanel inputDeviceBufferCountPanel;
         private System.Windows.Forms.Label inputBufferCountValueLabel;
         private System.Windows.Forms.Label inputBufferCountLabel;
         private System.Windows.Forms.TrackBar inputBufferCountSlider;
+        private System.Windows.Forms.TableLayoutPanel inputDeviceBufferSizePanel;
+        private System.Windows.Forms.Label inputBufferSizeValueLabel;
+        private System.Windows.Forms.Label inputBufferSizeLabel;
+        private System.Windows.Forms.TrackBar inputBufferSizeSlider;
+        private System.Windows.Forms.ComboBox inputDeviceComboBox;
+        private System.Windows.Forms.GroupBox outputGroupBox;
         private System.Windows.Forms.TableLayoutPanel outputDeviceBufferSizePanel;
         private System.Windows.Forms.Label outputLatencyValueLabel;
         private System.Windows.Forms.Label outputTargetLatencyLabel;
         private System.Windows.Forms.TrackBar outputLatencySlider;
         private System.Windows.Forms.TableLayoutPanel outputDeviceBufferCountPanel;
+        private System.Windows.Forms.TrackBar outputBufferCountSlider;
         private System.Windows.Forms.Label outputBufferCountValueLabel;
         private System.Windows.Forms.Label outputBufferCountLabel;
-        private System.Windows.Forms.TrackBar outputBufferCountSlider;
-        private System.Windows.Forms.Button clearButton;
-        private System.Windows.Forms.ListBox routeList;
+        private System.Windows.Forms.ComboBox outputDeviceComboBox;
+        private System.Windows.Forms.TabPage configurationTabPage;
         private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.TableLayoutPanel inputFormatPanel;
-        private System.Windows.Forms.CheckBox inputFormatEnable;
-        private System.Windows.Forms.TextBox inputFormatFrequency;
-        private System.Windows.Forms.Label inputFormatHzLabel;
-        private System.Windows.Forms.Label inputFormatChLabel;
-        private System.Windows.Forms.TextBox inputFormatChannels;
-        private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.GroupBox optionsGroupBox;
-        private System.Windows.Forms.CheckBox backgroundThreadCheckBox;
         private System.Windows.Forms.CheckBox discardDataCheckBox;
+        private System.Windows.Forms.CheckBox backgroundThreadCheckBox;
+        private System.Windows.Forms.TabPage devicesTabPage;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.TreeView deviceInfoTreeView;
+        private System.Windows.Forms.TextBox deviceInfoTextBox;
     }
 }
 

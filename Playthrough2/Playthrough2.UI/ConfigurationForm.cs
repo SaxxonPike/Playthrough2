@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using NAudio.Wave;
+using Newtonsoft.Json;
 using Playthrough2.Devices;
 using Playthrough2.Pipes;
 using Playthrough2.UI.Properties;
@@ -102,15 +105,61 @@ namespace Playthrough2.UI
             notifyIcon.Visible = true;
 
             Icon = icon;
+
+            SetupFormEvents();
+        }
+
+        private void SetupFormEvents()
+        {
+            inputBufferSizeSlider.Scroll += OnInputBufferSizeScroll;
+            inputBufferCountSlider.Scroll += OnInputBufferCountScroll;
+            inputDeviceComboBox.SelectedIndexChanged += OnInputDeviceChanged;
+            inputFormatEnable.CheckedChanged += OnInputFormatEnableChanged;
+            outputBufferCountSlider.Scroll += OnOutputBufferCountScroll;
+            outputLatencySlider.Scroll += OnOutputLatencyScroll;
+            outputDeviceComboBox.SelectedIndexChanged += OnOutputDeviceChanged;
+
+            startButton.Click += OnStartClicked;
+            stopButton.Click += OnStopClicked;
+            clearButton.Click += OnClearButtonClick;
+            routeList.Click += OnRouteListClicked;
+            routeList.SelectedIndexChanged += OnRouteListSelectedIndexChanged;
+
+            deviceInfoTreeView.NodeMouseClick += OnDeviceTreeDeviceClicked;
+        }
+
+        private string SerializeToJson(object input)
+        {
+            return JsonConvert.SerializeObject(input, Formatting.Indented);
+        }
+
+        private TObject DeserializeFromJson<TObject>(string input)
+        {
+            return JsonConvert.DeserializeObject<TObject>(input);
+        }
+
+        private void OnDeviceTreeDeviceClicked(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (!(e.Node.Tag is IWaveDevice))
+                return;
+
+            var device = (e.Node.Tag as IWaveDevice);
+            deviceInfoTextBox.Text = SerializeToJson(device);
         }
 
         private void PopulateDevices()
         {
-            inputDeviceComboBox.Items.AddRange(_waveDeviceEnumerator.GetWaveInDevices().Cast<object>().ToArray());
+            var waveInDevices = _waveDeviceEnumerator.GetWaveInDevices().ToList();
+            var waveOutDevices = _waveDeviceEnumerator.GetWaveOutDevices().ToList();
+
+            inputDeviceComboBox.Items.AddRange(waveInDevices.Cast<object>().ToArray());
             inputDeviceComboBox.SelectedIndex = inputDeviceComboBox.Items.Count > 0 ? 0 : -1;
 
-            outputDeviceComboBox.Items.AddRange(_waveDeviceEnumerator.GetWaveOutDevices().Cast<object>().ToArray());
+            outputDeviceComboBox.Items.AddRange(waveOutDevices.Cast<object>().ToArray());
             outputDeviceComboBox.SelectedIndex = outputDeviceComboBox.Items.Count > 0 ? 0 : -1;
+
+            var deviceTreeController = new DeviceTreeController(deviceInfoTreeView, deviceInfoTextBox);
+            deviceTreeController.Populate(waveInDevices, waveOutDevices);
         }
 
         private void OnStartClicked(object sender, EventArgs e)
