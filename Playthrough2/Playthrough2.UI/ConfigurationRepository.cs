@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Playthrough2.Pipes;
@@ -23,16 +21,20 @@ namespace Playthrough2.UI
             return Path.Combine(Application.ExecutablePath, ConfigurationFileName);
         }
 
+        private IWavePipeConfiguration LoadFromFile(string fileName)
+        {
+            if (!File.Exists(fileName))
+                return null;
+
+            var fileData = File.ReadAllText(fileName);
+            return JsonConvert.DeserializeObject<WavePipeConfiguration>(fileData);
+        }
+
         public IWavePipeConfiguration LoadFromUserProfile()
         {
             try
             {
-                var fileName = GetUserProfileFileName();
-                if (!File.Exists(fileName))
-                    return null;
-
-                var fileData = File.ReadAllText(fileName);
-                return JsonConvert.DeserializeObject<WavePipeConfiguration>(fileData);
+                return LoadFromFile(GetUserProfileFileName());
             }
             catch (Exception)
             {
@@ -44,12 +46,7 @@ namespace Playthrough2.UI
         {
             try
             {
-                var fileName = GetLocalConfigurationFileName();
-                if (!File.Exists(fileName))
-                    return null;
-
-                var fileData = File.ReadAllText(fileName);
-                return JsonConvert.DeserializeObject<WavePipeConfiguration>(fileData);
+                return LoadFromFile(GetLocalConfigurationFileName());
             }
             catch (Exception)
             {
@@ -73,6 +70,22 @@ namespace Playthrough2.UI
                 OutputLatency = localConfiguration?.OutputLatency ?? baseConfiguration?.OutputLatency,
                 UseBackgroundThread = localConfiguration?.UseBackgroundThread ?? baseConfiguration?.UseBackgroundThread ?? false
             };
+        }
+
+        private void SaveToFile(string fileName, IWavePipeConfiguration configuration)
+        {
+            var data = JsonConvert.SerializeObject(configuration, Formatting.Indented);
+            File.WriteAllText(fileName, data);
+        }
+
+        public void SaveToUserProfile(IWavePipeConfiguration configuration)
+        {
+            SaveToFile(GetUserProfileFileName(), configuration);
+        }
+
+        public void SaveToLocalFile(IWavePipeConfiguration configuration)
+        {
+            SaveToFile(GetLocalConfigurationFileName(), configuration);
         }
     }
 }
