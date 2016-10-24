@@ -1,12 +1,9 @@
-﻿using NAudio.Wave;
+﻿using System;
 
 namespace Playthrough2
 {
-    public interface IWavePipe
+    public interface IWavePipe : IDisposable
     {
-        IWaveIn WaveIn { get; }
-        IWavePlayer WaveOut { get; }
-
         void Start();
         void Stop();
         bool Running { get; }

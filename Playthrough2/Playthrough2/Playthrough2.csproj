@@ -80,6 +80,9 @@
     <Compile Include="WavePipeDeviceInfo.cs" />
     <Compile Include="WavePipeInfo.cs" />
     <Compile Include="WavePipeManager.cs" />
+    <Compile Include="WavePipeThreadCommand.cs" />
+    <Compile Include="WavePipeThreadCommandType.cs" />
+    <Compile Include="WavePipeThreadInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

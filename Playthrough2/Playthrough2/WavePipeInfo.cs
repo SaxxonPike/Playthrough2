@@ -21,6 +21,7 @@ namespace Playthrough2
 
         private void Configure(IWavePipeConfiguration configuration)
         {
+            WavePipe?.Dispose();
             WaveIn?.Dispose();
             WaveOut?.Dispose();
 
@@ -49,6 +50,7 @@ namespace Playthrough2
 
         public void Dispose()
         {
+            WavePipe.Dispose();
             WaveOut.Stop();
             WaveIn.StopRecording();
             WaveOut.Dispose();

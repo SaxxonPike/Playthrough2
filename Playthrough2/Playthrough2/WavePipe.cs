@@ -1,42 +1,70 @@
-﻿using NAudio.Wave;
+﻿using System.Threading;
+using NAudio.Wave;
 
 namespace Playthrough2
 {
     public class WavePipe : IWavePipe
     {
-        private readonly IWaveProvider _stream;
+        private readonly WavePipeThreadInfo _threadInfo;
 
         public WavePipe(IWaveIn waveIn, IWavePlayer waveOut)
         {
-            _stream = new WaveInProvider(waveIn);
-            WaveIn = waveIn;
-            WaveOut = waveOut;
+            _threadInfo = new WavePipeThreadInfo(waveIn, waveOut);
+            var thread = new Thread(WavePipeThreadProc);
+            thread.Start(_threadInfo);
+        }
+
+        private void WavePipeThreadProc(object threadInfo)
+        {
+            var info = (WavePipeThreadInfo)threadInfo;
+            try
+            {
+                while (true)
+                {
+                    while (info.CommandQueue.Count > 0)
+                    {
+                        var command = info.CommandQueue.Dequeue();
+                        switch (command.Type)
+                        {
+                            case WavePipeThreadCommandType.Dispose:
+                                return;
+                            case WavePipeThreadCommandType.Start:
+                                info.Start();
+                                break;
+                            case WavePipeThreadCommandType.Stop:
+                                info.Stop();
+                                break;
+                        }
+                    }
+                    Thread.Sleep(1);
+                }
+            }
+            catch (ThreadAbortException)
+            {
+                // Abort gracefully.
+            }
+        }
+
+        private void Enqueue(WavePipeThreadCommandType type)
+        {
+            _threadInfo.CommandQueue.Enqueue(new WavePipeThreadCommand(type));
+        }
+
+        public void Dispose()
+        {
+            Enqueue(WavePipeThreadCommandType.Dispose);
         }
 
         public void Start()
         {
-            if (Running)
-                return;
-
-            Running = true;
-            WaveIn.StartRecording();
-            WaveOut.Init(_stream);
-            WaveOut.Play();
+            Enqueue(WavePipeThreadCommandType.Start);
         }
 
         public void Stop()
         {
-            if (!Running)
-                return;
-
-            WaveIn.StopRecording();
-            if (WaveOut.PlaybackState == PlaybackState.Playing)
-                WaveOut.Stop();
-            Running = false;
+            Enqueue(WavePipeThreadCommandType.Stop);
         }
 
-        public IWaveIn WaveIn { get; }
-        public IWavePlayer WaveOut { get; }
-        public bool Running { get; private set; }
+        public bool Running => _threadInfo.Running;
     }
 }
