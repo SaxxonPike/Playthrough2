@@ -489,6 +489,8 @@
             this.backgroundThreadCheckBox.Size = new System.Drawing.Size(143, 17);
             this.backgroundThreadCheckBox.TabIndex = 0;
             this.backgroundThreadCheckBox.Text = "Use Background Thread";
+            this.toolTip.SetToolTip(this.backgroundThreadCheckBox, "If checked, record on a background thread. This generally performs better, but is" +
+        " less compatible.");
             this.backgroundThreadCheckBox.UseVisualStyleBackColor = true;
             // 
             // ConfigurationForm

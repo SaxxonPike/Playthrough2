@@ -90,13 +90,17 @@ namespace Playthrough2.UI
 
         private void OnFirstShown(object sender, EventArgs e)
         {
+            var icon = Resources.Logo16.ToIcon();
+
             Shown -= OnFirstShown;
 
             PopulateDevices();
 
             notifyIcon.Text = Text;
-            notifyIcon.Icon = Resources.Logo16.ToIcon();
+            notifyIcon.Icon = icon;
             notifyIcon.Visible = true;
+
+            Icon = icon;
         }
 
         private void PopulateDevices()
