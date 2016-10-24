@@ -1,8 +1,8 @@
 ﻿using NAudio.Wave;
 
-namespace Playthrough2
+namespace Playthrough2.Pipes
 {
-    public class WavePipeInfo : IWavePipeInfo
+    internal class WavePipeInfo : IWavePipeInfo
     {
         public WavePipeInfo(IWavePipeConfiguration wavePipeConfiguration)
         {

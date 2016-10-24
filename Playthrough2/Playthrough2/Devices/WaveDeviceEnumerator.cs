@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using NAudio.Wave;
-using Playthrough2.Devices;
 
-namespace Playthrough2
+namespace Playthrough2.Devices
 {
-    public class WaveDeviceEnumerator
+    public class WaveDeviceEnumerator : IWaveDeviceEnumerator
     {
         public IEnumerable<IWaveInDevice> GetWaveInDevices()
         {

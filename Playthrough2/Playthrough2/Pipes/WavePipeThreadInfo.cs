@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using NAudio.Wave;
 
-namespace Playthrough2
+namespace Playthrough2.Pipes
 {
     internal class WavePipeThreadInfo
     {

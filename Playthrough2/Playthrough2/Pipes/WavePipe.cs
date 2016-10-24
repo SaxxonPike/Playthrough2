@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using NAudio.Wave;
 
-namespace Playthrough2
+namespace Playthrough2.Pipes
 {
-    public class WavePipe : IWavePipe
+    internal class WavePipe : IWavePipe
     {
         private readonly WavePipeThreadInfo _threadInfo;
 

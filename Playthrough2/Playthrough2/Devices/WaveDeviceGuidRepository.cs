@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Playthrough2
+namespace Playthrough2.Devices
 {
     internal static class WaveDeviceGuidRepository
     {

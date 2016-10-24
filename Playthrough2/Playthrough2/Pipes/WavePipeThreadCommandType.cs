@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Playthrough2
+﻿namespace Playthrough2.Pipes
 {
     internal enum WavePipeThreadCommandType
     {

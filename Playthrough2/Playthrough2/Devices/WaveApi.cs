@@ -1,4 +1,4 @@
-﻿namespace Playthrough2
+﻿namespace Playthrough2.Devices
 {
     public enum WaveApi
     {

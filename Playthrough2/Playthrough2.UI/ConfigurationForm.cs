@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Windows.Forms;
 using NAudio.Wave;
+using Playthrough2.Devices;
+using Playthrough2.Pipes;
 using Playthrough2.UI.Properties;
 
 namespace Playthrough2.UI

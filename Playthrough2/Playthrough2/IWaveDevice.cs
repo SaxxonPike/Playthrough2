@@ -1,4 +1,5 @@
 ﻿using System;
+using Playthrough2.Devices;
 
 namespace Playthrough2
 {
