@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using NAudio.Wave;
 using Playthrough2.Devices;
@@ -133,6 +134,9 @@ namespace Playthrough2.UI
 
         private void OnFirstShown(object sender, EventArgs e)
         {
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            Text = $"{Application.ProductName} v{version.Major}.{version.Minor}";
+
             var icon = Resources.Logo16.ToIcon();
 
             Shown -= OnFirstShown;

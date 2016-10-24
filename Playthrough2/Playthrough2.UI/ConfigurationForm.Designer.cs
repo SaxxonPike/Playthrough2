@@ -54,15 +54,23 @@
             this.inputDeviceComboBox = new System.Windows.Forms.ComboBox();
             this.outputGroupBox = new System.Windows.Forms.GroupBox();
             this.outputDeviceBufferSizePanel = new System.Windows.Forms.TableLayoutPanel();
-            this.outputLatencySlider = new System.Windows.Forms.TrackBar();
             this.outputLatencyValueLabel = new System.Windows.Forms.Label();
             this.outputTargetLatencyLabel = new System.Windows.Forms.Label();
+            this.outputLatencySlider = new System.Windows.Forms.TrackBar();
             this.outputDeviceBufferCountPanel = new System.Windows.Forms.TableLayoutPanel();
             this.outputBufferCountSlider = new System.Windows.Forms.TrackBar();
             this.outputBufferCountValueLabel = new System.Windows.Forms.Label();
             this.outputBufferCountLabel = new System.Windows.Forms.Label();
             this.outputDeviceComboBox = new System.Windows.Forms.ComboBox();
             this.configurationTabPage = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.optionsGroupBox = new System.Windows.Forms.GroupBox();
             this.discardDataCheckBox = new System.Windows.Forms.CheckBox();
             this.backgroundThreadCheckBox = new System.Windows.Forms.CheckBox();
@@ -72,14 +80,6 @@
             this.deviceInfoTextBox = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.routesTabPage.SuspendLayout();
             this.actionsGroupBox.SuspendLayout();
@@ -95,13 +95,13 @@
             this.outputDeviceBufferCountPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputBufferCountSlider)).BeginInit();
             this.configurationTabPage.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.optionsGroupBox.SuspendLayout();
             this.devicesTabPage.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -410,19 +410,6 @@
             this.outputDeviceBufferSizePanel.Size = new System.Drawing.Size(188, 48);
             this.outputDeviceBufferSizePanel.TabIndex = 1;
             // 
-            // outputLatencySlider
-            // 
-            this.outputLatencySlider.AutoSize = false;
-            this.outputDeviceBufferSizePanel.SetColumnSpan(this.outputLatencySlider, 2);
-            this.outputLatencySlider.Location = new System.Drawing.Point(3, 16);
-            this.outputLatencySlider.Maximum = 300;
-            this.outputLatencySlider.Minimum = 1;
-            this.outputLatencySlider.Name = "outputLatencySlider";
-            this.outputLatencySlider.Size = new System.Drawing.Size(182, 27);
-            this.outputLatencySlider.TabIndex = 8;
-            this.outputLatencySlider.TickFrequency = 10;
-            this.outputLatencySlider.Value = 50;
-            // 
             // outputLatencyValueLabel
             // 
             this.outputLatencyValueLabel.AutoSize = true;
@@ -442,6 +429,19 @@
             this.outputTargetLatencyLabel.Size = new System.Drawing.Size(58, 13);
             this.outputTargetLatencyLabel.TabIndex = 9;
             this.outputTargetLatencyLabel.Text = "Buffer Size";
+            // 
+            // outputLatencySlider
+            // 
+            this.outputLatencySlider.AutoSize = false;
+            this.outputDeviceBufferSizePanel.SetColumnSpan(this.outputLatencySlider, 2);
+            this.outputLatencySlider.Location = new System.Drawing.Point(3, 16);
+            this.outputLatencySlider.Maximum = 300;
+            this.outputLatencySlider.Minimum = 1;
+            this.outputLatencySlider.Name = "outputLatencySlider";
+            this.outputLatencySlider.Size = new System.Drawing.Size(182, 27);
+            this.outputLatencySlider.TabIndex = 8;
+            this.outputLatencySlider.TickFrequency = 10;
+            this.outputLatencySlider.Value = 50;
             // 
             // outputDeviceBufferCountPanel
             // 
@@ -515,6 +515,86 @@
             this.configurationTabPage.TabIndex = 1;
             this.configurationTabPage.Text = "Configuration";
             this.configurationTabPage.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.button4);
+            this.groupBox2.Controls.Add(this.button5);
+            this.groupBox2.Controls.Add(this.button6);
+            this.groupBox2.Location = new System.Drawing.Point(0, 193);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 109);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "&User Profile Configuration (Primary)";
+            this.groupBox2.Visible = false;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(6, 77);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(188, 23);
+            this.button4.TabIndex = 2;
+            this.button4.Text = "Delete";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(6, 48);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(188, 23);
+            this.button5.TabIndex = 1;
+            this.button5.Text = "Save";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(6, 19);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(188, 23);
+            this.button6.TabIndex = 0;
+            this.button6.Text = "Load";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.button3);
+            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Location = new System.Drawing.Point(206, 193);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 109);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "&Local Folder Configuration";
+            this.groupBox1.Visible = false;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(6, 77);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(188, 23);
+            this.button3.TabIndex = 2;
+            this.button3.Text = "Delete";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(6, 48);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(188, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Save";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(6, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(188, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Load";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // optionsGroupBox
             // 
@@ -604,86 +684,6 @@
             this.notifyIcon.Text = "Passthrough2";
             this.notifyIcon.Visible = true;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Location = new System.Drawing.Point(206, 193);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 109);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "&Local Folder Configuration";
-            this.groupBox1.Visible = false;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(6, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(188, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Load";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(6, 48);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(188, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Save";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(6, 77);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(188, 23);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Delete";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.button5);
-            this.groupBox2.Controls.Add(this.button6);
-            this.groupBox2.Location = new System.Drawing.Point(0, 193);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 109);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "&User Profile Configuration (Primary)";
-            this.groupBox2.Visible = false;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(6, 77);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(188, 23);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "Delete";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(6, 48);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(188, 23);
-            this.button5.TabIndex = 1;
-            this.button5.Text = "Save";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(6, 19);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(188, 23);
-            this.button6.TabIndex = 0;
-            this.button6.Text = "Load";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
             // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -695,7 +695,6 @@
             this.Name = "ConfigurationForm";
             this.Padding = new System.Windows.Forms.Padding(3);
             this.ShowInTaskbar = false;
-            this.Text = "Passthrough2";
             this.tabControl1.ResumeLayout(false);
             this.routesTabPage.ResumeLayout(false);
             this.actionsGroupBox.ResumeLayout(false);
@@ -716,6 +715,8 @@
             this.outputDeviceBufferCountPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputBufferCountSlider)).EndInit();
             this.configurationTabPage.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.optionsGroupBox.ResumeLayout(false);
             this.optionsGroupBox.PerformLayout();
             this.devicesTabPage.ResumeLayout(false);
@@ -723,8 +724,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             this.splitContainer1.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
