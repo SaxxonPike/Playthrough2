@@ -12,5 +12,6 @@ namespace Playthrough2.Pipes
         public int? OutputLatency { get; set; }
         public WaveFormat InputFormat { get; set; }
         public WaveFormat OutputFormat { get; set; }
+        public bool UseBackgroundThread { get; set; }
     }
 }

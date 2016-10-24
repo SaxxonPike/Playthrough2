@@ -62,6 +62,8 @@
             this.startButton = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.optionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.backgroundThreadCheckBox = new System.Windows.Forms.CheckBox();
             this.inputGroupBox.SuspendLayout();
             this.inputFormatPanel.SuspendLayout();
             this.inputDeviceBufferCountPanel.SuspendLayout();
@@ -74,6 +76,7 @@
             this.outputDeviceBufferCountPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputBufferCountSlider)).BeginInit();
             this.actionsGroupBox.SuspendLayout();
+            this.optionsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // inputGroupBox
@@ -144,6 +147,7 @@
             this.inputFormatFrequency.TabIndex = 1;
             this.inputFormatFrequency.Text = "48000";
             this.inputFormatFrequency.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.toolTip.SetToolTip(this.inputFormatFrequency, "Frequency (in Hz) at which to record. Common values are 44100 and 48000.");
             // 
             // inputFormatHzLabel
             // 
@@ -166,6 +170,7 @@
             this.inputFormatChannels.TabIndex = 2;
             this.inputFormatChannels.Text = "2";
             this.inputFormatChannels.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.toolTip.SetToolTip(this.inputFormatChannels, "Number of channels to record. Use 1 for mono or 2 for stereo.");
             // 
             // inputDeviceBufferCountPanel
             // 
@@ -411,10 +416,10 @@
             this.actionsGroupBox.Controls.Add(this.routeList);
             this.actionsGroupBox.Controls.Add(this.stopButton);
             this.actionsGroupBox.Controls.Add(this.startButton);
-            this.actionsGroupBox.Location = new System.Drawing.Point(12, 207);
+            this.actionsGroupBox.Location = new System.Drawing.Point(12, 260);
             this.actionsGroupBox.Name = "actionsGroupBox";
             this.actionsGroupBox.Size = new System.Drawing.Size(406, 107);
-            this.actionsGroupBox.TabIndex = 2;
+            this.actionsGroupBox.TabIndex = 3;
             this.actionsGroupBox.TabStop = false;
             this.actionsGroupBox.Text = "Active &Routes";
             // 
@@ -464,11 +469,34 @@
             this.notifyIcon.Text = "Passthrough2";
             this.notifyIcon.Visible = true;
             // 
+            // optionsGroupBox
+            // 
+            this.optionsGroupBox.Controls.Add(this.backgroundThreadCheckBox);
+            this.optionsGroupBox.Location = new System.Drawing.Point(12, 207);
+            this.optionsGroupBox.Name = "optionsGroupBox";
+            this.optionsGroupBox.Size = new System.Drawing.Size(406, 47);
+            this.optionsGroupBox.TabIndex = 2;
+            this.optionsGroupBox.TabStop = false;
+            this.optionsGroupBox.Text = "Additional O&ptions";
+            // 
+            // backgroundThreadCheckBox
+            // 
+            this.backgroundThreadCheckBox.AutoSize = true;
+            this.backgroundThreadCheckBox.Checked = true;
+            this.backgroundThreadCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.backgroundThreadCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.backgroundThreadCheckBox.Name = "backgroundThreadCheckBox";
+            this.backgroundThreadCheckBox.Size = new System.Drawing.Size(143, 17);
+            this.backgroundThreadCheckBox.TabIndex = 0;
+            this.backgroundThreadCheckBox.Text = "Use Background Thread";
+            this.backgroundThreadCheckBox.UseVisualStyleBackColor = true;
+            // 
             // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 329);
+            this.ClientSize = new System.Drawing.Size(430, 381);
+            this.Controls.Add(this.optionsGroupBox);
             this.Controls.Add(this.actionsGroupBox);
             this.Controls.Add(this.outputGroupBox);
             this.Controls.Add(this.inputGroupBox);
@@ -494,6 +522,8 @@
             this.outputDeviceBufferCountPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputBufferCountSlider)).EndInit();
             this.actionsGroupBox.ResumeLayout(false);
+            this.optionsGroupBox.ResumeLayout(false);
+            this.optionsGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -533,6 +563,8 @@
         private System.Windows.Forms.Label inputFormatChLabel;
         private System.Windows.Forms.TextBox inputFormatChannels;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.GroupBox optionsGroupBox;
+        private System.Windows.Forms.CheckBox backgroundThreadCheckBox;
     }
 }
 

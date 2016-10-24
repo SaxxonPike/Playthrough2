@@ -70,13 +70,21 @@ namespace Playthrough2.UI
                               int.TryParse(inputFormatFrequency.Text, out frequency) &&
                               int.TryParse(inputFormatChannels.Text, out channels)
                     ? new WaveFormat(frequency, channels)
-                    : null
+                    : null,
+                UseBackgroundThread = backgroundThreadCheckBox.Checked
             };
         }
 
         private void OnClosed(object sender, EventArgs eventArgs)
         {
-            _wavePipeManager.Dispose();
+            try
+            {
+                _wavePipeManager.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"WavePipeManager did not shut down cleanly.\n{ex.Message}");
+            }
             notifyIcon.Visible = false;
         }
 

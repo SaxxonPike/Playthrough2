@@ -22,12 +22,11 @@ namespace Playthrough2.Devices
 
         public IWavePlayer Create(IWavePipeConfiguration config)
         {
-            return new WaveOut
+            return new WaveOutEvent
             {
                 DesiredLatency = config.OutputLatency ?? 100,
                 DeviceNumber = _index,
-                NumberOfBuffers = config.OutputBufferCount ?? 3,
-                Volume = 1
+                NumberOfBuffers = config.OutputBufferCount ?? 3
             };
         }
 

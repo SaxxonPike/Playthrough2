@@ -27,7 +27,7 @@ namespace Playthrough2.Pipes
 
             WaveIn = WaveInDevice.Create(configuration);
             WaveOut = WaveOutDevice.Create(configuration);
-            WavePipe = new WavePipe(WaveIn, WaveOut);
+            WavePipe = new WavePipe(WaveInDevice, WaveOutDevice, configuration);
         }
 
         public void Start()

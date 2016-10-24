@@ -2,7 +2,7 @@
 
 namespace Playthrough2
 {
-    public interface IWavePipe : IDisposable
+    internal interface IWavePipe : IDisposable
     {
         void Start();
         void Stop();

@@ -18,17 +18,35 @@ namespace Playthrough2.Devices
         public WindowsWaveInDevice(int index)
         {
             _index = index;
-            Capabilities = WaveIn.GetCapabilities(index);
+            Capabilities = WaveInEvent.GetCapabilities(index);
         }
 
         public IWaveIn Create(IWavePipeConfiguration config)
         {
-            var result = new WaveIn
+            IWaveIn result;
+            var deviceNumber = _index;
+            var bufferMilliseconds = config.InputBufferLength ?? 50;
+            var numberOfBuffers = config.InputBufferCount ?? 3;
+
+            if (config.UseBackgroundThread)
             {
-                DeviceNumber = _index,
-                BufferMilliseconds = config.InputBufferLength ?? 50,
-                NumberOfBuffers = config.InputBufferCount ?? 3
-            };
+                result = new WaveInEvent
+                {
+                    DeviceNumber = deviceNumber,
+                    BufferMilliseconds = bufferMilliseconds,
+                    NumberOfBuffers = numberOfBuffers
+                };
+            }
+            else
+            {
+                result = new WaveIn
+                {
+                    DeviceNumber = deviceNumber,
+                    BufferMilliseconds = bufferMilliseconds,
+                    NumberOfBuffers = numberOfBuffers
+                };
+            }
+
 
             if (config.InputFormat != null)
                 result.WaveFormat = config.InputFormat;

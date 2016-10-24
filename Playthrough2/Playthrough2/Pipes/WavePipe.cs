@@ -5,18 +5,28 @@ namespace Playthrough2.Pipes
 {
     internal class WavePipe : IWavePipe
     {
+        private readonly IWavePipeConfiguration _configuration;
         private readonly WavePipeThreadInfo _threadInfo;
 
-        public WavePipe(IWaveIn waveIn, IWavePlayer waveOut)
+        public WavePipe(IWaveInDevice waveIn, IWaveOutDevice waveOut, IWavePipeConfiguration configuration)
         {
-            _threadInfo = new WavePipeThreadInfo(waveIn, waveOut);
+            _configuration = configuration;
+            _threadInfo = new WavePipeThreadInfo(waveIn, waveOut, _configuration);
             var thread = new Thread(WavePipeThreadProc);
+
+            if (!_configuration.UseBackgroundThread)
+                _threadInfo.Initialize();
+
             thread.Start(_threadInfo);
         }
 
         private void WavePipeThreadProc(object threadInfo)
         {
             var info = (WavePipeThreadInfo)threadInfo;
+
+            if (_configuration.UseBackgroundThread)
+                info.Initialize();
+
             try
             {
                 while (true)
@@ -47,7 +57,7 @@ namespace Playthrough2.Pipes
 
         private void Enqueue(WavePipeThreadCommandType type)
         {
-            _threadInfo.CommandQueue.Enqueue(new WavePipeThreadCommand(type));
+            _threadInfo?.CommandQueue.Enqueue(new WavePipeThreadCommand(type));
         }
 
         public void Dispose()
@@ -65,6 +75,6 @@ namespace Playthrough2.Pipes
             Enqueue(WavePipeThreadCommandType.Stop);
         }
 
-        public bool Running => _threadInfo.Running;
+        public bool Running => _threadInfo?.Running ?? false;
     }
 }

@@ -3,19 +3,30 @@ using NAudio.Wave;
 
 namespace Playthrough2.Pipes
 {
-    internal class WavePipeThreadInfo
+    internal class WavePipeThreadInfo : IWavePipeThreadInfo
     {
-        public WavePipeThreadInfo(IWaveIn waveIn, IWavePlayer waveOut)
+        private readonly IWaveInDevice _waveInDevice;
+        private readonly IWaveOutDevice _waveOutDevice;
+        private readonly IWavePipeConfiguration _configuration;
+
+        public WavePipeThreadInfo(IWaveInDevice waveIn, IWaveOutDevice waveOut, IWavePipeConfiguration configuration)
         {
-            WaveIn = waveIn;
-            WaveOut = waveOut;
-            Stream = new WaveInProvider(waveIn);
+            _waveInDevice = waveIn;
+            _waveOutDevice = waveOut;
+            _configuration = configuration;
         }
 
-        public WaveInProvider Stream { get; }
+        private WaveInProvider Stream { get; set; }
         public Queue<WavePipeThreadCommand> CommandQueue { get; } = new Queue<WavePipeThreadCommand>();
-        public IWaveIn WaveIn { get; }
-        public IWavePlayer WaveOut { get; }
+        private IWaveIn WaveIn { get; set; }
+        private IWavePlayer WaveOut { get; set; }
+
+        public void Initialize()
+        {
+            WaveIn = _waveInDevice.Create(_configuration);
+            WaveOut = _waveOutDevice.Create(_configuration);
+            Stream = new WaveInProvider(WaveIn);
+        }
 
         public void Start()
         {

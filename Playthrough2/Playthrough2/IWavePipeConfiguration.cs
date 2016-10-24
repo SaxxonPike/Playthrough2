@@ -10,5 +10,6 @@ namespace Playthrough2
         int? OutputLatency { get; }
         WaveFormat InputFormat { get; }
         WaveFormat OutputFormat { get; }
+        bool UseBackgroundThread { get; }
     }
 }
