@@ -1,7 +1,14 @@
 # Playthrough2
 
-An audio passthrough tool. Route audio from any input to any output.
-Customizable buffer and latency settings.
+An audio passthrough tool.
+
+### Features
+
+- Route audio from any input to any output.
+- Customizable buffer and latency settings.
+- Minimizes to the notification area.
+- Multithreading support for boosted performance.
+- Multiple simultaneous routes are supported.
 
 ### Supported Operating Systems
 
