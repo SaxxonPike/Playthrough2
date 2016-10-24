@@ -27,7 +27,7 @@ namespace Playthrough2.UI
             notifyIcon.Click += OnNotifyIconClicked;
         }
 
-        private void SetHighPriority()
+        private static void SetHighPriority()
         {
             try
             {
