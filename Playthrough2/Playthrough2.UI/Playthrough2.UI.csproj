@@ -70,7 +70,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationNotifyIcon.cs" />
     <Compile Include="ConfigurationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +77,7 @@
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="BitmapExtensions.cs" />
+    <Compile Include="ConfigurationRepository.cs" />
     <Compile Include="DeviceTreeController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

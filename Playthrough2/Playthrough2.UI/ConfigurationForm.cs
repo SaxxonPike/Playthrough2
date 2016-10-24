@@ -15,6 +15,7 @@ namespace Playthrough2.UI
     {
         private readonly WavePipeManager _wavePipeManager = new WavePipeManager();
         private readonly WaveDeviceEnumerator _waveDeviceEnumerator = new WaveDeviceEnumerator();
+        private readonly ConfigurationRepository _configurationRepository = new ConfigurationRepository();
 
         public ConfigurationForm()
         {
@@ -54,6 +55,33 @@ namespace Playthrough2.UI
             SetInputBufferCount(2);
             SetOutputLatency(50);
             SetOutputBufferCount(3);
+        }
+
+        private int GetClampedValueForTrackBar(TrackBar trackBar, int? value)
+        {
+            if (value == null)
+                return trackBar.Value;
+            if (value > trackBar.Maximum)
+                return trackBar.Maximum;
+            if (value < trackBar.Minimum)
+                return trackBar.Minimum;
+            return value.Value;
+        }
+
+        private void SetConfiguration(IWavePipeConfiguration configuration)
+        {
+            inputBufferCountSlider.Value = GetClampedValueForTrackBar(inputBufferCountSlider,
+                configuration.InputBufferCount);
+            inputBufferSizeSlider.Value = GetClampedValueForTrackBar(inputBufferSizeSlider,
+                configuration.InputBufferCount);
+            outputBufferCountSlider.Value = GetClampedValueForTrackBar(outputBufferCountSlider,
+                configuration.OutputBufferCount);
+            outputLatencySlider.Value = GetClampedValueForTrackBar(outputLatencySlider,
+                configuration.OutputLatency);
+            inputFormatFrequency.Text = (configuration.InputFormat?.SampleRate ?? 44100).ToString();
+            inputFormatEnable.Checked = configuration.InputFormat == null;
+            backgroundThreadCheckBox.Checked = configuration.UseBackgroundThread;
+            discardDataCheckBox.Checked = configuration.DiscardSamplesIfLagging;
         }
 
         private IWavePipeConfiguration GetConfiguration()
@@ -107,6 +135,7 @@ namespace Playthrough2.UI
             Icon = icon;
 
             SetupFormEvents();
+            SetConfiguration(_configurationRepository.LoadCombined());
         }
 
         private void SetupFormEvents()
