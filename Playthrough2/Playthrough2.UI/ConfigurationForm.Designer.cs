@@ -145,7 +145,7 @@
             this.inputFormatFrequency.Name = "inputFormatFrequency";
             this.inputFormatFrequency.Size = new System.Drawing.Size(62, 21);
             this.inputFormatFrequency.TabIndex = 1;
-            this.inputFormatFrequency.Text = "48000";
+            this.inputFormatFrequency.Text = "44100";
             this.inputFormatFrequency.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.toolTip.SetToolTip(this.inputFormatFrequency, "Frequency (in Hz) at which to record. Common values are 44100 and 48000.");
             // 
