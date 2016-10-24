@@ -615,6 +615,7 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "&Local Folder Configuration";
+            this.groupBox1.Visible = false;
             // 
             // button1
             // 
@@ -654,6 +655,7 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "&User Profile Configuration (Primary)";
+            this.groupBox2.Visible = false;
             // 
             // button4
             // 
