@@ -681,7 +681,6 @@
             // 
             // notifyIcon
             // 
-            this.notifyIcon.Text = "Passthrough2";
             this.notifyIcon.Visible = true;
             // 
             // ConfigurationForm
