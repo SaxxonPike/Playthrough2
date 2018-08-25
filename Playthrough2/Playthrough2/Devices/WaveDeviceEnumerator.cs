@@ -20,6 +20,12 @@ namespace Playthrough2.Devices
 
             foreach (var directSoundDevice in DirectSoundOut.Devices)
                 yield return new DirectSoundWaveOutDevice(directSoundDevice);
+
+            if (AsioOut.isSupported())
+            {
+                foreach (var asioSoundDevice in AsioOut.GetDriverNames())
+                    yield return new AsioWaveOutDevice(asioSoundDevice);
+            }
         }
     }
 }

@@ -7,9 +7,9 @@ namespace Playthrough2.Devices
     {
         private readonly int _index;
         public string Name => _capabilities.ProductName;
-        public WaveApi Api => WaveApi.Windows;
+        public WaveApi Api => WaveApi.WindowsOut;
         public Guid Id => WaveDeviceGuidRepository.OutputGuids[_index];
-        private WaveOutCapabilities _capabilities;
+        private readonly WaveOutCapabilities _capabilities;
         public bool SupportsBufferCount => true;
         public bool SupportsBufferSize => true;
         public bool SupportsFormat => false;
@@ -29,6 +29,8 @@ namespace Playthrough2.Devices
                 NumberOfBuffers = config.OutputBufferCount ?? 3
             };
         }
+
+        public int OutputCount => 1;
 
         public override string ToString()
         {

@@ -14,5 +14,7 @@ namespace Playthrough2.Pipes
         public WaveFormat OutputFormat { get; set; }
         public bool UseBackgroundThread { get; set; }
         public bool DiscardSamplesIfLagging { get; set; }
+        public int InputSource { get; set; }
+        public int OutputSource { get; set; }
     }
 }

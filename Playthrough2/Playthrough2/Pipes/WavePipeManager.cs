@@ -14,7 +14,9 @@ namespace Playthrough2.Pipes
                 p.WaveInDevice.Id == wavePipeConfiguration.WaveInDevice.Id &&
                 p.WaveInDevice.Api == wavePipeConfiguration.WaveInDevice.Api &&
                 p.WaveOutDevice.Id == wavePipeConfiguration.WaveOutDevice.Id &&
-                p.WaveOutDevice.Api == wavePipeConfiguration.WaveOutDevice.Api);
+                p.WaveOutDevice.Api == wavePipeConfiguration.WaveOutDevice.Api &&
+                p.Configuration.InputSource == wavePipeConfiguration.InputSource &&
+                p.Configuration.OutputSource == wavePipeConfiguration.OutputSource);
         }
 
         public void Start(IWavePipeConfiguration wavePipeConfiguration)

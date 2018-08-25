@@ -4,5 +4,7 @@
     {
         IWaveInDevice WaveInDevice { get; }
         IWaveOutDevice WaveOutDevice { get; }
+        int InputSource { get; }
+        int OutputSource { get; }
     }
 }

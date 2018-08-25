@@ -80,6 +80,8 @@
             this.deviceInfoTextBox = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.inputSourceComboBox = new System.Windows.Forms.ComboBox();
+            this.outputSourceComboBox = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.routesTabPage.SuspendLayout();
             this.actionsGroupBox.SuspendLayout();
@@ -99,6 +101,7 @@
             this.groupBox1.SuspendLayout();
             this.optionsGroupBox.SuspendLayout();
             this.devicesTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -114,7 +117,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(414, 331);
+            this.tabControl1.Size = new System.Drawing.Size(414, 356);
             this.tabControl1.TabIndex = 0;
             // 
             // routesTabPage
@@ -124,7 +127,7 @@
             this.routesTabPage.Controls.Add(this.outputGroupBox);
             this.routesTabPage.Location = new System.Drawing.Point(4, 25);
             this.routesTabPage.Name = "routesTabPage";
-            this.routesTabPage.Size = new System.Drawing.Size(406, 302);
+            this.routesTabPage.Size = new System.Drawing.Size(406, 327);
             this.routesTabPage.TabIndex = 0;
             this.routesTabPage.Text = "Routing";
             this.routesTabPage.UseVisualStyleBackColor = true;
@@ -135,7 +138,7 @@
             this.actionsGroupBox.Controls.Add(this.routeList);
             this.actionsGroupBox.Controls.Add(this.stopButton);
             this.actionsGroupBox.Controls.Add(this.startButton);
-            this.actionsGroupBox.Location = new System.Drawing.Point(0, 195);
+            this.actionsGroupBox.Location = new System.Drawing.Point(0, 220);
             this.actionsGroupBox.Name = "actionsGroupBox";
             this.actionsGroupBox.Size = new System.Drawing.Size(406, 107);
             this.actionsGroupBox.TabIndex = 7;
@@ -181,13 +184,14 @@
             // 
             // inputGroupBox
             // 
+            this.inputGroupBox.Controls.Add(this.inputSourceComboBox);
             this.inputGroupBox.Controls.Add(this.inputFormatPanel);
             this.inputGroupBox.Controls.Add(this.inputDeviceBufferCountPanel);
             this.inputGroupBox.Controls.Add(this.inputDeviceBufferSizePanel);
             this.inputGroupBox.Controls.Add(this.inputDeviceComboBox);
             this.inputGroupBox.Location = new System.Drawing.Point(0, 0);
             this.inputGroupBox.Name = "inputGroupBox";
-            this.inputGroupBox.Size = new System.Drawing.Size(200, 189);
+            this.inputGroupBox.Size = new System.Drawing.Size(200, 214);
             this.inputGroupBox.TabIndex = 4;
             this.inputGroupBox.TabStop = false;
             this.inputGroupBox.Text = "&Input";
@@ -205,7 +209,7 @@
             this.inputFormatPanel.Controls.Add(this.inputFormatFrequency, 1, 0);
             this.inputFormatPanel.Controls.Add(this.inputFormatHzLabel, 2, 0);
             this.inputFormatPanel.Controls.Add(this.inputFormatChannels, 3, 0);
-            this.inputFormatPanel.Location = new System.Drawing.Point(6, 46);
+            this.inputFormatPanel.Location = new System.Drawing.Point(6, 73);
             this.inputFormatPanel.Name = "inputFormatPanel";
             this.inputFormatPanel.RowCount = 1;
             this.inputFormatPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -279,7 +283,7 @@
             this.inputDeviceBufferCountPanel.Controls.Add(this.inputBufferCountValueLabel, 1, 0);
             this.inputDeviceBufferCountPanel.Controls.Add(this.inputBufferCountLabel, 0, 0);
             this.inputDeviceBufferCountPanel.Controls.Add(this.inputBufferCountSlider, 0, 1);
-            this.inputDeviceBufferCountPanel.Location = new System.Drawing.Point(6, 132);
+            this.inputDeviceBufferCountPanel.Location = new System.Drawing.Point(6, 159);
             this.inputDeviceBufferCountPanel.Name = "inputDeviceBufferCountPanel";
             this.inputDeviceBufferCountPanel.RowCount = 2;
             this.inputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -328,7 +332,7 @@
             this.inputDeviceBufferSizePanel.Controls.Add(this.inputBufferSizeValueLabel, 1, 0);
             this.inputDeviceBufferSizePanel.Controls.Add(this.inputBufferSizeLabel, 0, 0);
             this.inputDeviceBufferSizePanel.Controls.Add(this.inputBufferSizeSlider, 0, 1);
-            this.inputDeviceBufferSizePanel.Location = new System.Drawing.Point(6, 78);
+            this.inputDeviceBufferSizePanel.Location = new System.Drawing.Point(6, 105);
             this.inputDeviceBufferSizePanel.Name = "inputDeviceBufferSizePanel";
             this.inputDeviceBufferSizePanel.RowCount = 2;
             this.inputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -383,12 +387,13 @@
             // 
             // outputGroupBox
             // 
+            this.outputGroupBox.Controls.Add(this.outputSourceComboBox);
             this.outputGroupBox.Controls.Add(this.outputDeviceBufferSizePanel);
             this.outputGroupBox.Controls.Add(this.outputDeviceBufferCountPanel);
             this.outputGroupBox.Controls.Add(this.outputDeviceComboBox);
             this.outputGroupBox.Location = new System.Drawing.Point(206, 0);
             this.outputGroupBox.Name = "outputGroupBox";
-            this.outputGroupBox.Size = new System.Drawing.Size(200, 189);
+            this.outputGroupBox.Size = new System.Drawing.Size(200, 214);
             this.outputGroupBox.TabIndex = 5;
             this.outputGroupBox.TabStop = false;
             this.outputGroupBox.Text = "&Output";
@@ -401,7 +406,7 @@
             this.outputDeviceBufferSizePanel.Controls.Add(this.outputLatencyValueLabel, 1, 0);
             this.outputDeviceBufferSizePanel.Controls.Add(this.outputTargetLatencyLabel, 0, 0);
             this.outputDeviceBufferSizePanel.Controls.Add(this.outputLatencySlider, 0, 1);
-            this.outputDeviceBufferSizePanel.Location = new System.Drawing.Point(6, 78);
+            this.outputDeviceBufferSizePanel.Location = new System.Drawing.Point(6, 105);
             this.outputDeviceBufferSizePanel.Name = "outputDeviceBufferSizePanel";
             this.outputDeviceBufferSizePanel.RowCount = 2;
             this.outputDeviceBufferSizePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -451,7 +456,7 @@
             this.outputDeviceBufferCountPanel.Controls.Add(this.outputBufferCountSlider, 0, 1);
             this.outputDeviceBufferCountPanel.Controls.Add(this.outputBufferCountValueLabel, 1, 0);
             this.outputDeviceBufferCountPanel.Controls.Add(this.outputBufferCountLabel, 0, 0);
-            this.outputDeviceBufferCountPanel.Location = new System.Drawing.Point(6, 132);
+            this.outputDeviceBufferCountPanel.Location = new System.Drawing.Point(6, 159);
             this.outputDeviceBufferCountPanel.Name = "outputDeviceBufferCountPanel";
             this.outputDeviceBufferCountPanel.RowCount = 2;
             this.outputDeviceBufferCountPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -683,11 +688,35 @@
             // 
             this.notifyIcon.Visible = true;
             // 
+            // inputSourceComboBox
+            // 
+            this.inputSourceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.inputSourceComboBox.DropDownWidth = 300;
+            this.inputSourceComboBox.FormattingEnabled = true;
+            this.inputSourceComboBox.Location = new System.Drawing.Point(6, 46);
+            this.inputSourceComboBox.Name = "inputSourceComboBox";
+            this.inputSourceComboBox.Size = new System.Drawing.Size(188, 21);
+            this.inputSourceComboBox.Sorted = true;
+            this.inputSourceComboBox.TabIndex = 4;
+            this.inputSourceComboBox.SelectedIndexChanged += new System.EventHandler(this.OnInputSourceChanged);
+            // 
+            // outputSourceComboBox
+            // 
+            this.outputSourceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.outputSourceComboBox.DropDownWidth = 300;
+            this.outputSourceComboBox.FormattingEnabled = true;
+            this.outputSourceComboBox.Location = new System.Drawing.Point(6, 46);
+            this.outputSourceComboBox.Name = "outputSourceComboBox";
+            this.outputSourceComboBox.Size = new System.Drawing.Size(188, 21);
+            this.outputSourceComboBox.Sorted = true;
+            this.outputSourceComboBox.TabIndex = 5;
+            this.outputSourceComboBox.SelectedIndexChanged += new System.EventHandler(this.OnOutputSourceChanged);
+            // 
             // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(420, 337);
+            this.ClientSize = new System.Drawing.Size(420, 362);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -722,6 +751,7 @@
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -780,6 +810,8 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox inputSourceComboBox;
+        private System.Windows.Forms.ComboBox outputSourceComboBox;
     }
 }
 

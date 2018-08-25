@@ -94,13 +94,12 @@ namespace Playthrough2.UI
             inputFormatEnable.Checked = configuration.InputFormat == null;
             backgroundThreadCheckBox.Checked = configuration.UseBackgroundThread;
             discardDataCheckBox.Checked = configuration.DiscardSamplesIfLagging;
+            inputSourceComboBox.SelectedIndex = configuration.InputSource;
+            outputSourceComboBox.SelectedIndex = configuration.OutputSource;
         }
 
         private IWavePipeConfiguration GetConfiguration()
         {
-            int frequency;
-            int channels;
-
             return new WavePipeConfiguration
             {
                 WaveInDevice = inputDeviceComboBox.SelectedItem as IWaveInDevice,
@@ -110,12 +109,14 @@ namespace Playthrough2.UI
                 OutputBufferCount = outputBufferCountSlider.Value,
                 OutputLatency = outputLatencySlider.Value,
                 InputFormat = inputFormatEnable.Checked &&
-                              int.TryParse(inputFormatFrequency.Text, out frequency) &&
-                              int.TryParse(inputFormatChannels.Text, out channels)
+                              int.TryParse(inputFormatFrequency.Text, out var frequency) &&
+                              int.TryParse(inputFormatChannels.Text, out var channels)
                     ? new WaveFormat(frequency, channels)
                     : null,
                 UseBackgroundThread = backgroundThreadCheckBox.Checked,
-                DiscardSamplesIfLagging = discardDataCheckBox.Checked
+                DiscardSamplesIfLagging = discardDataCheckBox.Checked,
+                InputSource = inputSourceComboBox.SelectedIndex,
+                OutputSource = outputSourceComboBox.SelectedIndex
             };
         }
 
@@ -167,6 +168,8 @@ namespace Playthrough2.UI
             outputBufferCountSlider.Scroll += OnOutputBufferCountScroll;
             outputLatencySlider.Scroll += OnOutputLatencyScroll;
             outputDeviceComboBox.SelectedIndexChanged += OnOutputDeviceChanged;
+            inputSourceComboBox.SelectedIndexChanged += OnInputSourceChanged;
+            outputSourceComboBox.SelectedIndexChanged += OnOutputSourceChanged;
 
             startButton.Click += OnStartClicked;
             stopButton.Click += OnStopClicked;
@@ -182,9 +185,11 @@ namespace Playthrough2.UI
 
             inputDeviceComboBox.Items.AddRange(waveInDevices.Cast<object>().ToArray());
             inputDeviceComboBox.SelectedIndex = inputDeviceComboBox.Items.Count > 0 ? 0 : -1;
+            UpdateInputSources();
 
             outputDeviceComboBox.Items.AddRange(waveOutDevices.Cast<object>().ToArray());
             outputDeviceComboBox.SelectedIndex = outputDeviceComboBox.Items.Count > 0 ? 0 : -1;
+            UpdateOutputSources();
 
             var deviceTreeController = new DeviceTreeController(deviceInfoTreeView, deviceInfoTextBox);
             deviceTreeController.Populate(waveInDevices, waveOutDevices);
@@ -209,9 +214,10 @@ namespace Playthrough2.UI
 
         private void UpdateRoutes()
         {
-            foreach (var newRoute in _wavePipeManager.Pipes.Except(routeList.Items.Cast<IWavePipeInfo>()))
+            var routes = routeList.Items.Cast<IWavePipeInfo>().ToList();
+            foreach (var newRoute in _wavePipeManager.Pipes.Except(routes))
                 routeList.Items.Add(newRoute);
-            foreach (var deadRoute in routeList.Items.Cast<IWavePipeInfo>().Except(_wavePipeManager.Pipes))
+            foreach (var deadRoute in routes.Except(_wavePipeManager.Pipes))
                 routeList.Items.Remove(deadRoute);
             OnDeviceChanged();
         }
@@ -293,8 +299,7 @@ namespace Playthrough2.UI
 
         private void OnRouteListSelectedIndexChanged(object sender, EventArgs e)
         {
-            var pipeInfo = routeList.SelectedItem as IWavePipeInfo;
-            if (pipeInfo == null)
+            if (!(routeList.SelectedItem is IWavePipeInfo pipeInfo))
                 return;
 
             SuspendLayout();
@@ -314,15 +319,46 @@ namespace Playthrough2.UI
                 SetOutputBufferCount(pipeInfo.Configuration.OutputBufferCount);
 
             if (inputDeviceComboBox.SelectedItem != pipeInfo.WaveInDevice ||
-                outputDeviceComboBox.SelectedItem != pipeInfo.WaveOutDevice)
+                outputDeviceComboBox.SelectedItem != pipeInfo.WaveOutDevice ||
+                inputSourceComboBox.SelectedIndex != pipeInfo.Configuration.InputSource ||
+                outputSourceComboBox.SelectedIndex != pipeInfo.Configuration.OutputSource)
             {
-                inputDeviceComboBox.SelectedItem = pipeInfo.WaveInDevice;
-                outputDeviceComboBox.SelectedItem = pipeInfo.WaveOutDevice;
+                if (inputDeviceComboBox.SelectedItem != pipeInfo.WaveInDevice)
+                {
+                    inputDeviceComboBox.SelectedItem = pipeInfo.WaveInDevice;
+                    UpdateInputSources();
+                    inputSourceComboBox.SelectedIndex = pipeInfo.Configuration.InputSource;
+                }
+
+                if (outputDeviceComboBox.SelectedItem != pipeInfo.WaveOutDevice)
+                {
+                    outputDeviceComboBox.SelectedItem = pipeInfo.WaveOutDevice;
+                    UpdateOutputSources();
+                    outputSourceComboBox.SelectedIndex = pipeInfo.Configuration.OutputSource;
+                }
             }
             else
             {
                 OnDeviceChanged();
             }
+        }
+
+        private void UpdateInputSources()
+        {
+            var config = GetConfiguration();
+            inputSourceComboBox.Items.Clear();
+            inputSourceComboBox.Items.AddRange(Enumerable.Range(0, config.WaveInDevice.InputCount)
+                .Select(i => (object) $"Input {i}").ToArray());
+            inputSourceComboBox.SelectedIndex = config.InputSource;
+        }
+
+        private void UpdateOutputSources()
+        {
+            var config = GetConfiguration();
+            outputSourceComboBox.Items.Clear();
+            outputSourceComboBox.Items.AddRange(Enumerable.Range(0, config.WaveOutDevice.OutputCount)
+                .Select(i => (object) $"Output {i}").ToArray());
+            outputSourceComboBox.SelectedIndex = config.OutputSource;
         }
 
         private void OnDeviceChanged()
@@ -354,11 +390,13 @@ namespace Playthrough2.UI
 
         private void OnInputDeviceChanged(object sender, EventArgs e)
         {
+            UpdateInputSources();
             OnDeviceChanged();
         }
 
         private void OnOutputDeviceChanged(object sender, EventArgs e)
         {
+            UpdateOutputSources();
             OnDeviceChanged();
         }
 
@@ -377,6 +415,16 @@ namespace Playthrough2.UI
             foreach (var pipe in _wavePipeManager.Pipes.ToList())
                 _wavePipeManager.Stop(pipe.Configuration);
             UpdateRoutes();
+        }
+
+        private void OnInputSourceChanged(object sender, EventArgs e)
+        {
+            OnDeviceChanged();
+        }
+
+        private void OnOutputSourceChanged(object sender, EventArgs e)
+        {
+            OnDeviceChanged();
         }
     }
 }

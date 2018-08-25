@@ -2,9 +2,13 @@
 {
     public enum WaveApi
     {
-        Windows = 0,
-        DirectSound = 1,
-        Wasapi = 2,
-        Asio = 3
+        WindowsOut = 0,
+        WindowsIn = 1,
+        DirectSoundOut = 2,
+        DirectSoundIn = 3,
+        WasapiOut = 4,
+        WasapiIn = 5,
+        AsioOut = 6,
+        AsioIn = 7
     }
 }

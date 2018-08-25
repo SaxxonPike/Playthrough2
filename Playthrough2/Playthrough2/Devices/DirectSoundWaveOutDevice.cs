@@ -9,7 +9,7 @@ namespace Playthrough2.Devices
 
         public string Name => _device.Description;
         public Guid Id => _device.Guid;
-        public WaveApi Api => WaveApi.DirectSound;
+        public WaveApi Api => WaveApi.DirectSoundOut;
         public bool SupportsBufferCount => false;
         public bool SupportsBufferSize => true;
         public bool SupportsFormat => false;
@@ -23,6 +23,8 @@ namespace Playthrough2.Devices
         {
             return new DirectSoundOut(_device.Guid, config.OutputLatency ?? 40);
         }
+
+        public int OutputCount => 1;
 
         public override string ToString()
         {

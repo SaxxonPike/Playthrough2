@@ -8,7 +8,7 @@ namespace Playthrough2.Devices
         private readonly int _index;
         public string Name => Capabilities.ProductName;
         public Guid Id => WaveDeviceGuidRepository.InputGuids[_index];
-        public WaveApi Api => WaveApi.Windows;
+        public WaveApi Api => WaveApi.WindowsIn;
         public bool SupportsBufferCount => true;
         public bool SupportsBufferSize => true;
         public bool SupportsFormat => true;
@@ -52,6 +52,8 @@ namespace Playthrough2.Devices
                 result.WaveFormat = config.InputFormat;
             return result;
         }
+
+        public int InputCount => 1;
 
         public override string ToString()
         {
