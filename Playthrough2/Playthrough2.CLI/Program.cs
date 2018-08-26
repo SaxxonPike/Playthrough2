@@ -7,7 +7,7 @@ namespace Playthrough2.CLI
     {
         static void Main(string[] args)
         {
-            var deviceEnumerator = new WaveDeviceEnumerator();
+            var deviceEnumerator = new WaveDeviceRepository();
 
             Console.WriteLine("\nInput devices\n");
 

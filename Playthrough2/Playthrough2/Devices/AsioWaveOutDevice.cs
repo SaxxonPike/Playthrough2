@@ -1,42 +1,52 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using NAudio.Wave;
 
 namespace Playthrough2.Devices
 {
     public class AsioWaveOutDevice : IWaveOutDevice
     {
-        private static readonly Dictionary<string, Guid> Repository = new Dictionary<string, Guid>();
+        private readonly IEnumerable<IWaveOutSource> _sources;
 
         public AsioWaveOutDevice(string device)
         {
             Name = device;
-
-            if (!Repository.ContainsKey(device))
-                Repository[device] = DeviceGuidService.CreateGuid(WaveApi.AsioOut, Repository.Count);
+            _sources = InitSources(device);
         }
 
+        public Guid Id { get; } = Guid.NewGuid();
         public string Name { get; }
-        public Guid Id => Repository[Name];
-        public WaveApi Api => WaveApi.AsioOut;
         public bool SupportsBufferCount => false;
         public bool SupportsBufferSize => true;
         public bool SupportsFormat => false;
+        public bool SupportsThread => false;
 
-        public IWavePlayer Create(IWavePipeConfiguration config)
+        public IEnumerable<IWaveOutSource> GetSources()
         {
-            return new AsioOut(Name) {ChannelOffset = config.OutputSource};
+            return _sources;
         }
 
-        public int OutputCount
+        private IEnumerable<IWaveOutSource> InitSources(string device)
         {
-            get
+            try
             {
-                using (var driver = new AsioOut(Name))
-                    return driver.DriverOutputChannelCount;
+                using (var driver = new AsioOut(device))
+                    return new ReadOnlyCollection<IWaveOutSource>(Enumerable
+                        .Range(0, driver.DriverOutputChannelCount)
+                        .Select(i => new AsioWaveOutSource(this, i, driver.AsioOutputChannelName(i)))
+                        .Cast<IWaveOutSource>()
+                        .ToList());
             }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return Enumerable.Empty<IWaveOutSource>();
+            }            
         }
 
-        public override string ToString() => $"{Name} [Asio]";
+        public override string ToString() => $"ASIO: {Name}";
     }
 }

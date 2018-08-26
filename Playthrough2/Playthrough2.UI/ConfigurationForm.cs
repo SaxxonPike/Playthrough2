@@ -13,7 +13,7 @@ namespace Playthrough2.UI
     public partial class ConfigurationForm : Form
     {
         private readonly WavePipeManager _wavePipeManager = new WavePipeManager();
-        private readonly WaveDeviceEnumerator _waveDeviceEnumerator = new WaveDeviceEnumerator();
+        private readonly WaveDeviceRepository _waveDeviceRepository = new WaveDeviceRepository();
         private readonly ConfigurationRepository _configurationRepository = new ConfigurationRepository();
 
         public ConfigurationForm()
@@ -94,16 +94,12 @@ namespace Playthrough2.UI
             inputFormatEnable.Checked = configuration.InputFormat == null;
             backgroundThreadCheckBox.Checked = configuration.UseBackgroundThread;
             discardDataCheckBox.Checked = configuration.DiscardSamplesIfLagging;
-            inputSourceComboBox.SelectedIndex = configuration.InputSource;
-            outputSourceComboBox.SelectedIndex = configuration.OutputSource;
         }
 
         private IWavePipeConfiguration GetConfiguration()
         {
             return new WavePipeConfiguration
             {
-                WaveInDevice = inputDeviceComboBox.SelectedItem as IWaveInDevice,
-                WaveOutDevice = outputDeviceComboBox.SelectedItem as IWaveOutDevice,
                 InputBufferCount = inputBufferCountSlider.Value,
                 InputBufferLength = inputBufferSizeSlider.Value,
                 OutputBufferCount = outputBufferCountSlider.Value,
@@ -115,8 +111,8 @@ namespace Playthrough2.UI
                     : null,
                 UseBackgroundThread = backgroundThreadCheckBox.Checked,
                 DiscardSamplesIfLagging = discardDataCheckBox.Checked,
-                InputSource = inputSourceComboBox.SelectedIndex,
-                OutputSource = outputSourceComboBox.SelectedIndex
+                InputSource = inputSourceComboBox.SelectedItem as IWaveInSource,
+                OutputSource = outputSourceComboBox.SelectedItem as IWaveOutSource
             };
         }
 
@@ -180,8 +176,8 @@ namespace Playthrough2.UI
 
         private void PopulateDevices()
         {
-            var waveInDevices = _waveDeviceEnumerator.GetWaveInDevices().ToList();
-            var waveOutDevices = _waveDeviceEnumerator.GetWaveOutDevices().ToList();
+            var waveInDevices = _waveDeviceRepository.GetWaveInDevices().Where(d => d.GetSources().Any()).ToList();
+            var waveOutDevices = _waveDeviceRepository.GetWaveOutDevices().Where(d => d.GetSources().Any()).ToList();
 
             inputDeviceComboBox.Items.AddRange(waveInDevices.Cast<object>().ToArray());
             inputDeviceComboBox.SelectedIndex = inputDeviceComboBox.Items.Count > 0 ? 0 : -1;
@@ -192,7 +188,10 @@ namespace Playthrough2.UI
             UpdateOutputSources();
 
             var deviceTreeController = new DeviceTreeController(deviceInfoTreeView, deviceInfoTextBox);
-            deviceTreeController.Populate(waveInDevices, waveOutDevices);
+            deviceTreeController.Populate(
+                waveInDevices
+                    .SelectMany(wid => wid.GetSources())
+                    .Concat<IWaveSource>(waveOutDevices.SelectMany(wod => wod.GetSources())));
         }
 
         private void OnStartClicked(object sender, EventArgs e)
@@ -309,32 +308,30 @@ namespace Playthrough2.UI
 
         private void UpdateInterfaceForPipe(IWavePipeInfo pipeInfo)
         {
-            if (pipeInfo.WaveInDevice?.SupportsBufferSize ?? false)
+            if (pipeInfo.Configuration.InputSource?.Device?.SupportsBufferSize ?? false)
                 SetInputBufferSize(pipeInfo.Configuration.InputBufferLength);
-            if (pipeInfo.WaveInDevice?.SupportsBufferCount ?? false)
+            if (pipeInfo.Configuration.InputSource?.Device?.SupportsBufferCount ?? false)
                 SetInputBufferCount(pipeInfo.Configuration.InputBufferCount);
-            if (pipeInfo.WaveOutDevice?.SupportsBufferSize ?? false)
+            if (pipeInfo.Configuration.OutputSource?.Device?.SupportsBufferSize ?? false)
                 SetOutputLatency(pipeInfo.Configuration.OutputLatency);
-            if (pipeInfo.WaveOutDevice?.SupportsBufferCount ?? false)
+            if (pipeInfo.Configuration.OutputSource?.Device?.SupportsBufferCount ?? false)
                 SetOutputBufferCount(pipeInfo.Configuration.OutputBufferCount);
 
-            if (inputDeviceComboBox.SelectedItem != pipeInfo.WaveInDevice ||
-                outputDeviceComboBox.SelectedItem != pipeInfo.WaveOutDevice ||
-                inputSourceComboBox.SelectedIndex != pipeInfo.Configuration.InputSource ||
-                outputSourceComboBox.SelectedIndex != pipeInfo.Configuration.OutputSource)
+            if (inputDeviceComboBox.SelectedItem != pipeInfo.Configuration.InputSource.Device ||
+                outputDeviceComboBox.SelectedItem != pipeInfo.Configuration.OutputSource.Device)
             {
-                if (inputDeviceComboBox.SelectedItem != pipeInfo.WaveInDevice)
+                if (inputDeviceComboBox.SelectedItem != pipeInfo.Configuration.InputSource.Device)
                 {
-                    inputDeviceComboBox.SelectedItem = pipeInfo.WaveInDevice;
+                    inputDeviceComboBox.SelectedItem = pipeInfo.Configuration.InputSource.Device;
                     UpdateInputSources();
-                    inputSourceComboBox.SelectedIndex = pipeInfo.Configuration.InputSource;
+                    inputSourceComboBox.SelectedItem = pipeInfo.Configuration.InputSource;
                 }
 
-                if (outputDeviceComboBox.SelectedItem != pipeInfo.WaveOutDevice)
+                if (outputDeviceComboBox.SelectedItem != pipeInfo.Configuration.OutputSource.Device)
                 {
-                    outputDeviceComboBox.SelectedItem = pipeInfo.WaveOutDevice;
+                    outputDeviceComboBox.SelectedItem = pipeInfo.Configuration.OutputSource.Device;
                     UpdateOutputSources();
-                    outputSourceComboBox.SelectedIndex = pipeInfo.Configuration.OutputSource;
+                    outputSourceComboBox.SelectedItem = pipeInfo.Configuration.OutputSource;
                 }
             }
             else
@@ -345,20 +342,24 @@ namespace Playthrough2.UI
 
         private void UpdateInputSources()
         {
-            var config = GetConfiguration();
             inputSourceComboBox.Items.Clear();
-            inputSourceComboBox.Items.AddRange(Enumerable.Range(0, config.WaveInDevice.InputCount)
-                .Select(i => (object) $"Input {i}").ToArray());
-            inputSourceComboBox.SelectedIndex = config.InputSource;
+            inputSourceComboBox.Items.AddRange(((IWaveInDevice)inputDeviceComboBox.SelectedItem).GetSources().Cast<object>().ToArray());
+            var config = GetConfiguration();
+            if (config.InputSource == null)
+                inputSourceComboBox.SelectedIndex = inputSourceComboBox.Items.Count > 0 ? 0 : -1;
+            else
+                inputSourceComboBox.SelectedItem = config.InputSource;
         }
 
         private void UpdateOutputSources()
         {
-            var config = GetConfiguration();
             outputSourceComboBox.Items.Clear();
-            outputSourceComboBox.Items.AddRange(Enumerable.Range(0, config.WaveOutDevice.OutputCount)
-                .Select(i => (object) $"Output {i}").ToArray());
-            outputSourceComboBox.SelectedIndex = config.OutputSource;
+            outputSourceComboBox.Items.AddRange(((IWaveOutDevice)outputDeviceComboBox.SelectedItem).GetSources().Cast<object>().ToArray());
+            var config = GetConfiguration();
+            if (config.OutputSource == null)
+                outputSourceComboBox.SelectedIndex = outputSourceComboBox.Items.Count > 0 ? 0 : -1;
+            else
+                outputSourceComboBox.SelectedItem = config.OutputSource;
         }
 
         private void OnDeviceChanged()
@@ -368,9 +369,9 @@ namespace Playthrough2.UI
             startButton.Text = routeExists ? Resources.StartButtonRestartText : Resources.StartButtonStartText;
             stopButton.Enabled = routeExists;
 
-            inputDeviceBufferSizePanel.Enabled = selectedRoute.WaveInDevice?.SupportsBufferSize ?? false;
-            inputDeviceBufferCountPanel.Enabled = selectedRoute.WaveInDevice?.SupportsBufferCount ?? false;
-            inputFormatPanel.Enabled = selectedRoute.WaveInDevice?.SupportsFormat ?? false;
+            inputDeviceBufferSizePanel.Enabled = selectedRoute.InputSource?.Device?.SupportsBufferSize ?? false;
+            inputDeviceBufferCountPanel.Enabled = selectedRoute.InputSource?.Device?.SupportsBufferCount ?? false;
+            inputFormatPanel.Enabled = selectedRoute.InputSource?.Device?.SupportsFormat ?? false;
 
             if (selectedRoute.InputFormat != null)
             {
@@ -384,8 +385,8 @@ namespace Playthrough2.UI
                 inputFormatEnable.Checked = false;
             }
 
-            outputDeviceBufferSizePanel.Enabled = selectedRoute.WaveOutDevice?.SupportsBufferSize ?? false;
-            outputDeviceBufferCountPanel.Enabled = selectedRoute.WaveOutDevice?.SupportsBufferCount ?? false;
+            outputDeviceBufferSizePanel.Enabled = selectedRoute.OutputSource?.Device?.SupportsBufferSize ?? false;
+            outputDeviceBufferCountPanel.Enabled = selectedRoute.OutputSource?.Device?.SupportsBufferCount ?? false;
         }
 
         private void OnInputDeviceChanged(object sender, EventArgs e)

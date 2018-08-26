@@ -69,8 +69,6 @@ namespace Playthrough2.UI
                 OutputFormat = localConfiguration?.OutputFormat ?? baseConfiguration?.OutputFormat,
                 OutputLatency = localConfiguration?.OutputLatency ?? baseConfiguration?.OutputLatency,
                 UseBackgroundThread = localConfiguration?.UseBackgroundThread ?? baseConfiguration?.UseBackgroundThread ?? false,
-                InputSource = localConfiguration?.InputSource ?? baseConfiguration?.InputSource ?? 0,
-                OutputSource = localConfiguration?.OutputSource ?? baseConfiguration?.OutputSource ?? 0
             };
         }
 

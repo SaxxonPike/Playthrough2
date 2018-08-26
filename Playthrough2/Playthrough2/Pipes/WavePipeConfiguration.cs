@@ -4,8 +4,6 @@ namespace Playthrough2.Pipes
 {
     public class WavePipeConfiguration : IWavePipeConfiguration
     {
-        public IWaveInDevice WaveInDevice { get; set; }
-        public IWaveOutDevice WaveOutDevice { get; set; }
         public int? InputBufferCount { get; set; }
         public int? InputBufferLength { get; set; }
         public int? OutputBufferCount { get; set; }
@@ -14,7 +12,11 @@ namespace Playthrough2.Pipes
         public WaveFormat OutputFormat { get; set; }
         public bool UseBackgroundThread { get; set; }
         public bool DiscardSamplesIfLagging { get; set; }
-        public int InputSource { get; set; }
-        public int OutputSource { get; set; }
+        public IWaveInSource InputSource { get; set; }
+        public IWaveOutSource OutputSource { get; set; }
+
+        public bool IsThreadCompatible => UseBackgroundThread &&
+                                          (InputSource?.Device?.SupportsThread ?? false) &&
+                                          (OutputSource?.Device?.SupportsThread ?? false);
     }
 }

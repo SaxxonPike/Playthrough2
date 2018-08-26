@@ -7,16 +7,16 @@ namespace Playthrough2.Pipes
         public WavePipeInfo(IWavePipeConfiguration wavePipeConfiguration)
         {
             Configuration = wavePipeConfiguration;
-            WaveInDevice = wavePipeConfiguration.WaveInDevice;
-            WaveOutDevice = wavePipeConfiguration.WaveOutDevice;
+            InputSource = wavePipeConfiguration.InputSource;
+            OutputSource = wavePipeConfiguration.OutputSource;
             Configure(wavePipeConfiguration);
         }
 
         private IWavePipe WavePipe { get; set; }
         private IWavePlayer WaveOut { get; set; }
         private IWaveIn WaveIn { get; set; }
-        public IWaveInDevice WaveInDevice { get; }
-        public IWaveOutDevice WaveOutDevice { get; }
+        private IWaveInSource InputSource { get; }
+        private IWaveOutSource OutputSource { get; }
         public IWavePipeConfiguration Configuration { get; private set; }
 
         private void Configure(IWavePipeConfiguration configuration)
@@ -25,9 +25,9 @@ namespace Playthrough2.Pipes
             WaveIn?.Dispose();
             WaveOut?.Dispose();
 
-            WaveIn = WaveInDevice.Create(configuration);
-            WaveOut = WaveOutDevice.Create(configuration);
-            WavePipe = new WavePipe(WaveInDevice, WaveOutDevice, configuration);
+            WaveIn = InputSource.Open(configuration);
+            WaveOut = OutputSource.Open(configuration);
+            WavePipe = new WavePipe(InputSource, OutputSource, configuration);
         }
 
         public void Start()
@@ -59,7 +59,7 @@ namespace Playthrough2.Pipes
 
         public override string ToString()
         {
-            return $"{WaveInDevice.Name} -> {WaveOutDevice.Name}";
+            return $"{InputSource.Device.Name}:{InputSource.Name} -> {OutputSource.Device.Name}:{OutputSource.Name}";
         }
     }
 }

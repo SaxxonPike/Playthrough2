@@ -1,63 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using NAudio.Wave;
 
 namespace Playthrough2.Devices
 {
-    internal class WindowsWaveInDevice : IWaveInDevice
+    public class WindowsWaveInDevice : IWaveInDevice
     {
-        private readonly int _index;
+        private readonly ReadOnlyCollection<IWaveInSource> _sources;
+        private readonly IWaveInSource _source;
+
+        public Guid Id { get; } = Guid.NewGuid();
         public string Name => Capabilities.ProductName;
-        public Guid Id => WaveDeviceGuidRepository.InputGuids[_index];
-        public WaveApi Api => WaveApi.WindowsIn;
         public bool SupportsBufferCount => true;
         public bool SupportsBufferSize => true;
         public bool SupportsFormat => true;
+        public bool SupportsThread => true;
+
+        public IEnumerable<IWaveInSource> GetSources()
+        {
+            yield return _source;
+        }
 
         private WaveInCapabilities Capabilities { get; }
 
         public WindowsWaveInDevice(int index)
         {
-            _index = index;
             Capabilities = WaveInEvent.GetCapabilities(index);
+            _source = new WindowsWaveInSource(this, index);
         }
-
-        public IWaveIn Create(IWavePipeConfiguration config)
-        {
-            IWaveIn result;
-            var deviceNumber = _index;
-            var bufferMilliseconds = config.InputBufferLength ?? 50;
-            var numberOfBuffers = config.InputBufferCount ?? 3;
-
-            if (config.UseBackgroundThread)
-            {
-                result = new WaveInEvent
-                {
-                    DeviceNumber = deviceNumber,
-                    BufferMilliseconds = bufferMilliseconds,
-                    NumberOfBuffers = numberOfBuffers
-                };
-            }
-            else
-            {
-                result = new WaveIn
-                {
-                    DeviceNumber = deviceNumber,
-                    BufferMilliseconds = bufferMilliseconds,
-                    NumberOfBuffers = numberOfBuffers
-                };
-            }
-
-
-            if (config.InputFormat != null)
-                result.WaveFormat = config.InputFormat;
-            return result;
-        }
-
-        public int InputCount => 1;
 
         public override string ToString()
         {
-            return $"{Name} [Wave]";
+            return $"Wave: {Name}";
         }
     }
 }

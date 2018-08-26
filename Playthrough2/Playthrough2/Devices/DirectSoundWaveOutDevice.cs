@@ -1,34 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 using NAudio.Wave;
 
 namespace Playthrough2.Devices
 {
-    internal class DirectSoundWaveOutDevice : IWaveOutDevice
+    public class DirectSoundWaveOutDevice : IWaveOutDevice
     {
         private readonly DirectSoundDeviceInfo _device;
+        private readonly IEnumerable<IWaveOutSource> _sources;
 
+        public Guid Id { get; } = Guid.NewGuid();
         public string Name => _device.Description;
-        public Guid Id => _device.Guid;
-        public WaveApi Api => WaveApi.DirectSoundOut;
         public bool SupportsBufferCount => false;
         public bool SupportsBufferSize => true;
         public bool SupportsFormat => false;
+        public bool SupportsThread => true;
+
+        public IEnumerable<IWaveOutSource> GetSources()
+        {
+            return _sources;
+        }
+
+        private IEnumerable<IWaveOutSource> InitSources(DirectSoundDeviceInfo deviceInfo)
+        {
+            yield return new DirectSoundWaveOutSource(this, deviceInfo.Guid);
+        }
 
         public DirectSoundWaveOutDevice(DirectSoundDeviceInfo deviceInfo)
         {
             _device = deviceInfo;
+            _sources = InitSources(deviceInfo);
         }
-
-        public IWavePlayer Create(IWavePipeConfiguration config)
-        {
-            return new DirectSoundOut(_device.Guid, config.OutputLatency ?? 40);
-        }
-
-        public int OutputCount => 1;
 
         public override string ToString()
         {
-            return $"{Name} [DirectSound]";
+            return $"DS: {Name}";
         }
     }
 }

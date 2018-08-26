@@ -1,29 +1,51 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using NAudio.Wave;
 
 namespace Playthrough2.Devices
 {
     public class AsioWaveInDevice : IWaveInDevice
     {
+        private readonly IEnumerable<IWaveInSource> _sources;
+        public Guid Id { get; } = Guid.NewGuid();
         public string Name { get; }
-        public Guid Id { get; }
-        public WaveApi Api => WaveApi.AsioIn;
         public bool SupportsBufferCount => false;
         public bool SupportsBufferSize => false;
         public bool SupportsFormat => true;
-        
-        public IWaveIn Create(IWavePipeConfiguration config)
+        public bool SupportsThread => false;
+
+        public AsioWaveInDevice(string device)
         {
-            throw new NotImplementedException();
+            Name = device;
+            _sources = InitSources(device);
+        }
+        
+        public IEnumerable<IWaveInSource> GetSources()
+        {
+            return _sources;
         }
 
-        public int InputCount
+        private IEnumerable<IWaveInSource> InitSources(string device)
         {
-            get
+            try
             {
-                using (var driver = new AsioOut(Name))
-                    return driver.DriverInputChannelCount;
+                using (var driver = new AsioOut(device))
+                    return new ReadOnlyCollection<IWaveInSource>(Enumerable
+                        .Range(0, driver.DriverInputChannelCount)
+                        .Select(i => new AsioWaveInSource(this, i, driver.AsioInputChannelName(i)))
+                        .Cast<IWaveInSource>()
+                        .ToList());
             }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return Enumerable.Empty<IWaveInSource>();
+            }            
         }
+
+        public override string ToString() => $"ASIO: {Name}";
     }
 }

@@ -19,23 +19,25 @@ namespace Playthrough2.UI
             deviceTreeView.NodeMouseClick += OnDeviceTreeDeviceClicked;
         }
 
-        public void Populate(IEnumerable<IWaveInDevice> waveInDevices, IEnumerable<IWaveOutDevice> waveOutDevices)
+        public void Populate(IEnumerable<IWaveSource> waveSources)
         {
-            var inputNodes = new Dictionary<WaveApi, TreeNode>();
-            var outputNodes = new Dictionary<WaveApi, TreeNode>();
+            var inputNodes = new Dictionary<IWaveInDevice, TreeNode>();
+            var outputNodes = new Dictionary<IWaveOutDevice, TreeNode>();
 
-            foreach (var device in waveInDevices)
+            foreach (var source in waveSources)
             {
-                if (!inputNodes.ContainsKey(device.Api))
-                    inputNodes[device.Api] = new TreeNode(device.Api.ToString()) {Tag = device.Api};
-                inputNodes[device.Api].Nodes.Add(new TreeNode(device.ToString()) {Tag = device});
-            }
-
-            foreach (var device in waveOutDevices)
-            {
-                if (!outputNodes.ContainsKey(device.Api))
-                    outputNodes[device.Api] = new TreeNode(device.Api.ToString()) {Tag = device.Api};
-                outputNodes[device.Api].Nodes.Add(new TreeNode(device.ToString()) {Tag = device});
+                if (source is IWaveInSource wis)
+                {
+                    if (!inputNodes.ContainsKey(wis.Device))
+                        inputNodes[wis.Device] = new TreeNode(wis.Device.ToString()) {Tag = wis.Device};
+                    inputNodes[wis.Device].Nodes.Add(new TreeNode(wis.ToString()) {Tag = wis});                    
+                }
+                else if (source is IWaveOutSource wos)
+                {
+                    if (!outputNodes.ContainsKey(wos.Device))
+                        outputNodes[wos.Device] = new TreeNode(wos.Device.ToString()) {Tag = wos.Device};
+                    outputNodes[wos.Device].Nodes.Add(new TreeNode(wos.ToString()) {Tag = wos});                    
+                }
             }
 
             var inputNode = new TreeNode("Input APIs");

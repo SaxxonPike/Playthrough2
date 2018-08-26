@@ -7,13 +7,13 @@ namespace Playthrough2.Pipes
         private readonly IWavePipeConfiguration _configuration;
         private readonly WavePipeThreadInfo _threadInfo;
 
-        public WavePipe(IWaveInDevice waveIn, IWaveOutDevice waveOut, IWavePipeConfiguration configuration)
+        public WavePipe(IWaveInSource waveIn, IWaveOutSource waveOut, IWavePipeConfiguration configuration)
         {
             _configuration = configuration;
             _threadInfo = new WavePipeThreadInfo(waveIn, waveOut, _configuration);
             var thread = new Thread(WavePipeThreadProc);
 
-            if (!_configuration.UseBackgroundThread)
+            if (!_configuration.IsThreadCompatible)
                 _threadInfo.Initialize();
             else
                 thread.Priority = ThreadPriority.AboveNormal;
@@ -25,7 +25,7 @@ namespace Playthrough2.Pipes
         {
             var info = (WavePipeThreadInfo)threadInfo;
 
-            if (_configuration.UseBackgroundThread)
+            if (_configuration.IsThreadCompatible)
                 info.Initialize();
 
             try

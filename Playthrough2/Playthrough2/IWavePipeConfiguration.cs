@@ -2,7 +2,7 @@
 
 namespace Playthrough2
 {
-    public interface IWavePipeConfiguration : IWavePipeDeviceInfo
+    public interface IWavePipeConfiguration
     {
         int? InputBufferCount { get; }
         int? InputBufferLength { get; }
@@ -12,5 +12,8 @@ namespace Playthrough2
         WaveFormat OutputFormat { get; }
         bool UseBackgroundThread { get; }
         bool DiscardSamplesIfLagging { get; }
+        IWaveInSource InputSource { get; }
+        IWaveOutSource OutputSource { get; }
+        bool IsThreadCompatible { get; }
     }
 }

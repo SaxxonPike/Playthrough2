@@ -5,11 +5,11 @@ namespace Playthrough2.Pipes
 {
     internal class WavePipeThreadInfo : IWavePipeThreadInfo
     {
-        private readonly IWaveInDevice _waveInDevice;
-        private readonly IWaveOutDevice _waveOutDevice;
+        private readonly IWaveInSource _waveInDevice;
+        private readonly IWaveOutSource _waveOutDevice;
         private readonly IWavePipeConfiguration _configuration;
 
-        public WavePipeThreadInfo(IWaveInDevice waveIn, IWaveOutDevice waveOut, IWavePipeConfiguration configuration)
+        public WavePipeThreadInfo(IWaveInSource waveIn, IWaveOutSource waveOut, IWavePipeConfiguration configuration)
         {
             _waveInDevice = waveIn;
             _waveOutDevice = waveOut;
@@ -23,8 +23,8 @@ namespace Playthrough2.Pipes
 
         public void Initialize()
         {
-            WaveIn = _waveInDevice.Create(_configuration);
-            WaveOut = _waveOutDevice.Create(_configuration);
+            WaveIn = _waveInDevice.Open(_configuration);
+            WaveOut = _waveOutDevice.Open(_configuration);
             Stream = new WaveInBufferedStreamProvider(WaveIn, _configuration);
         }
 
