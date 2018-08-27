@@ -12,10 +12,6 @@ namespace Playthrough2.Devices
         private readonly WindowsWaveOutSource _source;
 
         public Guid Id { get; } = Guid.NewGuid();
-        public bool SupportsBufferCount => true;
-        public bool SupportsBufferSize => true;
-        public bool SupportsFormat => false;
-        public bool SupportsThread => true;
 
         public IEnumerable<IWaveOutSource> GetSources()
         {
@@ -30,7 +26,7 @@ namespace Playthrough2.Devices
 
         public override string ToString()
         {
-            return $"Wave: {Name}";
+            return $"MM: {Name}";
         }
     }
 }

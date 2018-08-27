@@ -6,5 +6,9 @@ namespace Playthrough2
     {
         string Name { get; }
         Guid Id { get; }
+        bool SupportsBufferCount { get; }
+        bool SupportsBufferSize { get; }
+        bool SupportsFormat { get; }
+        bool SupportsThread { get; }
     }
 }

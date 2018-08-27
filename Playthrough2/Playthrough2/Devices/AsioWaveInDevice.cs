@@ -12,10 +12,6 @@ namespace Playthrough2.Devices
         private readonly IEnumerable<IWaveInSource> _sources;
         public Guid Id { get; } = Guid.NewGuid();
         public string Name { get; }
-        public bool SupportsBufferCount => false;
-        public bool SupportsBufferSize => false;
-        public bool SupportsFormat => true;
-        public bool SupportsThread => false;
 
         public AsioWaveInDevice(string device)
         {
@@ -46,6 +42,6 @@ namespace Playthrough2.Devices
             }            
         }
 
-        public override string ToString() => $"ASIO: {Name}";
+        public override string ToString() => $"Asio: {Name}";
     }
 }

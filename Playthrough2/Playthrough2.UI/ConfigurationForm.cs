@@ -308,13 +308,13 @@ namespace Playthrough2.UI
 
         private void UpdateInterfaceForPipe(IWavePipeInfo pipeInfo)
         {
-            if (pipeInfo.Configuration.InputSource?.Device?.SupportsBufferSize ?? false)
+            if (pipeInfo.Configuration.InputSource?.SupportsBufferSize ?? false)
                 SetInputBufferSize(pipeInfo.Configuration.InputBufferLength);
-            if (pipeInfo.Configuration.InputSource?.Device?.SupportsBufferCount ?? false)
+            if (pipeInfo.Configuration.InputSource?.SupportsBufferCount ?? false)
                 SetInputBufferCount(pipeInfo.Configuration.InputBufferCount);
-            if (pipeInfo.Configuration.OutputSource?.Device?.SupportsBufferSize ?? false)
+            if (pipeInfo.Configuration.OutputSource?.SupportsBufferSize ?? false)
                 SetOutputLatency(pipeInfo.Configuration.OutputLatency);
-            if (pipeInfo.Configuration.OutputSource?.Device?.SupportsBufferCount ?? false)
+            if (pipeInfo.Configuration.OutputSource?.SupportsBufferCount ?? false)
                 SetOutputBufferCount(pipeInfo.Configuration.OutputBufferCount);
 
             if (inputDeviceComboBox.SelectedItem != pipeInfo.Configuration.InputSource.Device ||
@@ -369,9 +369,9 @@ namespace Playthrough2.UI
             startButton.Text = routeExists ? Resources.StartButtonRestartText : Resources.StartButtonStartText;
             stopButton.Enabled = routeExists;
 
-            inputDeviceBufferSizePanel.Enabled = selectedRoute.InputSource?.Device?.SupportsBufferSize ?? false;
-            inputDeviceBufferCountPanel.Enabled = selectedRoute.InputSource?.Device?.SupportsBufferCount ?? false;
-            inputFormatPanel.Enabled = selectedRoute.InputSource?.Device?.SupportsFormat ?? false;
+            inputDeviceBufferSizePanel.Enabled = selectedRoute.InputSource?.SupportsBufferSize ?? false;
+            inputDeviceBufferCountPanel.Enabled = selectedRoute.InputSource?.SupportsBufferCount ?? false;
+            inputFormatPanel.Enabled = selectedRoute.InputSource?.SupportsFormat ?? false;
 
             if (selectedRoute.InputFormat != null)
             {
@@ -385,8 +385,8 @@ namespace Playthrough2.UI
                 inputFormatEnable.Checked = false;
             }
 
-            outputDeviceBufferSizePanel.Enabled = selectedRoute.OutputSource?.Device?.SupportsBufferSize ?? false;
-            outputDeviceBufferCountPanel.Enabled = selectedRoute.OutputSource?.Device?.SupportsBufferCount ?? false;
+            outputDeviceBufferSizePanel.Enabled = selectedRoute.OutputSource?.SupportsBufferSize ?? false;
+            outputDeviceBufferCountPanel.Enabled = selectedRoute.OutputSource?.SupportsBufferCount ?? false;
         }
 
         private void OnInputDeviceChanged(object sender, EventArgs e)

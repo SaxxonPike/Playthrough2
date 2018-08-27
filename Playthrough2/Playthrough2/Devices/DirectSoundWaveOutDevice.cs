@@ -11,10 +11,6 @@ namespace Playthrough2.Devices
 
         public Guid Id { get; } = Guid.NewGuid();
         public string Name => _device.Description;
-        public bool SupportsBufferCount => false;
-        public bool SupportsBufferSize => true;
-        public bool SupportsFormat => false;
-        public bool SupportsThread => true;
 
         public IEnumerable<IWaveOutSource> GetSources()
         {

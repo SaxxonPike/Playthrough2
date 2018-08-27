@@ -17,10 +17,10 @@ namespace Playthrough2.Pipes
                 DiscardOnBufferOverflow = configuration.DiscardSamplesIfLagging,
             };
 
-            if (configuration.DiscardSamplesIfLagging && configuration.InputSource.Device.SupportsBufferSize && configuration.OutputSource.Device.SupportsBufferSize)
+            if (configuration.DiscardSamplesIfLagging && configuration.InputSource.SupportsBufferSize && configuration.OutputSource.SupportsBufferSize)
             {
-                var totalInputLatency = (configuration.InputSource.Device.SupportsBufferCount ? configuration.InputBufferCount ?? 1 : 1) * (configuration.InputBufferLength ?? 20);
-                var totalOutputLatency = (configuration.OutputSource.Device.SupportsBufferCount ? configuration.OutputBufferCount ?? 1 : 1) * (configuration.OutputLatency ?? 40);
+                var totalInputLatency = (configuration.InputSource.SupportsBufferCount ? configuration.InputBufferCount ?? 1 : 1) * (configuration.InputBufferLength ?? 20);
+                var totalOutputLatency = (configuration.OutputSource.SupportsBufferCount ? configuration.OutputBufferCount ?? 1 : 1) * (configuration.OutputLatency ?? 40);
                 _bufferedWaveProvider.BufferLength = waveIn.WaveFormat.ConvertLatencyToByteSize(totalInputLatency + totalOutputLatency);
             }
             else

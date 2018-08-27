@@ -15,8 +15,11 @@ namespace Playthrough2.Devices
         }
 
         public string Name { get; }
-        
         public Guid Id { get; } = Guid.NewGuid();
+        public bool SupportsBufferCount => false;
+        public bool SupportsBufferSize => false;
+        public bool SupportsFormat => false;
+        public bool SupportsThread => false;
         
         public IWavePlayer Open(IWavePipeConfiguration config)
         {

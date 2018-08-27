@@ -16,7 +16,7 @@ namespace Playthrough2.Pipes
         public IWaveOutSource OutputSource { get; set; }
 
         public bool IsThreadCompatible => UseBackgroundThread &&
-                                          (InputSource?.Device?.SupportsThread ?? false) &&
-                                          (OutputSource?.Device?.SupportsThread ?? false);
+                                          (InputSource?.SupportsThread ?? false) &&
+                                          (OutputSource?.SupportsThread ?? false);
     }
 }

@@ -13,13 +13,18 @@ namespace Playthrough2.Devices
             Device = asioWaveInDevice;
             Name = name;
         }
-        
+
         public string Name { get; }
         public Guid Id { get; } = Guid.NewGuid();
-        
+        public bool SupportsBufferCount => false;
+        public bool SupportsBufferSize => false;
+        public bool SupportsFormat => true;
+        public bool SupportsThread => false;
+
         public IWaveIn Open(IWavePipeConfiguration config)
         {
-            throw new NotImplementedException();
+            return new AsioWaveInWrapper(new AsioOut(Device.Name) {InputChannelOffset = _index})
+                {WaveFormat = config.InputFormat};
         }
 
         public IWaveInDevice Device { get; }
