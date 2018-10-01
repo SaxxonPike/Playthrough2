@@ -37,6 +37,7 @@
             this.stopButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
             this.inputGroupBox = new System.Windows.Forms.GroupBox();
+            this.inputSourceComboBox = new System.Windows.Forms.ComboBox();
             this.inputFormatPanel = new System.Windows.Forms.TableLayoutPanel();
             this.inputFormatChLabel = new System.Windows.Forms.Label();
             this.inputFormatEnable = new System.Windows.Forms.CheckBox();
@@ -53,6 +54,7 @@
             this.inputBufferSizeSlider = new System.Windows.Forms.TrackBar();
             this.inputDeviceComboBox = new System.Windows.Forms.ComboBox();
             this.outputGroupBox = new System.Windows.Forms.GroupBox();
+            this.outputSourceComboBox = new System.Windows.Forms.ComboBox();
             this.outputDeviceBufferSizePanel = new System.Windows.Forms.TableLayoutPanel();
             this.outputLatencyValueLabel = new System.Windows.Forms.Label();
             this.outputTargetLatencyLabel = new System.Windows.Forms.Label();
@@ -80,8 +82,6 @@
             this.deviceInfoTextBox = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.inputSourceComboBox = new System.Windows.Forms.ComboBox();
-            this.outputSourceComboBox = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.routesTabPage.SuspendLayout();
             this.actionsGroupBox.SuspendLayout();
@@ -195,6 +195,18 @@
             this.inputGroupBox.TabIndex = 4;
             this.inputGroupBox.TabStop = false;
             this.inputGroupBox.Text = "&Input";
+            // 
+            // inputSourceComboBox
+            // 
+            this.inputSourceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.inputSourceComboBox.DropDownWidth = 300;
+            this.inputSourceComboBox.FormattingEnabled = true;
+            this.inputSourceComboBox.Location = new System.Drawing.Point(6, 46);
+            this.inputSourceComboBox.Name = "inputSourceComboBox";
+            this.inputSourceComboBox.Size = new System.Drawing.Size(188, 21);
+            this.inputSourceComboBox.Sorted = true;
+            this.inputSourceComboBox.TabIndex = 4;
+            this.inputSourceComboBox.SelectedIndexChanged += new System.EventHandler(this.OnInputSourceChanged);
             // 
             // inputFormatPanel
             // 
@@ -398,6 +410,18 @@
             this.outputGroupBox.TabStop = false;
             this.outputGroupBox.Text = "&Output";
             // 
+            // outputSourceComboBox
+            // 
+            this.outputSourceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.outputSourceComboBox.DropDownWidth = 300;
+            this.outputSourceComboBox.FormattingEnabled = true;
+            this.outputSourceComboBox.Location = new System.Drawing.Point(6, 46);
+            this.outputSourceComboBox.Name = "outputSourceComboBox";
+            this.outputSourceComboBox.Size = new System.Drawing.Size(188, 21);
+            this.outputSourceComboBox.Sorted = true;
+            this.outputSourceComboBox.TabIndex = 5;
+            this.outputSourceComboBox.SelectedIndexChanged += new System.EventHandler(this.OnOutputSourceChanged);
+            // 
             // outputDeviceBufferSizePanel
             // 
             this.outputDeviceBufferSizePanel.ColumnCount = 2;
@@ -516,7 +540,7 @@
             this.configurationTabPage.Location = new System.Drawing.Point(4, 25);
             this.configurationTabPage.Name = "configurationTabPage";
             this.configurationTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.configurationTabPage.Size = new System.Drawing.Size(406, 302);
+            this.configurationTabPage.Size = new System.Drawing.Size(406, 327);
             this.configurationTabPage.TabIndex = 1;
             this.configurationTabPage.Text = "Configuration";
             this.configurationTabPage.UseVisualStyleBackColor = true;
@@ -643,7 +667,7 @@
             this.devicesTabPage.Controls.Add(this.splitContainer1);
             this.devicesTabPage.Location = new System.Drawing.Point(4, 25);
             this.devicesTabPage.Name = "devicesTabPage";
-            this.devicesTabPage.Size = new System.Drawing.Size(406, 302);
+            this.devicesTabPage.Size = new System.Drawing.Size(406, 327);
             this.devicesTabPage.TabIndex = 2;
             this.devicesTabPage.Text = "Devices";
             this.devicesTabPage.UseVisualStyleBackColor = true;
@@ -661,7 +685,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.deviceInfoTextBox);
-            this.splitContainer1.Size = new System.Drawing.Size(406, 302);
+            this.splitContainer1.Size = new System.Drawing.Size(406, 327);
             this.splitContainer1.SplitterDistance = 135;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -670,7 +694,7 @@
             this.deviceInfoTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.deviceInfoTreeView.Location = new System.Drawing.Point(0, 0);
             this.deviceInfoTreeView.Name = "deviceInfoTreeView";
-            this.deviceInfoTreeView.Size = new System.Drawing.Size(135, 302);
+            this.deviceInfoTreeView.Size = new System.Drawing.Size(135, 327);
             this.deviceInfoTreeView.TabIndex = 0;
             // 
             // deviceInfoTextBox
@@ -681,36 +705,12 @@
             this.deviceInfoTextBox.Name = "deviceInfoTextBox";
             this.deviceInfoTextBox.ReadOnly = true;
             this.deviceInfoTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.deviceInfoTextBox.Size = new System.Drawing.Size(267, 302);
+            this.deviceInfoTextBox.Size = new System.Drawing.Size(267, 327);
             this.deviceInfoTextBox.TabIndex = 0;
             // 
             // notifyIcon
             // 
             this.notifyIcon.Visible = true;
-            // 
-            // inputSourceComboBox
-            // 
-            this.inputSourceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.inputSourceComboBox.DropDownWidth = 300;
-            this.inputSourceComboBox.FormattingEnabled = true;
-            this.inputSourceComboBox.Location = new System.Drawing.Point(6, 46);
-            this.inputSourceComboBox.Name = "inputSourceComboBox";
-            this.inputSourceComboBox.Size = new System.Drawing.Size(188, 21);
-            this.inputSourceComboBox.Sorted = true;
-            this.inputSourceComboBox.TabIndex = 4;
-            this.inputSourceComboBox.SelectedIndexChanged += new System.EventHandler(this.OnInputSourceChanged);
-            // 
-            // outputSourceComboBox
-            // 
-            this.outputSourceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.outputSourceComboBox.DropDownWidth = 300;
-            this.outputSourceComboBox.FormattingEnabled = true;
-            this.outputSourceComboBox.Location = new System.Drawing.Point(6, 46);
-            this.outputSourceComboBox.Name = "outputSourceComboBox";
-            this.outputSourceComboBox.Size = new System.Drawing.Size(188, 21);
-            this.outputSourceComboBox.Sorted = true;
-            this.outputSourceComboBox.TabIndex = 5;
-            this.outputSourceComboBox.SelectedIndexChanged += new System.EventHandler(this.OnOutputSourceChanged);
             // 
             // ConfigurationForm
             // 
